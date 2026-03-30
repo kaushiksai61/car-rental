@@ -1,0 +1,22 @@
+mat-card {
+  margin: 2rem auto;
+  padding: 2rem;
+  max-width: 800px;
+}
+
+mat-card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.mat-raised-button {
+  flex: 1;
+}

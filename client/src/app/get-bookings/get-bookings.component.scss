@@ -1,0 +1,122 @@
+.full-height {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 128px);
+  overflow: hidden;
+}
+
+.mat-card {
+  margin: 2rem 4rem;
+}
+
+.mat-card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.mat-header-cell {
+  font-size: medium;
+  color: black;
+  text-align: center !important;
+  background-color: whitesmoke;
+}
+
+.mat-cell {
+  text-align: center;
+  vertical-align: center;
+  text-align: center;
+}
+
+/* Super compact cells */
+.compact-cell {
+  padding: 0.25rem !important;
+  line-height: 1.1 !important;
+  font-size: 0.8rem;
+}
+
+/* Tiny badges */
+.small-badge {
+  padding: 0.15em 0.35em;
+  font-size: 0.7rem;
+  border-radius: 4px;
+}
+
+/* Compact form */
+.compact-form-card {
+  margin: 0.4rem 0;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.compact-field .mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+.compact-field .mat-form-field-infix {
+  padding: 0.25em 0 !important;
+  font-size: 0.75rem;
+}
+
+.compact-field .mat-select-value,
+.compact-field input {
+  font-size: 0.75rem;
+}
+
+/* Paginator */
+.paginator-compact {
+  font-size: 0.75rem;
+}
+
+/* Container */
+.container { padding: 0.5rem 0.8rem; }
+button.mat-stroked-button[size="small"] {
+  min-width: 60px;
+  padding: 0 8px;
+  line-height: 24px;
+  font-size: 0.75rem;
+}
+
+.status-badge {
+  padding: 0.25rem 0.625rem;
+  border-radius: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: white;
+  display: inline-block;
+  text-align: center;
+  min-width: 5rem;
+}
+ 
+/* --------------------------------------------------------------
+   HIDE OVERFLOW INSIDE CARDS (prevents scrollbars on long text)
+   -------------------------------------------------------------- */
+mat-card,
+mat-card-content {
+  overflow: hidden !important;
+}
+
+.table-container {
+  flex:1
+}
+
+.d-flex {
+  justify-content: space-around;
+}
+
+.clickable-icon{
+  cursor: pointer;
+  color: #f44336;
+}
+
+.smallicon{
+  font-size: 20px;
+  vertical-align: middle;
+  line-height: 1;
+  align-items: center;
+  justify-content: center;
+  padding-top: 1px;
+  
+}
