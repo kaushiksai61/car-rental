@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+
+    <!-- =============================== -->
+    <!-- CarsComponent Tests -->
+    <!-- =============================== -->
+
+    <property name="CarsComponent should mark the form as invalid if rental start and end dates are empty"
+        value="CarsComponent Form validation should mark the form as invalid if rental start and end dates are empty"/>
+
+    <property name="CarsComponent should mark the form as valid if rental start and end dates are provided"
+        value="CarsComponent Form validation should mark the form as valid if rental start and end dates are provided"/>
+
+
+    <!-- =============================== -->
+    <!-- CategoryComponent Tests -->
+    <!-- =============================== -->
+
+    <property name="CategoryComponent should mark the form as invalid if required fields are empty"
+        value="CategoryComponent Form validation should mark the form as invalid if required fields are empty"/>
+
+    <property name="CategoryComponent should mark the form as valid if all required fields are filled"
+        value="CategoryComponent Form validation should mark the form as valid if all required fields are filled"/>
+
+
+    <!-- =============================== -->
+    <!-- GetBookingsComponent Tests -->
+    <!-- =============================== -->
+
+    <property name="GetBookingsComponent should mark the form as invalid if required fields are empty"
+        value="GetBookingsComponent Form validation should mark the form as invalid if required fields are empty"/>
+
+    <property name="GetBookingsComponent should mark the form as valid if all required fields are filled"
+        value="GetBookingsComponent Form validation should mark the form as valid if all required fields are filled"/>
+
+
+    <!-- =============================== -->
+    <!-- LoginComponent Tests -->
+    <!-- =============================== -->
+
+    <property name="LoginComponent should have invalid form if username and password are empty"
+        value="LoginComponent Form validation should have invalid form if username and password are empty"/>
+
+    <property name="LoginComponent should have invalid form if username or password is empty"
+        value="LoginComponent Form validation should have invalid form if username or password is empty"/>
+
+    <property name="LoginComponent should have valid form if username and password are provided"
+        value="LoginComponent Form validation should have valid form if username and password are provided"/>
+
+
+    <!-- =============================== -->
+    <!-- RegistrationComponent Tests -->
+    <!-- =============================== -->
+
+    <property name="RegistrationComponent should have invalid form if any field is empty"
+        value="RegistrationComponent Form validation should have invalid form if any field is empty"/>
+
+    <property name="RegistrationComponent should have invalid form if email is invalid"
+        value="RegistrationComponent Form validation should have invalid form if email is invalid"/>
+
+    <property name="RegistrationComponent should have valid form if all fields are filled correctly"
+        value="RegistrationComponent Form validation should have valid form if all fields are filled correctly"/>
+
+
+    <!-- =============================== -->
+    <!-- HttpService Tests -->
+    <!-- =============================== -->
+
+    <property name="HttpService should retrieve all categories"
+        value="HttpService #getAllCategories should retrieve all categories via GET with Authorization header"/>
+
+    <property name="HttpService should retrieve bookings by agent"
+        value="HttpService #getBookingByAgent should retrieve bookings via GET with Authorization header"/>
+
+    <property name="HttpService should retrieve payment report"
+        value="HttpService #paymentReport should retrieve payment report via GET with Authorization header"/>
+
+    <property name="HttpService should retrieve booking report"
+        value="HttpService #getBookingReport should retrieve booking report via GET with Authorization header"/>
+
+    <property name="HttpService should retrieve all available cars"
+        value="HttpService #getCars should retrieve all available cars via GET with Authorization header"/>
+
+    <property name="HttpService should book a car"
+        value="HttpService #bookACar should book a car via POST with request body and Authorization header"/>
+
+    <property name="HttpService should process booking payment"
+        value="HttpService #bookingPayment should process booking payment via POST with Authorization header"/>
+
+    <property name="HttpService should update booking status"
+        value="HttpService #updateBookingStatus should update booking status via PUT with Authorization header"/>
+
+    <property name="HttpService should update a car"
+        value="HttpService #updateCar should update car via PUT with Authorization header"/>
+
+    <property name="HttpService should create a car"
+        value="HttpService #createCar should create car via POST with Authorization header"/>
+
+    <property name="HttpService should create a category"
+        value="HttpService #createCategory should create category via POST with Authorization header"/>
+
+    <property name="HttpService should update a category"
+        value="HttpService #updateCategory should update category via PUT with Authorization header"/>
+
+    <property name="HttpService should login"
+        value="HttpService #Login should authenticate user via POST and return token"/>
+
+    <property name="HttpService should register a user"
+        value="HttpService #registerUser should register a user via POST"/>
+
+
+    <!-- =============================== -->
+    <!-- Spring Boot Backend Tests -->
+    <!-- =============================== -->
+
+    <property name="testRegisterUser"
+        value="Backend should register user and persist user details successfully"/>
+
+    <property name="testLoginUser"
+        value="Backend should login user and return authentication token"/>
+
+    <property name="testLoginWithWrongUsernameOrPassword"
+        value="Backend should return unauthorized for invalid login credentials"/>
+
+    <property name="testCreateCarCategory"
+        value="Backend Admin API should create car category successfully"/>
+
+    <property name="testGetAllCarCategories"
+        value="Backend Admin API should retrieve all car categories"/>
+
+    <property name="testUpdateCarCategory"
+        value="Backend Admin API should update car category successfully"/>
+
+    <property name="testGetAllBookings"
+        value="Backend Admin API should retrieve all bookings report"/>
+
+    <property name="testGetAllPayments"
+        value="Backend Admin API should retrieve all payments report"/>
+
+    <property name="testAddCar"
+        value="Backend Agent API should add a car successfully"/>
+
+    <property name="testUpdateCar"
+        value="Backend Agent API should update car details successfully"/>
+
+    <property name="testUpdateBookingStatus"
+        value="Backend Agent API should update booking status successfully"/>
+
+    <property name="testCreatePayment"
+        value="Backend Agent API should create payment successfully"/>
+
+    <property name="testGetAvailableCars"
+        value="Backend Customer API should retrieve available cars"/>
+
+    <property name="testBookCar"
+        value="Backend Customer API should book a car successfully"/>
+
+    <property name="testAdministratorApiShouldBeForbiddenForOtherUser"
+        value="Backend should restrict administrator APIs for unauthorized roles"/>
+
+    <property name="testAgentApiShouldBeForbiddenForOtherUser"
+        value="Backend should restrict agent APIs for unauthorized roles"/>
+
+    <property name="testCustomerApiShouldBeForbiddenForOtherUser"
+        value="Backend should restrict customer APIs for unauthorized roles"/>
+
+</properties>

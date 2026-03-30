@@ -1,0 +1,29 @@
+<div class="container">
+  <h2>Payment Report</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Payment ID</th>
+        <th>Booking ID</th>
+        <th>Amount</th>
+        <th>Date</th>
+        <th>Method</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let p of bookingList">
+        <td>{{ p.id }}</td>
+        <td>{{ p.bookingId }}</td>
+        <td>{{ p.amount }}</td>
+        <td>{{ p.paymentDate }}</td>
+        <td>{{ p.paymentMethod }}</td>
+        <td>{{ p.paymentStatus }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="error" *ngIf="showError">{{ errorMessage }}</p>
+</div>

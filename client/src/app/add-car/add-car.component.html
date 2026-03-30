@@ -1,0 +1,46 @@
+<div class="container">
+  <h2>Add / Update Car</h2>
+
+  <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+
+    <label>Make</label>
+    <input type="text" formControlName="make">
+
+    <label>Model</label>
+    <input type="text" formControlName="model">
+
+    <label>Manufacture Year</label>
+    <input type="number" formControlName="manufactureYear">
+
+    <label>Registration Number</label>
+    <input type="text" formControlName="registrationNumber">
+
+    <label>Status</label>
+    <input type="text" formControlName="status">
+
+    <label>Rental Rate Per Day</label>
+    <input type="number" formControlName="rentalRatePerDay">
+
+    <label>Category</label>
+    <select formControlName="categoryId">
+      <option value="">Select Category</option>
+      <option *ngFor="let c of categoryList" [value]="c.id">
+        {{ c.name }}
+      </option>
+    </select>
+
+    <button type="submit">Save</button>
+
+    <p class="success" *ngIf="showMessage">{{ responseMessage }}</p>
+    <p class="error" *ngIf="showError">{{ errorMessage }}</p>
+  </form>
+
+  <h3>Existing Cars</h3>
+
+  <div class="car-card" *ngFor="let car of carList">
+    <p>{{ car.make }} {{ car.model }}</p>
+    <p>Reg: {{ car.registrationNumber }}</p>
+
+    <button (click)="editCar(car)">Edit</button>
+  </div>
+</div>

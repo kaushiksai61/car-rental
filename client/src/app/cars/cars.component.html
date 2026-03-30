@@ -1,0 +1,28 @@
+<div class="container">
+  <h2>Available Cars</h2>
+
+  <div class="car-card" *ngFor="let car of carList">
+    <h3>{{ car.make }} {{ car.model }}</h3>
+
+    <p>Year: {{ car.manufactureYear }}</p>
+    <p>Registration: {{ car.registrationNumber }}</p>
+    <p>Rate per day: {{ car.rentalRatePerDay }}</p>
+
+    <button (click)="book(car)">Book</button>
+  </div>
+
+  <h3>Book Selected Car</h3>
+
+  <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+    <label>Start Date</label>
+    <input type="datetime-local" formControlName="rentalStartDate">
+
+    <label>End Date</label>
+    <input type="datetime-local" formControlName="rentalEndDate">
+
+    <button type="submit" [disabled]="!toBook.id">Confirm Booking</button>
+
+    <p class="success" *ngIf="showMessage">{{ responseMessage }}</p>
+    <p class="error" *ngIf="showError">{{ errorMessage }}</p>
+  </form>
+</div>

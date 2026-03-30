@@ -1,0 +1,42 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1976d2;
+  color: white;
+  padding: 10px 15px;
+}
+
+.nav-left .brand {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.nav-links a {
+  margin-right: 15px;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.nav-right button {
+  background: #d32f2f;
+  border: none;
+  padding: 6px 12px;
+  margin-left: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+.role {
+  font-weight: bold;
+}

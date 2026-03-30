@@ -1,0 +1,36 @@
+<div class="container">
+  <h2>Bookings Assigned to You</h2>
+
+  <div class="booking-card" *ngFor="let b of carList">
+    <p><strong>Car:</strong> {{ b.car?.make }} {{ b.car?.model }}</p>
+    <p><strong>Customer ID:</strong> {{ b.customerId }}</p>
+    <p><strong>Status:</strong> {{ b.status }}</p>
+
+    <button (click)="bookNow(b)">Update Status</button>
+    <button (click)="payment(b)">Make Payment</button>
+  </div>
+
+  <div *ngIf="idPaymentNow">
+    <h3>Make Payment</h3>
+
+    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+
+      <label>Amount</label>
+      <input type="number" formControlName="amount">
+
+      <label>Payment Date</label>
+      <input type="datetime-local" formControlName="paymentDate">
+
+      <label>Payment Method</label>
+      <input type="text" formControlName="paymentMethod">
+
+      <label>Payment Status</label>
+      <input type="text" formControlName="paymentStatus">
+
+      <button type="submit">Submit Payment</button>
+
+      <p class="success" *ngIf="showMessage">{{ responseMessage }}</p>
+      <p class="error" *ngIf="showError">{{ errorMessage }}</p>
+    </form>
+  </div>
+</div>

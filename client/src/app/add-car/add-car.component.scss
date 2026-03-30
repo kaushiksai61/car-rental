@@ -1,0 +1,40 @@
+.container {
+  width: 600px;
+  margin: 20px auto;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input, select {
+  width: 100%;
+  padding: 6px;
+  margin-top: 4px;
+}
+
+button {
+  margin-top: 12px;
+  padding: 8px;
+  background: #1976d2;
+  color: white;
+  border: none;
+}
+
+.car-card {
+  border: 1px solid #777;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 5px;
+}
+
+.success {
+  margin-top: 10px;
+  color: green;
+}
+
+.error {
+  margin-top: 10px;
+  color: red;
+}
