@@ -28,7 +28,7 @@ public class AgentController {
     private PaymentService paymentService;
 
 
-    // ADD CAR
+    
     @PostMapping("/car")
     public ResponseEntity<Car> addCar(@RequestBody Car car) {
         try {
@@ -40,7 +40,7 @@ public class AgentController {
     }
 
 
-    // GET ALL CARS
+    
     @GetMapping("/cars")
     public ResponseEntity<List<Car>> getAllCars() {
         try {
@@ -52,7 +52,7 @@ public class AgentController {
     }
 
 
-    // UPDATE CAR DETAILS
+    
     @PutMapping("/car/{carId}")
     public ResponseEntity<Car> updateCar(@PathVariable Long carId,
                                          @RequestBody Car updatedCar) {
@@ -65,7 +65,7 @@ public class AgentController {
     }
 
 
-    // GET ALL BOOKINGS
+    
     @GetMapping("/bookings")
     public ResponseEntity<List<Booking>> getAllBookings() {
         try {
@@ -77,7 +77,7 @@ public class AgentController {
     }
 
 
-    // UPDATE BOOKING STATUS
+    
     @PutMapping("/bookings/{bookingId}/status")
     public ResponseEntity<Booking> updateBookingStatus(
             @PathVariable Long bookingId,
@@ -91,7 +91,7 @@ public class AgentController {
     }
 
 
-    // CREATE PAYMENT FOR BOOKING
+    
     @PostMapping("/payment/{bookingId}")
     public ResponseEntity<Payment> createPayment(
             @PathVariable Long bookingId,

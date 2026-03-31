@@ -16,7 +16,11 @@
     <input type="text" formControlName="registrationNumber">
 
     <label>Status</label>
-    <input type="text" formControlName="status">
+<select formControlName="status">
+  <option value="">Select</option>
+  <option value="available">Available</option>
+  <option value="booked">Booked</option>
+</select>
 
     <label>Rental Rate Per Day</label>
     <input type="number" formControlName="rentalRatePerDay">

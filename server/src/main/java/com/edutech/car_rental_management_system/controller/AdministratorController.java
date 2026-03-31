@@ -28,7 +28,7 @@ public class AdministratorController {
     private PaymentService paymentService;
 
 
-    // CREATE CAR CATEGORY
+    
     @PostMapping("/car-categories")
     public ResponseEntity<CarCategory> createCarCategory(@RequestBody CarCategory carCategory) {
         try {
@@ -40,7 +40,7 @@ public class AdministratorController {
     }
 
 
-    // GET ALL CAR CATEGORIES
+    
     @GetMapping("/car-categories")
     public ResponseEntity<List<CarCategory>> getAllCarCategories() {
         try {
@@ -52,7 +52,7 @@ public class AdministratorController {
     }
 
 
-    // UPDATE CAR CATEGORY
+    
     @PutMapping("/car-categories/{categoryId}")
     public ResponseEntity<CarCategory> updateCarCategory(
             @PathVariable Long categoryId,
@@ -66,7 +66,7 @@ public class AdministratorController {
     }
 
 
-    // GET ALL BOOKINGS REPORT
+    
     @GetMapping("/reports/bookings")
     public ResponseEntity<List<Booking>> getAllBookings() {
         try {
@@ -78,7 +78,7 @@ public class AdministratorController {
     }
 
 
-    // GET ALL PAYMENTS REPORT
+    
     @GetMapping("/reports/payments")
     public ResponseEntity<List<Payment>> getAllPayments() {
         try {

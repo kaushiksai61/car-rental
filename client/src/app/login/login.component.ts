@@ -23,7 +23,15 @@ export class LoginComponent {
   ) {
     this.itemForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            '^(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&]).{8,}$'
+          )
+        ]
+      ]
     });
   }
 
@@ -39,12 +47,13 @@ export class LoginComponent {
           this.auth.saveToken(res.token);
           this.auth.SetRole(res.role);
           this.auth.saveUserId(res.userId);
+
           this.router.navigate(['/dashboard']);
         }
       },
       () => {
         this.showError = true;
-        this.errorMessage = "Invalid username or password.";
+        this.errorMessage = 'Invalid username or password.';
       }
     );
   }

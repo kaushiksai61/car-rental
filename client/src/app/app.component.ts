@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
@@ -7,25 +7,28 @@ import { Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  IsLoggin: boolean = false;
+  IsLoggin = false;
   roleName: string | null = null;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router) {}
 
-    // FIXED: Call the methods instead of assigning function references
+  ngOnInit(): void {
+    this.refreshAuthState();
+  }
+
+  refreshAuthState() {
     this.IsLoggin = this.authService.getLoginStatus();
     this.roleName = this.authService.getRole();
-
-    // Redirect to login if not logged in
-    if (!this.IsLoggin) {
-      this.router.navigateByUrl('/login');
-    }
   }
+
+  isAuthPage(): boolean {
+  return this.router.url === '/login' || this.router.url === '/registration';
+}
 
   logout() {
     this.authService.logout();
-    window.location.reload();
+    this.router.navigate(['/login']);
   }
 }

@@ -17,7 +17,16 @@ export class RegistrationComponent {
     this.itemForm = this.fb.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(
+            '^(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z0-9@$!%*?&]{8,}$'
+          )
+        ]
+      ],
       role: ['', Validators.required]
     });
   }
@@ -28,12 +37,18 @@ export class RegistrationComponent {
       return;
     }
 
-    this.http.registerUser(this.itemForm.value).subscribe(
-      () => {
-        this.showMessage = true;
-        this.responseMessage = "You are successfully registered.";
-        this.itemForm.reset();
-      }
-    );
+    const payload = {
+      ...this.itemForm.value,
+      role:
+        this.itemForm.value.role === 'ADMIN'
+          ? 'ADMINISTRATOR'
+          : this.itemForm.value.role
+    };
+
+    this.http.registerUser(payload).subscribe(() => {
+      this.showMessage = true;
+      this.responseMessage = 'Registration successful';
+      this.itemForm.reset();
+    });
   }
 }

@@ -1,6 +1,8 @@
-<div class="navbar" *ngIf="IsLoggin">
+<!-- NAVBAR : Visible only after login and NOT on login / registration pages -->
+<div class="navbar" *ngIf="IsLoggin && !isAuthPage()">
+
   <div class="nav-left">
-    <span class="brand">Car Rental System</span>
+    <span class="brand">Car Rental Management System</span>
   </div>
 
   <div class="nav-links">
@@ -13,19 +15,18 @@
     <a *ngIf="roleName === 'AGENT'" routerLink="/bookings">Bookings</a>
 
     <!-- ADMIN -->
-    <a *ngIf="roleName === 'ADMIN'" routerLink="/categories">Categories</a>
-    <a *ngIf="roleName === 'ADMIN'" routerLink="/booking-report">Booking Report</a>
-    <a *ngIf="roleName === 'ADMIN'" routerLink="/payment-report">Payment Report</a>
+    <a *ngIf="roleName === 'ADMINISTRATOR'" routerLink="/categories">Category</a>
+    <a *ngIf="roleName === 'ADMINISTRATOR'" routerLink="/booking-report">Booking Report</a>
+    <a *ngIf="roleName === 'ADMINISTRATOR'" routerLink="/payment-report">Payment Report</a>
 
-    <!-- COMMON FOR ALL -->
-    <a routerLink="/dashboard">Dashboard</a>
   </div>
 
   <div class="nav-right">
     <span class="role">({{ roleName }})</span>
     <button (click)="logout()">Logout</button>
   </div>
+
 </div>
 
-<!-- Main Page Content -->
+<!-- ✅ ONLY THIS -->
 <router-outlet></router-outlet>

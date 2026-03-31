@@ -7,16 +7,22 @@
 
     <label>Username</label>
     <input type="text" formControlName="username" placeholder="name@example.com" />
-
     <p class="error" *ngIf="itemForm.controls['username'].touched && itemForm.controls['username'].invalid">
-      Please Enter username .
+      Please enter username.
     </p>
 
     <label>Password</label>
     <input type="password" formControlName="password" placeholder="*******" />
 
-    <p class="error" *ngIf="itemForm.controls['password'].touched && itemForm.controls['password'].invalid">
-      Please Enter password .
+    <p class="error" *ngIf="itemForm.controls['password'].touched && itemForm.controls['password'].errors">
+      <span *ngIf="itemForm.controls['password'].errors['required']">
+        Password is required.
+      </span><br />
+
+      <span *ngIf="itemForm.controls['password'].errors['pattern']">
+        Password must be at least 8 characters, with one capital letter,
+        one number and one special character.
+      </span>
     </p>
 
     <button type="submit">Login</button>

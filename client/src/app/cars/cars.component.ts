@@ -38,14 +38,11 @@ export class CarsComponent implements OnInit {
   }
 
   getCars() {
-    this.http.getCars().subscribe(
-      res => this.carList = res,
-      () => {
-        this.showError = true;
-        this.errorMessage = "Unable to fetch cars.";
-      }
-    );
-  }
+  this.http.getCars().subscribe(
+    res => this.carList = res,
+    () => this.errorMessage = 'Unable to fetch cars'
+  );
+}
 
   book(val: any) {
     this.toBook = val;

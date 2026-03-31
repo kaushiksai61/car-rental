@@ -1,14 +1,22 @@
 <div class="dashboard">
   <h2>Dashboard</h2>
-
   <p>Welcome to the Car Rental Management System.</p>
 
-  <div class="links">
-    <a routerLink="/cars">Cars</a>
-    <a routerLink="/add-car">Add Car</a>
-    <a routerLink="/bookings">Bookings</a>
-    <a routerLink="/categories">Categories</a>
-    <a routerLink="/booking-report">Booking Report</a>
-    <a routerLink="/payment-report">Payment Report</a>
+  <!-- ✅ ADMIN DASHBOARD -->
+  <div class="links" *ngIf="role === 'ADMINISTRATOR'">
+    <button (click)="goToCategories()">Categories</button>
+    <button (click)="goToBookingReport()">Booking Report</button>
+    <button (click)="goToPaymentReport()">Payment Report</button>
+  </div>
+
+  <!-- ✅ AGENT DASHBOARD -->
+  <div class="links" *ngIf="role === 'AGENT'">
+    <button (click)="goToAddCar()">Add Car</button>
+    <button (click)="goToBookings()">Bookings</button>
+  </div>
+
+  <!-- ✅ CUSTOMER DASHBOARD -->
+  <div class="links" *ngIf="role === 'CUSTOMER'">
+    <button (click)="goToCars()">Cars</button>
   </div>
 </div>

@@ -24,7 +24,7 @@ public class CustomerController {
     private BookingService bookingService;
 
 
-    // GET AVAILABLE CARS
+    
     @GetMapping("/cars/available")
     public ResponseEntity<List<Car>> getAvailableCars() {
         try {
@@ -36,7 +36,7 @@ public class CustomerController {
     }
 
 
-    // BOOK A CAR
+    
     @PostMapping("/booking")
     public ResponseEntity<Booking> bookCar(
             @RequestParam Long userId,
