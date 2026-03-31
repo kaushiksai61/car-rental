@@ -1,8 +1,4 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
 import { HttpService } from '../../services/http.service';
 
 @Component({
@@ -10,11 +6,28 @@ import { HttpService } from '../../services/http.service';
   templateUrl: './payment-report.component.html',
   styleUrls: ['./payment-report.component.scss']
 })
-export class PaymentReportComponent  {
+export class PaymentReportComponent implements OnInit {
 
-  // Write the code here!
- 
- 
-  
+  bookingList: any[] = [];
+  showError = false;
+  errorMessage: any;
+  showMessage = false;
+
+  constructor(private http: HttpService) {}
+
+  ngOnInit(): void {
+    this.getPaymentReport();
+  }
+
+  getPaymentReport() {
+    this.http.paymentReport().subscribe(
+      (res) => {
+        this.bookingList = res;
+      },
+      () => {
+        this.showError = true;
+        this.errorMessage = "Unable to fetch payment report.";
+      }
+    );
+  }
 }
-

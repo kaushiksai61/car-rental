@@ -1,12 +1,10 @@
 package com.edutech.car_rental_management_system.repository;
 
-
+import com.edutech.car_rental_management_system.entity.Booking;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.edutech.car_rental_management_system.entity.Booking;
+@Repository
+public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-
-public interface BookingRepository {
-    // implement jpa repository here
 }

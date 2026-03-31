@@ -1,6 +1,5 @@
 package com.edutech.car_rental_management_system.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,17 +11,47 @@ import com.edutech.car_rental_management_system.entity.Car;
 import com.edutech.car_rental_management_system.service.BookingService;
 import com.edutech.car_rental_management_system.service.CarService;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
-
+@RestController
+@RequestMapping("/api/customers")
 public class CustomerController {
-   
-        // get all available cars.
-        // note: return all the cars where car status is "available"
-   
-        // book a car
+
+    @Autowired
+    private CarService carService;
+
+    @Autowired
+    private BookingService bookingService;
+
+
+    
+    @GetMapping("/cars/available")
+    public ResponseEntity<List<Car>> getAvailableCars() {
+        try {
+            List<Car> list = carService.getAvailableCars();
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 
+    
+    @PostMapping("/booking")
+    public ResponseEntity<Booking> bookCar(
+            @RequestParam Long userId,
+            @RequestParam Long carId,
+            @RequestBody BookingDto bookingDto) {
+        try {
+            Booking saved = bookingService.bookCar(
+                    userId,
+                    carId,
+                    bookingDto.getRentalStartDate(),
+                    bookingDto.getRentalEndDate()
+            );
+            return new ResponseEntity<>(saved, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+}

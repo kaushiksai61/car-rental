@@ -9,8 +9,32 @@ import com.edutech.car_rental_management_system.repository.CarCategoryRepository
 import java.util.List;
 import java.util.Optional;
 
-
+@Service
 public class CarCategoryService {
-    // implement car category service
-}
 
+    @Autowired
+    private CarCategoryRepository categoryRepository;
+
+    public CarCategory createCarCategory(CarCategory carCategory) {
+        return categoryRepository.save(carCategory);
+    }
+
+    public List<CarCategory> getAllCarCategories() {
+        return categoryRepository.findAll();
+    }
+
+    public CarCategory updateCarCategory(Long categoryId, CarCategory updatedCarCategory) {
+        Optional<CarCategory> optional = categoryRepository.findById(categoryId);
+
+        if (optional.isPresent()) {
+            CarCategory existing = optional.get();
+            existing.setName(updatedCarCategory.getName());
+            existing.setDescription(updatedCarCategory.getDescription());
+            existing.setBaseRate(updatedCarCategory.getBaseRate());
+
+            return categoryRepository.save(existing);
+        }
+
+        return null;
+    }
+}

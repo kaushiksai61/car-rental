@@ -3,7 +3,6 @@ package com.edutech.car_rental_management_system.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -17,25 +16,66 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.edutech.car_rental_management_system.jwt.JwtRequestFilter;
 
+@Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+@SuppressWarnings("deprecation")
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-public class SecurityConfig {
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-    // configure the security of the application such that
-    // /api/user/register and /api/user/login are permitted to all
-    // /api/administrator/car-categories is permitted to ADMINISTRATOR
-    // /api/administrator/car-categories is permitted to ADMINISTRATOR
-    // /api/administrator/car-categories/{categoryId} is permitted to ADMINISTRATOR
-    // /api/administrator/reports/bookings is permitted to ADMINISTRATOR
-    // /api/administrator/reports/payments is permitted to ADMINISTRATOR
-    // /api/agent/car is permitted to AGENT
-    // /api/agent/car/{carId} is permitted to AGENT
-    // /api/agent/bookings is permitted to AGENT
-    // /api/agent/bookings/{bookingId}/status is permitted to AGENT
-    // /api/agent/payment/{bookingId}  is permitted to AGENT
-    // /api/customers/cars/available is permitter to CUSTOMER
-    // /api/customers/booking is permitter to CUSTOMER
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
 
-    // note that check the permission with respect to authority
-    // for example hasAuthority("ADMINISTRATOR")
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder);
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+
+        http.csrf().disable()
+                .cors().and()
+                .authorizeRequests()
+
+                // PUBLIC
+                .antMatchers("/api/user/register", "/api/user/login").permitAll()
+
+                // ADMIN
+                .antMatchers("/api/administrator/car-categories").hasAuthority("ADMINISTRATOR")
+                .antMatchers("/api/administrator/car-categories/**").hasAuthority("ADMINISTRATOR")
+                .antMatchers("/api/administrator/reports/bookings").hasAuthority("ADMINISTRATOR")
+                .antMatchers("/api/administrator/reports/payments").hasAuthority("ADMINISTRATOR")
+
+                // AGENT
+                .antMatchers("/api/agent/car").hasAuthority("AGENT")
+                .antMatchers("/api/agent/car/**").hasAuthority("AGENT")
+                .antMatchers("/api/agent/bookings").hasAuthority("AGENT")
+                .antMatchers("/api/agent/bookings/**").hasAuthority("AGENT")
+                .antMatchers("/api/agent/payment/**").hasAuthority("AGENT")
+
+                // CUSTOMER
+                .antMatchers("/api/customers/cars/available").hasAuthority("CUSTOMER")
+                .antMatchers("/api/customers/booking").hasAuthority("CUSTOMER")
+
+                // ANY OTHER MUST AUTHENTICATE
+                .anyRequest().authenticated()
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        // JWT FILTER
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 }

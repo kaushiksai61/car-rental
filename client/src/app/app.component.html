@@ -1,1 +1,32 @@
-//complete missing code
+<!-- NAVBAR : Visible only after login and NOT on login / registration pages -->
+<div class="navbar" *ngIf="IsLoggin && !isAuthPage()">
+
+  <div class="nav-left">
+    <span class="brand">Car Rental Management System</span>
+  </div>
+
+  <div class="nav-links">
+
+    <!-- CUSTOMER -->
+    <a *ngIf="roleName === 'CUSTOMER'" routerLink="/cars">Cars</a>
+
+    <!-- AGENT -->
+    <a *ngIf="roleName === 'AGENT'" routerLink="/add-car">Add Car</a>
+    <a *ngIf="roleName === 'AGENT'" routerLink="/bookings">Bookings</a>
+
+    <!-- ADMIN -->
+    <a *ngIf="roleName === 'ADMINISTRATOR'" routerLink="/categories">Category</a>
+    <a *ngIf="roleName === 'ADMINISTRATOR'" routerLink="/booking-report">Booking Report</a>
+    <a *ngIf="roleName === 'ADMINISTRATOR'" routerLink="/payment-report">Payment Report</a>
+
+  </div>
+
+  <div class="nav-right">
+    <span class="role">({{ roleName }})</span>
+    <button (click)="logout()">Logout</button>
+  </div>
+
+</div>
+
+<!-- ✅ ONLY THIS -->
+<router-outlet></router-outlet>

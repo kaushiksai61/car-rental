@@ -1,1 +1,29 @@
-//todo: complete missing code.
+<div class="container">
+  <h2>Booking Report</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Booking ID</th>
+        <th>Car</th>
+        <th>Customer ID</th>
+        <th>Status</th>
+        <th>Start</th>
+        <th>End</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let b of bookingList">
+        <td>{{ b.id }}</td>
+        <td>{{ b.car?.make }} {{ b.car?.model }}</td>
+        <td>{{ b.customerId }}</td>
+        <td>{{ b.status }}</td>
+        <td>{{ b.rentalStartDate }}</td>
+        <td>{{ b.rentalEndDate }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="error" *ngIf="showError">{{ errorMessage }}</p>
+</div>

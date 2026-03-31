@@ -1,1 +1,39 @@
-//todo: complete missing code.
+<div class="container">
+
+  <h1>CAR RENTAL MANAGEMENT SYSTEM</h1>
+  <p class="sub">Please enter your user and password!</p>
+
+  <form [formGroup]="itemForm" (ngSubmit)="onLogin()">
+
+    <label>Username</label>
+    <input type="text" formControlName="username" placeholder="name@example.com" />
+    <p class="error" *ngIf="itemForm.controls['username'].touched && itemForm.controls['username'].invalid">
+      Please enter username.
+    </p>
+
+    <label>Password</label>
+    <input type="password" formControlName="password" placeholder="*******" />
+
+    <p class="error" *ngIf="itemForm.controls['password'].touched && itemForm.controls['password'].errors">
+      <span *ngIf="itemForm.controls['password'].errors['required']">
+        Password is required.
+      </span><br />
+
+      <span *ngIf="itemForm.controls['password'].errors['pattern']">
+        Password must be at least 8 characters, with one capital letter,
+        one number and one special character.
+      </span>
+    </p>
+
+    <button type="submit">Login</button>
+
+    <p class="api-error" *ngIf="showError">{{ errorMessage }}</p>
+
+  </form>
+
+  <p class="bottom-text">
+    Don't have an account?
+    <a routerLink="/registration">Registration</a>
+  </p>
+
+</div>

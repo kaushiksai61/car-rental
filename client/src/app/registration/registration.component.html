@@ -1,1 +1,58 @@
-//todo: complete missing code.
+<div class="container">
+
+  <h1>CAR RENTAL MANAGEMENT SYSTEM</h1>
+  <p class="sub">Create your account</p>
+
+  <form [formGroup]="itemForm" (ngSubmit)="onRegister()">
+
+    <label>Username</label>
+    <input type="text" formControlName="username" placeholder="Username" />
+    <p class="error" *ngIf="itemForm.controls['username'].touched && itemForm.controls['username'].invalid">
+      Please enter username.
+    </p>
+
+    <label>Email address</label>
+    <input type="email" formControlName="email" placeholder="name@example.com" />
+    <p class="error" *ngIf="itemForm.controls['email'].touched && itemForm.controls['email'].invalid">
+      Please enter a valid email.
+    </p>
+
+    <label>Password</label>
+    <input type="password" formControlName="password" placeholder="*******" />
+
+    <p class="error" *ngIf="itemForm.controls['password'].touched && itemForm.controls['password'].errors">
+      <span *ngIf="itemForm.controls['password'].errors['required']">
+        Password is required.
+      </span><br />
+
+      <span *ngIf="itemForm.controls['password'].errors['minlength']">
+        Password must be at least 8 characters.
+      </span><br />
+
+      <span *ngIf="itemForm.controls['password'].errors['pattern']">
+        Password must contain:
+        <br />• One capital letter  
+        <br />• One number  
+        <br />• One special character
+      </span>
+    </p>
+
+    <label>Role</label>
+    <select formControlName="role">
+      <option value="">Choose Role</option>
+      <option value="ADMIN">ADMIN</option>
+      <option value="AGENT">AGENT</option>
+      <option value="CUSTOMER">CUSTOMER</option>
+    </select>
+
+    <button type="submit">Submit</button>
+
+    <p class="success" *ngIf="showMessage">{{ responseMessage }}</p>
+
+  </form>
+
+  <p class="bottom-text">
+    <a routerLink="/login">Go to Login</a>
+  </p>
+
+</div>
