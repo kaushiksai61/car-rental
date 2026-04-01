@@ -1,31 +1,83 @@
-<div class="navbar" *ngIf="IsLoggin">
-  <div class="nav-left">
-    <span class="brand">Car Rental System</span>
+<!-- NAVBAR -->
+<nav class="app-navbar" *ngIf="IsLoggin">
+  <div class="nav-inner">
+
+    <!-- Brand -->
+    <div class="nav-brand">
+      <div class="nav-brand-icon">
+        <svg viewBox="0 0 24 24" fill="white">
+          <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+        </svg>
+      </div>
+      <span class="nav-brand-name">CAR<span>RENTAL</span></span>
+    </div>
+
+    <!-- Nav Links -->
+    <div class="nav-links" [class.open]="menuOpen">
+
+      <!-- Dashboard always visible -->
+      <a class="nav-link" routerLink="/dashboard" routerLinkActive="active" (click)="menuOpen=false">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+        Dashboard
+      </a>
+
+      <!-- CUSTOMER -->
+      <a class="nav-link" *ngIf="roleName === 'CUSTOMER'" routerLink="/cars" routerLinkActive="active" (click)="menuOpen=false">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+        Book a Car
+      </a>
+
+      <!-- AGENT -->
+      <a class="nav-link" *ngIf="roleName === 'AGENT'" routerLink="/add-car" routerLinkActive="active" (click)="menuOpen=false">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        Add Car
+      </a>
+      <a class="nav-link" *ngIf="roleName === 'AGENT'" routerLink="/bookings" routerLinkActive="active" (click)="menuOpen=false">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+        Bookings
+      </a>
+
+      <!-- ADMIN -->
+      <a class="nav-link" *ngIf="roleName === 'ADMIN'" routerLink="/categories" routerLinkActive="active" (click)="menuOpen=false">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l-5.5 9h11L12 2zm0 3.84L13.93 9h-3.87L12 5.84zM17.5 13c-2.49 0-4.5 2.01-4.5 4.5S15.01 22 17.5 22s4.5-2.01 4.5-4.5S19.99 13 17.5 13zm0 7c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5zM3 21.5h8v-8H3v8zm2-6h4v4H5v-4z"/></svg>
+        Categories
+      </a>
+      <a class="nav-link" *ngIf="roleName === 'ADMIN'" routerLink="/booking-report" routerLinkActive="active" (click)="menuOpen=false">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+        Booking Report
+      </a>
+      <a class="nav-link" *ngIf="roleName === 'ADMIN'" routerLink="/payment-report" routerLinkActive="active" (click)="menuOpen=false">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+        Payment Report
+      </a>
+
+    </div>
+
+    <!-- Right side -->
+    <div class="nav-right">
+      <div class="role-badge">
+        <span class="role-dot"></span>
+        {{ roleName }}
+      </div>
+      <button class="btn-logout" (click)="logout()">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+          <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5-5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+        </svg>
+        Logout
+      </button>
+
+      <!-- Mobile hamburger -->
+      <button class="hamburger" (click)="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
   </div>
+</nav>
 
-  <div class="nav-links">
-
-    <!-- CUSTOMER -->
-    <a *ngIf="roleName === 'CUSTOMER'" routerLink="/cars">Cars</a>
-
-    <!-- AGENT -->
-    <a *ngIf="roleName === 'AGENT'" routerLink="/add-car">Add Car</a>
-    <a *ngIf="roleName === 'AGENT'" routerLink="/bookings">Bookings</a>
-
-    <!-- ADMIN -->
-    <a *ngIf="roleName === 'ADMIN'" routerLink="/categories">Categories</a>
-    <a *ngIf="roleName === 'ADMIN'" routerLink="/booking-report">Booking Report</a>
-    <a *ngIf="roleName === 'ADMIN'" routerLink="/payment-report">Payment Report</a>
-
-    <!-- COMMON FOR ALL -->
-    <a routerLink="/dashboard">Dashboard</a>
-  </div>
-
-  <div class="nav-right">
-    <span class="role">({{ roleName }})</span>
-    <button (click)="logout()">Logout</button>
-  </div>
+<!-- Page Content -->
+<div class="page-wrapper" [class.with-nav]="IsLoggin">
+  <router-outlet></router-outlet>
 </div>
-
-<!-- Main Page Content -->
-<router-outlet></router-outlet>

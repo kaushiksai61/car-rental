@@ -1,29 +1,192 @@
-<div class="container">
-  <h2>Car Categories</h2>
+<div class="page-container">
 
-  <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-header-left">
+      <div class="page-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2l-5.5 9h11L12 2zm0 3.84L13.93 9h-3.87L12 5.84zM17.5 13c-2.49 0-4.5 2.01-4.5 4.5S15.01 22 17.5 22s4.5-2.01 4.5-4.5S19.99 13 17.5 13zm0 7c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5zM3 21.5h8v-8H3v8zm2-6h4v4H5v-4z"/>
+        </svg>
+      </div>
+      <div>
+        <h1 class="page-title">Manage Categories</h1>
+        <p class="page-sub">Create and update car categories with base rates</p>
+      </div>
+    </div>
+    <div class="page-header-right">
+      <div class="page-badge">
+        <span class="badge-dot"></span>
+        Administrator
+      </div>
+    </div>
+  </div>
 
-    <label>Name</label>
-    <input type="text" formControlName="name">
+  <div class="page-body">
 
-    <label>Description</label>
-    <textarea formControlName="description"></textarea>
+    <!-- LEFT: Form Panel -->
+    <div class="form-panel">
+      <div class="panel-header">
+        <h2 class="panel-title">
+          {{ updateId ? 'Edit Category' : 'Create Category' }}
+        </h2>
+        <button class="btn-cancel" *ngIf="updateId" (click)="cancelEdit()">
+          Cancel
+        </button>
+      </div>
 
-    <label>Base Rate</label>
-    <input type="number" formControlName="baseRate">
+      <!-- Success Message -->
+      <div class="alert-success" *ngIf="showMessage">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/>
+        </svg>
+        {{ responseMessage }}
+      </div>
 
-    <button type="submit">Save</button>
+      <!-- Error Message -->
+      <div class="alert-error" *ngIf="showError">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+        </svg>
+        {{ errorMessage }}
+      </div>
 
-    <p class="success" *ngIf="showMessage">{{ responseMessage }}</p>
-  </form>
+      <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" novalidate>
 
-  <h3>Existing Categories</h3>
+        <!-- Name -->
+        <div class="form-group">
+          <label for="name">Category Name</label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.63 5.84C17.27 5.33 16.67 5 16 5L5 5.01C3.9 5.01 3 5.9 3 7v10c0 1.1.9 1.99 2 1.99L16 19c.67 0 1.27-.33 1.63-.84L22 12l-4.37-6.16z"/>
+              </svg>
+            </span>
+            <input
+              id="name"
+              type="text"
+              formControlName="name"
+              placeholder="e.g. SUV, Sedan, Hatchback"
+              [class.input-error]="itemForm.controls['name'].touched && itemForm.controls['name'].invalid"
+            />
+          </div>
+          <p class="error-msg" *ngIf="itemForm.controls['name'].touched && itemForm.controls['name'].invalid">
+            Category name is required
+          </p>
+        </div>
 
-  <div class="cat-card" *ngFor="let cat of categoryList">
-    <p><strong>{{ cat.name }}</strong></p>
-    <p>{{ cat.description }}</p>
-    <p>Rate: {{ cat.baseRate }}</p>
+        <!-- Description -->
+        <div class="form-group">
+          <label for="description">Description</label>
+          <div class="input-wrap">
+            <span class="input-icon input-icon-top">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M14 17H4v2h10v-2zm6-8H4v2h16V9zM4 15h16v-2H4v2zM4 5v2h16V5H4z"/>
+              </svg>
+            </span>
+            <textarea
+              id="description"
+              formControlName="description"
+              placeholder="Describe this car category..."
+              rows="3"
+              [class.input-error]="itemForm.controls['description'].touched && itemForm.controls['description'].invalid"
+            ></textarea>
+          </div>
+          <p class="error-msg" *ngIf="itemForm.controls['description'].touched && itemForm.controls['description'].invalid">
+            Description is required
+          </p>
+        </div>
 
-    <button (click)="edit(cat)">Edit</button>
+        <!-- Base Rate -->
+        <div class="form-group">
+          <label for="baseRate">Base Rate (₹ / day)</label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+              </svg>
+            </span>
+            <input
+              id="baseRate"
+              type="number"
+              formControlName="baseRate"
+              placeholder="e.g. 2500"
+              [class.input-error]="itemForm.controls['baseRate'].touched && itemForm.controls['baseRate'].invalid"
+            />
+          </div>
+          <p class="error-msg" *ngIf="itemForm.controls['baseRate'].touched && itemForm.controls['baseRate'].invalid">
+            Base rate is required
+          </p>
+        </div>
+
+        <button type="submit" class="btn-submit" [disabled]="isLoading">
+          <span *ngIf="!isLoading">
+            {{ updateId ? 'Update Category' : 'Create Category' }}
+          </span>
+          <span *ngIf="isLoading" class="btn-loader">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </span>
+        </button>
+
+      </form>
+    </div>
+
+    <!-- RIGHT: Table Panel -->
+    <div class="table-panel">
+      <div class="panel-header">
+        <h2 class="panel-title">All Categories</h2>
+        <span class="count-badge">{{ categoryList.length }}</span>
+      </div>
+
+      <!-- Loading state -->
+      <div class="table-loading" *ngIf="isTableLoading">
+        <div class="spinner"></div>
+        <p>Loading categories...</p>
+      </div>
+
+      <!-- Empty state -->
+      <div class="empty-state" *ngIf="!isTableLoading && categoryList.length === 0">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="40" height="40">
+          <path d="M12 2l-5.5 9h11L12 2zm0 3.84L13.93 9h-3.87L12 5.84zM17.5 13c-2.49 0-4.5 2.01-4.5 4.5S15.01 22 17.5 22s4.5-2.01 4.5-4.5S19.99 13 17.5 13zm0 7c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5zM3 21.5h8v-8H3v8zm2-6h4v4H5v-4z"/>
+        </svg>
+        <p>No categories found</p>
+        <span>Create your first category using the form</span>
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrap" *ngIf="!isTableLoading && categoryList.length > 0">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Base Rate</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cat of categoryList; let i = index">
+              <td class="td-num">{{ i + 1 }}</td>
+              <td class="td-name">{{ cat.name }}</td>
+              <td class="td-desc">{{ cat.description }}</td>
+              <td class="td-rate">
+                <span class="rate-badge">₹ {{ cat.baseRate | number }}</span>
+              </td>
+              <td>
+                <button class="btn-edit" (click)="edit(cat)">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                  </svg>
+                  Edit
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 </div>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,17 +8,22 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
   IsLoggin: boolean = false;
   roleName: string | null = null;
+  menuOpen: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {
-
-    // FIXED: Call the methods instead of assigning function references
     this.IsLoggin = this.authService.getLoginStatus();
     this.roleName = this.authService.getRole();
 
-    // Redirect to login if not logged in
+    // Re-check login status on every route change
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.IsLoggin = this.authService.getLoginStatus();
+        this.roleName = this.authService.getRole();
+      }
+    });
+
     if (!this.IsLoggin) {
       this.router.navigateByUrl('/login');
     }
@@ -26,6 +31,12 @@ export class AppComponent {
 
   logout() {
     this.authService.logout();
-    window.location.reload();
+    this.IsLoggin = false;
+    this.roleName = null;
+    this.router.navigateByUrl('/login');
+  }
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
   }
 }

@@ -1,29 +1,148 @@
-<div class="container">
-  <h2>Payment Report</h2>
+<div class="page-container">
 
-  <table>
-    <thead>
-      <tr>
-        <th>Payment ID</th>
-        <th>Booking ID</th>
-        <th>Amount</th>
-        <th>Date</th>
-        <th>Method</th>
-        <th>Status</th>
-      </tr>
-    </thead>
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-header-left">
+      <div class="page-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/>
+        </svg>
+      </div>
+      <div>
+        <h1 class="page-title">Payment Report</h1>
+        <p class="page-sub">All payment transactions across the system</p>
+      </div>
+    </div>
+    <div class="page-header-right">
+      <div class="revenue-pill">
+        <span class="revenue-label">Total Revenue</span>
+        <span class="revenue-num">₹ {{ getTotalRevenue() | number }}</span>
+      </div>
+      <button class="btn-refresh" (click)="getPaymentReport()">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15">
+          <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+        </svg>
+        Refresh
+      </button>
+    </div>
+  </div>
 
-    <tbody>
-      <tr *ngFor="let p of bookingList">
-        <td>{{ p.id }}</td>
-        <td>{{ p.bookingId }}</td>
-        <td>{{ p.amount }}</td>
-        <td>{{ p.paymentDate }}</td>
-        <td>{{ p.paymentMethod }}</td>
-        <td>{{ p.paymentStatus }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <!-- Summary Cards -->
+  <div class="summary-strip">
+    <div class="summary-card">
+      <span class="summary-num">{{ bookingList.length }}</span>
+      <span class="summary-label">Total Transactions</span>
+    </div>
+    <div class="summary-card summary-card-gold">
+      <span class="summary-num gold-text">₹ {{ getTotalRevenue() | number }}</span>
+      <span class="summary-label">Total Revenue</span>
+    </div>
+    <div class="summary-card">
+      <span class="summary-num success-text">
+        {{ bookingList | paymentStatusFilter:'success' }}
+      </span>
+      <span class="summary-label">Successful</span>
+    </div>
+    <div class="summary-card">
+      <span class="summary-num pending-text">
+        {{ bookingList | paymentStatusFilter:'pending' }}
+      </span>
+      <span class="summary-label">Pending</span>
+    </div>
+  </div>
 
-  <p class="error" *ngIf="showError">{{ errorMessage }}</p>
+  <!-- Table Panel -->
+  <div class="table-panel">
+
+    <!-- Toolbar -->
+    <div class="table-toolbar">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="currentColor" class="search-icon">
+          <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          placeholder="Search by customer, car or payment method..."
+          class="search-input"
+        />
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div class="table-loading" *ngIf="isLoading">
+      <div class="spinner"></div>
+      <p>Loading payments...</p>
+    </div>
+
+    <!-- Error -->
+    <div class="alert-error" *ngIf="showError && !isLoading">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+      </svg>
+      {{ errorMessage }}
+    </div>
+
+    <!-- Empty -->
+    <div class="empty-state" *ngIf="!isLoading && !showError && filteredPayments.length === 0">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="40" height="40">
+        <path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/>
+      </svg>
+      <p>No payments found</p>
+      <span>{{ searchTerm ? 'Try a different search term' : 'No payments have been recorded yet' }}</span>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap" *ngIf="!isLoading && filteredPayments.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Customer</th>
+            <th>Car</th>
+            <th>Amount</th>
+            <th>Payment Date</th>
+            <th>Method</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let payment of filteredPayments; let i = index">
+            <td class="td-num">{{ i + 1 }}</td>
+            <td>
+              <div class="user-info">
+                <div class="user-avatar">
+                  {{ payment.booking?.user?.username?.charAt(0)?.toUpperCase() }}
+                </div>
+                <span class="user-name">{{ payment.booking?.user?.username }}</span>
+              </div>
+            </td>
+            <td>
+              <div class="car-info">
+                <span class="car-make">
+                  {{ payment.booking?.car?.make }} {{ payment.booking?.car?.model }}
+                </span>
+                <span class="car-reg">{{ payment.booking?.car?.registrationNumber }}</span>
+              </div>
+            </td>
+            <td>
+              <span class="amount-badge">₹ {{ payment.amount | number }}</span>
+            </td>
+            <td class="td-date">{{ formatDate(payment.paymentDate) }}</td>
+            <td>
+              <div class="method-wrap">
+                <span class="method-badge">{{ payment.paymentMethod || 'N/A' }}</span>
+              </div>
+            </td>
+            <td>
+              <span class="status-chip" [ngClass]="getPaymentStatusClass(payment.paymentStatus)">
+                {{ payment.paymentStatus || 'pending' }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
 </div>

@@ -1,14 +1,172 @@
-<div class="dashboard">
-  <h2>Dashboard</h2>
+<div class="dashboard-page">
 
-  <p>Welcome to the Car Rental Management System.</p>
+  <!-- Hero Welcome Section -->
+  <div class="dashboard-hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="welcome-tag">
+        <span class="tag-dot"></span>
+        <span>Live Session</span>
+      </div>
+      <h1 class="welcome-title">
+        Welcome back,<br>
+        <span class="role-highlight">{{ roleName }}</span>
+      </h1>
+      <p class="welcome-sub">{{ currentDate }}</p>
+      <div class="time-display">{{ currentTime }}</div>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-num">500+</span>
+        <span class="hero-stat-label">Vehicles</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">40+</span>
+        <span class="hero-stat-label">Locations</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">24/7</span>
+        <span class="hero-stat-label">Support</span>
+      </div>
+    </div>
+  </div>
 
-  <div class="links">
-    <a routerLink="/cars">Cars</a>
-    <a routerLink="/add-car">Add Car</a>
-    <a routerLink="/bookings">Bookings</a>
-    <a routerLink="/categories">Categories</a>
-    <a routerLink="/booking-report">Booking Report</a>
-    <a routerLink="/payment-report">Payment Report</a>
+  <!-- Quick Action Cards -->
+  <div class="dashboard-body">
+    <div class="section-header">
+      <h2 class="section-title">Quick Actions</h2>
+      <p class="section-sub">Jump straight into your work</p>
+    </div>
+
+    <!-- ADMIN CARDS -->
+    <div class="cards-grid" *ngIf="roleName === 'ADMIN'">
+
+      <div class="action-card" (click)="navigateTo('/categories')">
+        <div class="card-icon card-icon-red">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2l-5.5 9h11L12 2zm0 3.84L13.93 9h-3.87L12 5.84zM17.5 13c-2.49 0-4.5 2.01-4.5 4.5S15.01 22 17.5 22s4.5-2.01 4.5-4.5S19.99 13 17.5 13zm0 7c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5zM3 21.5h8v-8H3v8zm2-6h4v4H5v-4z"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Manage Categories</h3>
+          <p class="card-desc">Create and update car categories with base rates</p>
+        </div>
+        <div class="card-arrow">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+        </div>
+      </div>
+
+      <div class="action-card" (click)="navigateTo('/booking-report')">
+        <div class="card-icon card-icon-gold">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Booking Report</h3>
+          <p class="card-desc">View all customer bookings across the system</p>
+        </div>
+        <div class="card-arrow">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+        </div>
+      </div>
+
+      <div class="action-card" (click)="navigateTo('/payment-report')">
+        <div class="card-icon card-icon-green">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Payment Report</h3>
+          <p class="card-desc">Track all payment transactions and statuses</p>
+        </div>
+        <div class="card-arrow">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- AGENT CARDS -->
+    <div class="cards-grid" *ngIf="roleName === 'AGENT'">
+
+      <div class="action-card" (click)="navigateTo('/add-car')">
+        <div class="card-icon card-icon-red">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Manage Cars</h3>
+          <p class="card-desc">Add new cars and update existing fleet details</p>
+        </div>
+        <div class="card-arrow">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+        </div>
+      </div>
+
+      <div class="action-card" (click)="navigateTo('/bookings')">
+        <div class="card-icon card-icon-gold">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Manage Bookings</h3>
+          <p class="card-desc">View bookings, confirm status and process payments</p>
+        </div>
+        <div class="card-arrow">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CUSTOMER CARDS -->
+    <div class="cards-grid" *ngIf="roleName === 'CUSTOMER'">
+
+      <div class="action-card" (click)="navigateTo('/cars')">
+        <div class="card-icon card-icon-red">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Browse & Book Cars</h3>
+          <p class="card-desc">View all available vehicles and make a booking</p>
+        </div>
+        <div class="card-arrow">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Info strip -->
+    <div class="info-strip">
+      <div class="info-item">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+          <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+        </svg>
+        JWT Secured Session
+      </div>
+      <div class="info-item">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/>
+        </svg>
+        Role: {{ roleName }}
+      </div>
+      <div class="info-item">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+          <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 6v6l4 2"/>
+        </svg>
+        {{ currentTime }}
+      </div>
+    </div>
+
   </div>
 </div>

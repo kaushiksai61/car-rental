@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from '../../services/http.service';
-import { DatePipe } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-car',
@@ -13,105 +12,119 @@ import { DatePipe } from '@angular/common';
 export class AddCarComponent implements OnInit {
 
   itemForm!: FormGroup;
-  categoryList: any[] = [];
-  carList: any[] = [];
-  updateId: any = null;
-
-  showError = false;
+  formModel: any = { status: null };
+  showError: boolean = false;
   errorMessage: any;
-
-  showMessage = false;
+  categoryList: any = [];
+  assignModel: any = {};
+  carList: any = [];
+  showMessage: any;
   responseMessage: any;
+  updateId: any;
+  isLoading: boolean = false;
+  isTableLoading: boolean = false;
 
   constructor(
-    private fb: FormBuilder,
     private router: Router,
     private http: HttpService,
-    private auth: AuthService,
-    private datePipe: DatePipe
+    private fb: FormBuilder,
+    private auth: AuthService
   ) {
     this.itemForm = this.fb.group({
-      make: ['', Validators.required],
-      model: ['', Validators.required],
-      manufactureYear: ['', Validators.required],
+      make:               ['', Validators.required],
+      model:              ['', Validators.required],
+      manufactureYear:    ['', Validators.required],
       registrationNumber: ['', Validators.required],
-      status: ['', Validators.required],
-      rentalRatePerDay: ['', Validators.required],
-      categoryId: ['', Validators.required]
+      status:             ['', Validators.required],
+      rentalRatePerDay:   ['', Validators.required],
+      id:                 ['']
     });
   }
 
   ngOnInit(): void {
-    this.getCategories();
-    this.getCars();
+    this.getAllCarList();
   }
 
-  getCategories() {
-    this.http.getAllCategories().subscribe(
-      (res) => this.categoryList = res,
-      () => {
-        this.showError = true;
-        this.errorMessage = "Unable to fetch categories.";
-      }
-    );
-  }
-
-  getCars() {
+  getAllCarList(): void {
+    this.isTableLoading = true;
     this.http.getAllCars().subscribe(
-      (res) => this.carList = res,
+      (res: any) => {
+        this.carList = res;
+        this.isTableLoading = false;
+      },
       () => {
         this.showError = true;
-        this.errorMessage = "Unable to fetch cars.";
+        this.errorMessage = 'Failed to load cars. Please try again.';
+        this.isTableLoading = false;
       }
     );
   }
 
-  editCar(car: any) {
-    this.updateId = car.id;
-
-    this.itemForm.patchValue({
-      make: car.make,
-      model: car.model,
-      manufactureYear: car.manufactureYear,
-      registrationNumber: car.registrationNumber,
-      status: car.status,
-      rentalRatePerDay: car.rentalRatePerDay,
-      categoryId: car.category?.id
-    });
-  }
-
-  onSubmit() {
+  onSubmit(): void {
     if (this.itemForm.invalid) {
       this.itemForm.markAllAsTouched();
       return;
     }
 
-    const payload = this.itemForm.value;
+    this.isLoading = true;
+    this.showMessage = false;
+    this.showError = false;
 
     if (this.updateId) {
-      this.http.updateCar(payload, this.updateId).subscribe(
-        () => this.afterSave("Car updated successfully."),
-        () => this.errorHandler("Failed to update car.")
+      this.http.updateCar(this.itemForm.value, this.updateId).subscribe(
+        () => {
+          this.isLoading = false;
+          this.showMessage = true;
+          this.responseMessage = 'Car updated successfully.';
+          this.itemForm.reset();
+          this.updateId = null;
+          this.getAllCarList();
+        },
+        () => {
+          this.isLoading = false;
+          this.showError = true;
+          this.errorMessage = 'Failed to update car. Please try again.';
+        }
       );
     } else {
-      this.http.createCar(payload).subscribe(
-        () => this.afterSave("Car created successfully."),
-        () => this.errorHandler("Failed to create car.")
+      this.http.createCar(this.itemForm.value).subscribe(
+        () => {
+          this.isLoading = false;
+          this.showMessage = true;
+          this.responseMessage = 'Car added successfully.';
+          this.itemForm.reset();
+          this.getAllCarList();
+        },
+        () => {
+          this.isLoading = false;
+          this.showError = true;
+          this.errorMessage = 'Failed to add car. Please try again.';
+        }
       );
     }
   }
 
-  afterSave(msg: string) {
-    this.showMessage = true;
-    this.responseMessage = msg;
-    this.itemForm.reset();
-    this.updateId = null;
-
-    this.getCars();
+  editCar(val: any): void {
+    this.updateId = val.id;
+    this.itemForm.patchValue(val);
+    this.showMessage = false;
+    this.showError = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  errorHandler(msg: string) {
-    this.showError = true;
-    this.errorMessage = msg;
+  cancelEdit(): void {
+    this.updateId = null;
+    this.itemForm.reset();
+    this.showMessage = false;
+    this.showError = false;
+  }
+
+  getStatusClass(status: string): string {
+    if (!status) return 'status-unknown';
+    switch (status.toLowerCase()) {
+      case 'available': return 'status-available';
+      case 'booked':    return 'status-booked';
+      default:          return 'status-unknown';
+    }
   }
 }

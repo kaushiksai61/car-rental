@@ -1,9 +1,9 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from '../../services/http.service';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-get-bookings',
@@ -13,24 +13,30 @@ import { HttpService } from '../../services/http.service';
 export class GetBookingsComponent implements OnInit {
 
   itemForm!: FormGroup;
-  carList: any = [];
-  showError = false;
+  formModel: any = { status: null };
+  showError: boolean = false;
   errorMessage: any;
-  idPaymentNow = false;
-  selectedBooking: any = {};
-  showMessage = false;
+  carList: any = [];
+  assignModel: any = {};
+  showMessage: any;
   responseMessage: any;
+  updateId: any;
+  toBook: any = {};
+  idPaymentNow: boolean = false;
+  selectedBooking: any = {};
+  isLoading: boolean = false;
+  isTableLoading: boolean = false;
 
   constructor(
-    private fb: FormBuilder,
     private router: Router,
     private http: HttpService,
+    private fb: FormBuilder,
     private auth: AuthService,
     private datePipe: DatePipe
   ) {
     this.itemForm = this.fb.group({
-      amount: ['', Validators.required],
-      paymentDate: ['', Validators.required],
+      amount:        ['', Validators.required],
+      paymentDate:   ['', Validators.required],
       paymentMethod: ['', Validators.required],
       paymentStatus: ['', Validators.required]
     });
@@ -40,65 +46,97 @@ export class GetBookingsComponent implements OnInit {
     this.getBookings();
   }
 
-  getBookings() {
+  getBookings(): void {
+    this.isTableLoading = true;
     this.http.getBookingByAgent().subscribe(
-      (res) => this.carList = res,
+      (res: any) => {
+        this.carList = res;
+        this.isTableLoading = false;
+      },
       () => {
         this.showError = true;
-        this.errorMessage = "Unable to fetch bookings.";
+        this.errorMessage = 'Failed to load bookings. Please try again.';
+        this.isTableLoading = false;
       }
     );
   }
 
-  bookNow(val: any) {
+  bookNow(val: any): void {
+    this.showMessage = false;
     this.http.updateBookingStatus(val.id).subscribe(
       () => {
         this.showMessage = true;
-        this.responseMessage = "Booking status updated.";
+        this.responseMessage = 'Booking status updated successfully.';
         this.getBookings();
       },
       () => {
         this.showError = true;
-        this.errorMessage = "Unable to update booking status.";
+        this.errorMessage = 'Failed to update booking status.';
       }
     );
   }
 
-  payment(val: any) {
+  payment(val: any): void {
     this.idPaymentNow = true;
     this.selectedBooking = val;
+    this.showMessage = false;
+    this.showError = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.itemForm.invalid) {
       this.itemForm.markAllAsTouched();
       return;
     }
 
-    const paymentDate = this.datePipe.transform(
-      this.itemForm.value.paymentDate,
-      'yyyy-MM-ddTHH:mm:ss'
-    );
+    this.isLoading = true;
+    this.showMessage = false;
+    this.showError = false;
 
-    const payload = {
-      amount: this.itemForm.value.amount,
-      paymentDate: paymentDate,
-      paymentMethod: this.itemForm.value.paymentMethod,
-      paymentStatus: this.itemForm.value.paymentStatus
+    const formVal = this.itemForm.value;
+    const formatted = {
+      ...formVal,
+      paymentDate: this.datePipe.transform(formVal.paymentDate, 'yyyy-MM-dd')
     };
 
-    this.http.bookingPayment(payload, this.selectedBooking.id).subscribe(
+    this.http.bookingPayment(formatted, this.selectedBooking.id).subscribe(
       () => {
+        this.isLoading = false;
         this.showMessage = true;
-        this.responseMessage = "Payment successful.";
-        this.idPaymentNow = false;
+        this.responseMessage = 'Payment processed successfully.';
         this.itemForm.reset();
+        this.selectedBooking = {};
+        this.idPaymentNow = false;
         this.getBookings();
       },
       () => {
+        this.isLoading = false;
         this.showError = true;
-        this.errorMessage = "Payment failed.";
+        this.errorMessage = 'Failed to process payment. Please try again.';
       }
     );
+  }
+
+  cancelPayment(): void {
+    this.idPaymentNow = false;
+    this.selectedBooking = {};
+    this.itemForm.reset();
+    this.showMessage = false;
+    this.showError = false;
+  }
+
+  formatDate(date: any): string {
+    return this.datePipe.transform(date, 'dd MMM yyyy') || '-';
+  }
+
+  getStatusClass(status: string): string {
+    if (!status) return 'status-pending';
+    switch (status.toLowerCase()) {
+      case 'booked':    return 'status-booked';
+      case 'pending':   return 'status-pending';
+      case 'completed': return 'status-completed';
+      default:          return 'status-pending';
+    }
   }
 }

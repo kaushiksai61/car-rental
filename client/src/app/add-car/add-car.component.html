@@ -1,46 +1,280 @@
-<div class="container">
-  <h2>Add / Update Car</h2>
+<div class="page-container">
 
-  <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-header-left">
+      <div class="page-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+        </svg>
+      </div>
+      <div>
+        <h1 class="page-title">Manage Cars</h1>
+        <p class="page-sub">Add new vehicles and update existing fleet</p>
+      </div>
+    </div>
+    <div class="page-header-right">
+      <div class="page-badge">
+        <span class="badge-dot"></span>
+        Agent
+      </div>
+    </div>
+  </div>
 
-    <label>Make</label>
-    <input type="text" formControlName="make">
+  <div class="page-body">
 
-    <label>Model</label>
-    <input type="text" formControlName="model">
+    <!-- LEFT: Form Panel -->
+    <div class="form-panel">
+      <div class="panel-header">
+        <h2 class="panel-title">{{ updateId ? 'Edit Car' : 'Add New Car' }}</h2>
+        <button class="btn-cancel" *ngIf="updateId" (click)="cancelEdit()">
+          Cancel
+        </button>
+      </div>
 
-    <label>Manufacture Year</label>
-    <input type="number" formControlName="manufactureYear">
+      <!-- Success -->
+      <div class="alert-success" *ngIf="showMessage">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/>
+        </svg>
+        {{ responseMessage }}
+      </div>
 
-    <label>Registration Number</label>
-    <input type="text" formControlName="registrationNumber">
+      <!-- Error -->
+      <div class="alert-error" *ngIf="showError">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+        </svg>
+        {{ errorMessage }}
+      </div>
 
-    <label>Status</label>
-    <input type="text" formControlName="status">
+      <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" novalidate>
 
-    <label>Rental Rate Per Day</label>
-    <input type="number" formControlName="rentalRatePerDay">
+        <!-- Make -->
+        <div class="form-group">
+          <label for="make">Make</label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+              </svg>
+            </span>
+            <input
+              id="make"
+              type="text"
+              formControlName="make"
+              placeholder="e.g. Maruti, Honda, Toyota"
+              [class.input-error]="itemForm.controls['make'].touched && itemForm.controls['make'].invalid"
+            />
+          </div>
+          <p class="error-msg" *ngIf="itemForm.controls['make'].touched && itemForm.controls['make'].invalid">
+            Make is required
+          </p>
+        </div>
 
-    <label>Category</label>
-    <select formControlName="categoryId">
-      <option value="">Select Category</option>
-      <option *ngFor="let c of categoryList" [value]="c.id">
-        {{ c.name }}
-      </option>
-    </select>
+        <!-- Model -->
+        <div class="form-group">
+          <label for="model">Model</label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
+              </svg>
+            </span>
+            <input
+              id="model"
+              type="text"
+              formControlName="model"
+              placeholder="e.g. Swift, Ertiga, Innova"
+              [class.input-error]="itemForm.controls['model'].touched && itemForm.controls['model'].invalid"
+            />
+          </div>
+          <p class="error-msg" *ngIf="itemForm.controls['model'].touched && itemForm.controls['model'].invalid">
+            Model is required
+          </p>
+        </div>
 
-    <button type="submit">Save</button>
+        <!-- Manufacture Year -->
+        <div class="form-group">
+          <label for="manufactureYear">Manufacture Year</label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/>
+              </svg>
+            </span>
+            <input
+              id="manufactureYear"
+              type="text"
+              formControlName="manufactureYear"
+              placeholder="e.g. 2022"
+              [class.input-error]="itemForm.controls['manufactureYear'].touched && itemForm.controls['manufactureYear'].invalid"
+            />
+          </div>
+          <p class="error-msg" *ngIf="itemForm.controls['manufactureYear'].touched && itemForm.controls['manufactureYear'].invalid">
+            Manufacture year is required
+          </p>
+        </div>
 
-    <p class="success" *ngIf="showMessage">{{ responseMessage }}</p>
-    <p class="error" *ngIf="showError">{{ errorMessage }}</p>
-  </form>
+        <!-- Registration Number -->
+        <div class="form-group">
+          <label for="registrationNumber">Registration Number</label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20 6h-2.18c.07-.44.18-.88.18-1.34C18 2.01 15.99 0 13.34 0c-1.3 0-2.49.53-3.34 1.39L9 2.4l-1-1.01C7.15.53 5.96 0 4.66 0 2.01 0 0 2.01 0 4.66c0 .46.11.9.18 1.34H0v2h20V6z"/>
+              </svg>
+            </span>
+            <input
+              id="registrationNumber"
+              type="text"
+              formControlName="registrationNumber"
+              placeholder="e.g. TN22AB1234"
+              [class.input-error]="itemForm.controls['registrationNumber'].touched && itemForm.controls['registrationNumber'].invalid"
+            />
+          </div>
+          <p class="error-msg" *ngIf="itemForm.controls['registrationNumber'].touched && itemForm.controls['registrationNumber'].invalid">
+            Registration number is required
+          </p>
+        </div>
 
-  <h3>Existing Cars</h3>
+        <!-- Status -->
+        <div class="form-group">
+          <label for="status">Status</label>
+          <div class="input-wrap select-wrap">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/>
+              </svg>
+            </span>
+            <select
+              id="status"
+              formControlName="status"
+              [class.input-error]="itemForm.controls['status'].touched && itemForm.controls['status'].invalid"
+            >
+              <option value="" disabled selected>Choose status</option>
+              <option value="available">Available</option>
+              <option value="booked">Booked</option>
+              <option value="maintenance">Maintenance</option>
+            </select>
+            <span class="select-arrow">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+            </span>
+          </div>
+          <p class="error-msg" *ngIf="itemForm.controls['status'].touched && itemForm.controls['status'].invalid">
+            Status is required
+          </p>
+        </div>
 
-  <div class="car-card" *ngFor="let car of carList">
-    <p>{{ car.make }} {{ car.model }}</p>
-    <p>Reg: {{ car.registrationNumber }}</p>
+        <!-- Rental Rate -->
+        <div class="form-group">
+          <label for="rentalRatePerDay">Rental Rate (₹ / day)</label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+              </svg>
+            </span>
+            <input
+              id="rentalRatePerDay"
+              type="number"
+              formControlName="rentalRatePerDay"
+              placeholder="e.g. 3500"
+              [class.input-error]="itemForm.controls['rentalRatePerDay'].touched && itemForm.controls['rentalRatePerDay'].invalid"
+            />
+          </div>
+          <p class="error-msg" *ngIf="itemForm.controls['rentalRatePerDay'].touched && itemForm.controls['rentalRatePerDay'].invalid">
+            Rental rate is required
+          </p>
+        </div>
 
-    <button (click)="editCar(car)">Edit</button>
+        <button type="submit" class="btn-submit" [disabled]="isLoading">
+          <span *ngIf="!isLoading">{{ updateId ? 'Update Car' : 'Add Car' }}</span>
+          <span *ngIf="isLoading" class="btn-loader">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </span>
+        </button>
+
+      </form>
+    </div>
+
+    <!-- RIGHT: Table Panel -->
+    <div class="table-panel">
+      <div class="panel-header">
+        <h2 class="panel-title">Fleet Overview</h2>
+        <div class="panel-header-right">
+          <span class="count-badge">{{ carList.length }} Cars</span>
+          <button class="btn-refresh" (click)="getAllCarList()">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13">
+              <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+            </svg>
+            Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Loading -->
+      <div class="table-loading" *ngIf="isTableLoading">
+        <div class="spinner"></div>
+        <p>Loading fleet...</p>
+      </div>
+
+      <!-- Empty -->
+      <div class="empty-state" *ngIf="!isTableLoading && carList.length === 0">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="40" height="40">
+          <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99z"/>
+        </svg>
+        <p>No cars in fleet</p>
+        <span>Add your first car using the form</span>
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrap" *ngIf="!isTableLoading && carList.length > 0">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Make & Model</th>
+              <th>Year</th>
+              <th>Reg. Number</th>
+              <th>Rate / Day</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let car of carList; let i = index">
+              <td class="td-num">{{ i + 1 }}</td>
+              <td class="td-car">
+                <div class="car-info">
+                  <span class="car-make">{{ car.make }} {{ car.model }}</span>
+                </div>
+              </td>
+              <td class="td-year">{{ car.manufactureYear }}</td>
+              <td class="td-reg">{{ car.registrationNumber }}</td>
+              <td>
+                <span class="rate-badge">₹ {{ car.rentalRatePerDay | number }}</span>
+              </td>
+              <td>
+                <span class="status-chip" [ngClass]="getStatusClass(car.status)">
+                  {{ car.status }}
+                </span>
+              </td>
+              <td>
+                <button class="btn-edit" (click)="editCar(car)">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13">
+                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                  </svg>
+                  Edit
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 </div>
