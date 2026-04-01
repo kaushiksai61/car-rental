@@ -5,15 +5,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class LoginRequest {
 
-    private String username;
-    private String password;
+    private String username; // username
+    private String password; // password
 
+    // default constructor
     public LoginRequest() {}
 
+    // parameterized constructor
     @JsonCreator
     public LoginRequest(
             @JsonProperty("username") String username,
             @JsonProperty("password") String password) {
+
         this.username = username;
         this.password = password;
     }

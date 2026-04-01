@@ -9,22 +9,24 @@ public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // payment id
 
-    private Double amount;
+    private Double amount; // payment amount
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date paymentDate;
+    private Date paymentDate; // payment date
 
-    private String paymentMethod;
-    private String paymentStatus;
+    private String paymentMethod; // payment method
+    private String paymentStatus; // payment status
 
     @OneToOne
     @JoinColumn(name = "booking_id")
-    private Booking booking;
+    private Booking booking; // booking linked to this payment
 
+    // default constructor
     public Payment() {}
 
+    // parameterized constructor
     public Payment(Long id, Double amount, Date paymentDate,
                    String paymentMethod, String paymentStatus) {
         this.id = id;

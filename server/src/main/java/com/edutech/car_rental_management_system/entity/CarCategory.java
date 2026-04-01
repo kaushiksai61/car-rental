@@ -11,18 +11,20 @@ public class CarCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // category id
 
-    private String name;
-    private String description;
-    private Double baseRate;
+    private String name; // category name
+    private String description; // category description
+    private Double baseRate; // base rate
 
     @JsonIgnore
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<Car> cars;
+    private List<Car> cars; // list of cars in this category
 
+    // default constructor
     public CarCategory() {}
 
+    // parameterized constructor
     public CarCategory(Long id, String name, String description, Double baseRate) {
         this.id = id;
         this.name = name;

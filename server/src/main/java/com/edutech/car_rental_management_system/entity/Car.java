@@ -1,7 +1,6 @@
 package com.edutech.car_rental_management_system.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,25 +10,27 @@ public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // car id
 
-    private String make;
-    private String model;
-    private String manufactureYear;
-    private String registrationNumber;
-    private String status;
-    private Double rentalRatePerDay;
+    private String make; // car make
+    private String model; // car model
+    private String manufactureYear; // manufacture year
+    private String registrationNumber; // registration number
+    private String status; // available / booked
+    private Double rentalRatePerDay; // rental rate per day
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private CarCategory category;
+    private CarCategory category; // car category
 
     @JsonIgnore
     @OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
-    private List<Booking> bookings;
+    private List<Booking> bookings; // list of bookings for this car
 
+    // default constructor
     public Car() {}
 
+    // parameterized constructor
     public Car(Long id, String make, String model, String manufactureYear,
                String registrationNumber, String status, Double rentalRatePerDay) {
 

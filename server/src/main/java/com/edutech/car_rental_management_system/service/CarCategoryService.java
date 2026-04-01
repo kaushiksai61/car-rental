@@ -15,15 +15,19 @@ public class CarCategoryService {
     @Autowired
     private CarCategoryRepository categoryRepository;
 
+    // create car category
     public CarCategory createCarCategory(CarCategory carCategory) {
         return categoryRepository.save(carCategory);
     }
 
+    // get all car categories
     public List<CarCategory> getAllCarCategories() {
         return categoryRepository.findAll();
     }
 
+    // update car category
     public CarCategory updateCarCategory(Long categoryId, CarCategory updatedCarCategory) {
+
         Optional<CarCategory> optional = categoryRepository.findById(categoryId);
 
         if (optional.isPresent()) {
@@ -31,7 +35,6 @@ public class CarCategoryService {
             existing.setName(updatedCarCategory.getName());
             existing.setDescription(updatedCarCategory.getDescription());
             existing.setBaseRate(updatedCarCategory.getBaseRate());
-
             return categoryRepository.save(existing);
         }
 

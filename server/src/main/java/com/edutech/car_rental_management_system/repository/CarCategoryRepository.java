@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CarCategoryRepository extends JpaRepository<CarCategory, Long> {
 
+    // basic repository for car categories
 }

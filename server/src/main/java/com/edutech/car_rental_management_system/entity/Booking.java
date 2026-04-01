@@ -19,22 +19,20 @@ public class Booking {
 
     private String status; // booking status
     private Double totalAmount; // total amount
-    private String paymentStatus; // payment 
+    private String paymentStatus; // payment status
 
     @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL)
-    private Payment payment;
+    private Payment payment; // payment for booking
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
-
-
+    private User user; // user who booked
     @ManyToOne
     @JoinColumn(name = "car_id")
-    private Car car;
-
+    private Car car; // booked car
+    // default constructor
     public Booking() {}
-
+    //parameterized constructor
     public Booking(Long id, Date rentalStartDate, Date rentalEndDate,
                    String status, Double totalAmount, String paymentStatus) {
         this.id = id;
@@ -44,7 +42,7 @@ public class Booking {
         this.totalAmount = totalAmount;
         this.paymentStatus = paymentStatus;
     }
-
+    //getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

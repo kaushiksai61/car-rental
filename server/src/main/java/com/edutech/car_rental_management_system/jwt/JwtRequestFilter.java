@@ -27,7 +27,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtil jwtUtil;
 
-
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -39,18 +38,18 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String jwt = null;
         String username = null;
 
-        // Extract token
+        // extract token
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
 
             try {
                 Claims claims = jwtUtil.extractAllClaims(jwt);
-                username = claims.getSubject();
+                username = claims.getSubject(); // get username from token
             } catch (Exception ignored) {
             }
         }
 
-        // Validate token & authenticate user
+        // validate token and set authentication
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
@@ -58,13 +57,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             if (jwtUtil.validateToken(jwt, username)) {
 
                 Claims claims = jwtUtil.extractAllClaims(jwt);
-                String role = (String) claims.get("role");
+                String role = (String) claims.get("role"); // get role from token
 
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(
                                 userDetails,
                                 null,
-                                AuthorityUtils.createAuthorityList(role)
+                                AuthorityUtils.createAuthorityList(role) // set authority
                         );
 
                 SecurityContextHolder.getContext().setAuthentication(authToken);

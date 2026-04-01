@@ -20,25 +20,28 @@ public class PaymentService {
     @Autowired
     private BookingRepository bookingRepository;
 
- 
+    // get all payments
     public List<Payment> getAllPayments() {
         return paymentRepository.findAll();
     }
 
-   
+    // create payment for booking
     public Payment generateInvoice(Long bookingId, Payment paymentRequest) {
 
         Optional<Booking> optional = bookingRepository.findById(bookingId);
 
         if (optional.isPresent()) {
+
             Booking booking = optional.get();
 
+            // link payment to booking
             paymentRequest.setBooking(booking);
 
-           
+            // update booking payment status
             booking.setPaymentStatus("paid");
             bookingRepository.save(booking);
 
+            // save payment
             return paymentRepository.save(paymentRequest);
         }
 

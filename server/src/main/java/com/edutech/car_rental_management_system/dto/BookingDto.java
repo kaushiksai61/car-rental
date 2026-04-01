@@ -6,13 +6,15 @@ import java.util.Date;
 public class BookingDto {
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "UTC")
-    private Date rentalStartDate;
+    private Date rentalStartDate; // start date
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "UTC")
-    private Date rentalEndDate;
+    private Date rentalEndDate; // end date
 
+    // default constructor
     public BookingDto() {}
 
+    // parameterized constructor
     public BookingDto(Date rentalStartDate, Date rentalEndDate) {
         this.rentalStartDate = rentalStartDate;
         this.rentalEndDate = rentalEndDate;

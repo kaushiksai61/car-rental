@@ -5,17 +5,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class LoginResponse {
 
-    private String token;
-    private String role;
-    private Long userId;
+    private String token; // jwt token
+    private String role;  // user role
+    private Long userId;  // user id
 
+    // default constructor
     public LoginResponse() {}
 
+    // parameterized constructor
     @JsonCreator
     public LoginResponse(
             @JsonProperty("token") String token,
             @JsonProperty("role") String role,
             @JsonProperty("userId") Long userId) {
+
         this.token = token;
         this.role = role;
         this.userId = userId;

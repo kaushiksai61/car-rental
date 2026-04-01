@@ -27,80 +27,52 @@ public class AgentController {
     @Autowired
     private PaymentService paymentService;
 
-
-    
+    // add car
     @PostMapping("/car")
     public ResponseEntity<Car> addCar(@RequestBody Car car) {
-        try {
-            Car saved = carService.addCar(car);
-            return new ResponseEntity<>(saved, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        Car saved = carService.addCar(car);
+        return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
-
-    
+    // get all cars
     @GetMapping("/cars")
     public ResponseEntity<List<Car>> getAllCars() {
-        try {
-            List<Car> list = carService.getAllCars();
-            return new ResponseEntity<>(list, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        List<Car> list = carService.getAllCars();
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-
-    
+    // update car details
     @PutMapping("/car/{carId}")
     public ResponseEntity<Car> updateCar(@PathVariable Long carId,
                                          @RequestBody Car updatedCar) {
-        try {
-            Car updated = carService.updateCar(carId, updatedCar);
-            return new ResponseEntity<>(updated, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        Car updated = carService.updateCar(carId, updatedCar);
+        return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 
-
-    
+    // get all bookings
     @GetMapping("/bookings")
     public ResponseEntity<List<Booking>> getAllBookings() {
-        try {
-            List<Booking> list = bookingService.getAllBookings();
-            return new ResponseEntity<>(list, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        List<Booking> list = bookingService.getAllBookings();
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-
-    
+    // update booking status
     @PutMapping("/bookings/{bookingId}/status")
     public ResponseEntity<Booking> updateBookingStatus(
             @PathVariable Long bookingId,
             @RequestParam String status) {
-        try {
-            Booking updated = bookingService.updateBookingStatus(bookingId, status);
-            return new ResponseEntity<>(updated, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+
+        Booking updated = bookingService.updateBookingStatus(bookingId, status);
+        return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 
-
-    
+    // create payment for booking
     @PostMapping("/payment/{bookingId}")
     public ResponseEntity<Payment> createPayment(
             @PathVariable Long bookingId,
             @RequestBody Payment paymentRequest) {
-        try {
-            Payment saved = paymentService.generateInvoice(bookingId, paymentRequest);
-            return new ResponseEntity<>(saved, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+
+        Payment saved = paymentService.generateInvoice(bookingId, paymentRequest);
+        return new ResponseEntity<>(saved, HttpStatus.OK);
     }
 }

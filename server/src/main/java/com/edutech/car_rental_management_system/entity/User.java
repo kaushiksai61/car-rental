@@ -11,19 +11,21 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // user id
 
-    private String username;
-    private String password;
-    private String email;
-    private String role;  // CUSTOMER, AGENT, ADMINISTRATOR
+    private String username; // username
+    private String password; // password
+    private String email; // email
+    private String role; // CUSTOMER, AGENT, ADMINISTRATOR
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<Booking> bookings;
+    private List<Booking> bookings; // list of bookings for this user
 
+    // default constructor
     public User() {}
 
+    // parameterized constructor
     public User(Long id, String username, String password, String email, String role) {
         this.id = id;
         this.username = username;

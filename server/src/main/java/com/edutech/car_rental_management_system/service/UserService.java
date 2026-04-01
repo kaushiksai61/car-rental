@@ -11,7 +11,6 @@ import com.edutech.car_rental_management_system.entity.User;
 import com.edutech.car_rental_management_system.repository.UserRepository;
 
 import org.springframework.security.core.userdetails.User.UserBuilder;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -22,17 +21,18 @@ public class UserService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-   
+    // register user
     public User registerUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
+    // get user by username
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-    
+    // load user for authentication
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -44,7 +44,7 @@ public class UserService implements UserDetailsService {
 
         UserBuilder builder = org.springframework.security.core.userdetails.User.withUsername(user.getUsername());
         builder.password(user.getPassword());
-        builder.authorities(user.getRole());
+        builder.authorities(user.getRole()); // role: CUSTOMER, AGENT, ADMINISTRATOR
 
         return builder.build();
     }

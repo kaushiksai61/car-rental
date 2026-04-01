@@ -18,7 +18,7 @@ import java.util.Map;
 @Component
 public class JwtUtil {
 
-    // FIX: secure 512-bit key for HS512
+    // secret key for HS512
     private static final SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
     private final int expiration = 86400; // 24 hours
@@ -26,26 +26,28 @@ public class JwtUtil {
     @Autowired
     private UserRepository userRepository;
 
+    // generate jwt token
     public String generateToken(String username) {
 
         User user = userRepository.findByUsername(username);
 
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", user.getRole());
-        claims.put("id", user.getId());
+        claims.put("role", user.getRole()); // store role
+        claims.put("id", user.getId());     // store user id
 
         Date now = new Date();
         Date expiry = new Date(now.getTime() + expiration * 1000);
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(username)
+                .setSubject(username) // username
                 .setIssuedAt(now)
                 .setExpiration(expiry)
-                .signWith(secretKey)   // HS512 with secure key
+                .signWith(secretKey) // sign token
                 .compact();
     }
 
+    // extract all claims
     public Claims extractAllClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(secretKey)
@@ -53,10 +55,12 @@ public class JwtUtil {
                 .getBody();
     }
 
+    // check expiration
     private boolean isExpired(String token) {
         return extractAllClaims(token).getExpiration().before(new Date());
     }
 
+    // validate token
     public boolean validateToken(String token, String username) {
         return extractAllClaims(token).getSubject().equals(username)
                 && !isExpired(token);
