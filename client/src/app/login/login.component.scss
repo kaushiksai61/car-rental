@@ -24,10 +24,92 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(160deg, rgba(220,38,38,0.08) 0%, transparent 50%),
-    linear-gradient(to top, rgba(8,10,15,0.97) 0%, rgba(8,10,15,0.45) 60%, transparent 100%),
-    url('https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=1400&q=80&auto=format&fit=crop') center/cover no-repeat;
-  filter: saturate(0.65) contrast(1.05);
+    linear-gradient(160deg, rgba(220,38,38,0.06) 0%, transparent 50%),
+    linear-gradient(to top, rgba(8,10,15,0.98) 0%, rgba(8,10,15,0.6) 55%, rgba(8,10,15,0.2) 100%),
+    #0a0c11;
+}
+
+/* ── CAR SCENE ───────────────────────────────────────────── */
+.login-page .car-scene {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -58%);
+  width: 90%;
+  max-width: 520px;
+  z-index: 1;
+  opacity: 0.85;
+}
+
+.login-page .vintage-car {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* floating animation on whole car */
+.login-page .car-group {
+  animation: carFloat 4s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+@keyframes carFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+/* wheel spin */
+.login-page .wheel {
+  animation: wheelSpin 1.8s linear infinite;
+}
+.login-page .wheel-front { transform-origin: 300px 133px; }
+.login-page .wheel-rear  { transform-origin: 122px 133px; }
+
+@keyframes wheelSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* road dashes scroll */
+.login-page .dash {
+  animation: roadScroll 1.2s linear infinite;
+}
+.login-page .d1 { animation-delay: 0s; }
+.login-page .d2 { animation-delay: -0.24s; }
+.login-page .d3 { animation-delay: -0.48s; }
+.login-page .d4 { animation-delay: -0.72s; }
+.login-page .d5 { animation-delay: -0.96s; }
+
+@keyframes roadScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-80px); }
+}
+
+/* headlight beam pulse */
+.login-page .beam {
+  animation: beamPulse 2.5s ease-in-out infinite;
+}
+@keyframes beamPulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1; }
+}
+
+/* tail light blink */
+.login-page .taillight-inner {
+  animation: tailBlink 2s ease-in-out infinite;
+}
+@keyframes tailBlink {
+  0%, 90%, 100% { opacity: 1; }
+  95%           { opacity: 0.3; }
+}
+
+/* glow under car */
+.login-page .underglow {
+  animation: underlowPulse 4s ease-in-out infinite;
+}
+@keyframes underlowPulse {
+  0%, 100% { opacity: 0.3; }
+  50%       { opacity: 0.7; }
 }
 
 .login-page .diagonal-line {
@@ -472,8 +554,9 @@
 /* ── RESPONSIVE ──────────────────────────────────────────── */
 @media (max-width: 900px) {
   .login-page { flex-direction: column !important; }
-  .login-page .left-panel { min-height: 300px; padding: 36px 28px; }
+  .login-page .left-panel { min-height: 320px; padding: 36px 28px; }
   .login-page .left-headline { font-size: 52px; }
+  .login-page .car-scene { top: 40%; max-width: 380px; }
   .login-page .right-panel {
     width: 100% !important;
     min-width: unset !important;
@@ -489,4 +572,5 @@
   .login-page .stats-row { gap: 16px; }
   .login-page .right-panel { padding: 32px 20px 48px !important; }
   .login-page .trust-badges { gap: 14px; }
+  .login-page .car-scene { max-width: 300px; }
 }

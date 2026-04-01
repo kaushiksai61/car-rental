@@ -5,6 +5,247 @@
     <div class="left-bg"></div>
     <div class="diagonal-line"></div>
 
+    <!-- ANIMATED VINTAGE CAR SCENE -->
+    <div class="car-scene">
+      <svg class="vintage-car" viewBox="0 0 420 175" xmlns="http://www.w3.org/2000/svg">
+
+        <!-- Underglow -->
+        <ellipse class="underglow" cx="210" cy="158" rx="140" ry="8"
+          fill="rgba(220,38,38,0.18)"/>
+
+        <!-- Road -->
+        <rect x="0" y="152" width="420" height="5" rx="0" fill="#12151e"/>
+        <rect x="0" y="155" width="420" height="1" fill="rgba(220,38,38,0.25)"/>
+
+        <!-- Road dashes -->
+        <rect class="dash d1" x="10"  y="154" width="36" height="2" rx="1" fill="rgba(255,255,255,0.06)"/>
+        <rect class="dash d2" x="90"  y="154" width="36" height="2" rx="1" fill="rgba(255,255,255,0.06)"/>
+        <rect class="dash d3" x="170" y="154" width="36" height="2" rx="1" fill="rgba(255,255,255,0.06)"/>
+        <rect class="dash d4" x="250" y="154" width="36" height="2" rx="1" fill="rgba(255,255,255,0.06)"/>
+        <rect class="dash d5" x="330" y="154" width="36" height="2" rx="1" fill="rgba(255,255,255,0.06)"/>
+        <rect class="dash d6" x="410" y="154" width="36" height="2" rx="1" fill="rgba(255,255,255,0.06)"/>
+
+        <!-- ENTIRE CAR GROUP (floats up and down) -->
+        <g class="car-group">
+
+          <!-- Shadow under car -->
+          <ellipse cx="207" cy="152" rx="120" ry="4" fill="rgba(0,0,0,0.5)"/>
+
+          <!-- ── MAIN BODY ── -->
+          <!-- Lower body / sill -->
+          <path d="M68,118 L68,130 L358,130 L358,118 Z"
+            fill="#111827" stroke="none"/>
+
+          <!-- Body main shape -->
+          <path d="M68,118
+                   L68,100
+                   Q70,88 82,80
+                   L108,72
+                   Q125,65 148,62
+                   L175,58
+                   Q195,52 215,50
+                   L248,50
+                   Q272,50 292,56
+                   L318,65
+                   Q338,72 350,86
+                   L356,100
+                   L358,118 Z"
+            fill="#1a2236" stroke="rgba(201,168,76,0.2)" stroke-width="0.6"/>
+
+          <!-- Body highlight strip -->
+          <path d="M80,108 Q200,104 355,108"
+            fill="none" stroke="rgba(201,168,76,0.22)" stroke-width="0.8"/>
+
+          <!-- Hood (front sloping section) -->
+          <path d="M292,56 L318,65 Q338,72 350,86 L356,100 L358,118 L290,118 Z"
+            fill="#141c2e" stroke="none"/>
+          <!-- Hood centre crease -->
+          <path d="M310,68 Q330,82 348,100"
+            fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+          <!-- Hood ornament -->
+          <circle cx="342" cy="88" r="3" fill="rgba(201,168,76,0.5)" stroke="rgba(201,168,76,0.8)" stroke-width="0.5"/>
+          <line x1="342" y1="82" x2="342" y2="85" stroke="rgba(201,168,76,0.6)" stroke-width="0.8"/>
+
+          <!-- Roof -->
+          <path d="M148,62 Q175,52 215,50 L248,50 Q272,50 285,56 L272,96 L160,96 Z"
+            fill="#0f1520" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/>
+
+          <!-- Windshield glass -->
+          <path d="M170,60 Q195,52 215,50 L248,50 Q268,50 270,55 L256,92 L178,92 Z"
+            fill="rgba(120,200,255,0.06)" stroke="rgba(120,200,255,0.20)" stroke-width="0.8"/>
+          <!-- Windshield inner reflection -->
+          <path d="M180,63 L192,54 L205,52 L192,88"
+            fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1.5"/>
+          <!-- Windshield wiper (parked) -->
+          <path d="M198,91 L240,76"
+            fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-linecap="round"/>
+
+          <!-- Rear quarter window -->
+          <path d="M160,96 L178,92 L170,60 Q162,64 158,72 L155,96 Z"
+            fill="rgba(120,200,255,0.04)" stroke="rgba(120,200,255,0.14)" stroke-width="0.7"/>
+
+          <!-- ── CHROME TRIM ── -->
+          <!-- Upper body chrome belt line -->
+          <path d="M72,98 Q200,94 356,98"
+            fill="none" stroke="rgba(201,168,76,0.40)" stroke-width="1"/>
+          <!-- Lower chrome sill -->
+          <path d="M70,126 L358,126"
+            fill="none" stroke="rgba(201,168,76,0.30)" stroke-width="0.8"/>
+
+          <!-- Roof drip rail -->
+          <path d="M160,96 L272,96"
+            fill="none" stroke="rgba(201,168,76,0.20)" stroke-width="0.6"/>
+
+          <!-- ── FRONT SECTION ── -->
+          <!-- Front bumper -->
+          <path d="M345,118 L370,118 Q378,118 380,122 L378,128 L345,128 Z"
+            fill="#1a2236" stroke="rgba(201,168,76,0.35)" stroke-width="0.7"/>
+          <!-- Bumper chrome strip -->
+          <rect x="346" y="122" width="32" height="3" rx="1.5" fill="rgba(201,168,76,0.45)"/>
+
+          <!-- Grille surround -->
+          <rect x="348" y="98" width="24" height="18" rx="3"
+            fill="#0a0d14" stroke="rgba(201,168,76,0.50)" stroke-width="0.8"/>
+          <!-- Grille bars -->
+          <line x1="353" y1="98" x2="353" y2="116" stroke="rgba(201,168,76,0.28)" stroke-width="0.6"/>
+          <line x1="358" y1="98" x2="358" y2="116" stroke="rgba(201,168,76,0.28)" stroke-width="0.6"/>
+          <line x1="363" y1="98" x2="363" y2="116" stroke="rgba(201,168,76,0.28)" stroke-width="0.6"/>
+          <line x1="348" y1="106" x2="372" y2="106" stroke="rgba(201,168,76,0.18)" stroke-width="0.5"/>
+
+          <!-- Headlight housing -->
+          <ellipse cx="344" cy="94" rx="9" ry="6"
+            fill="#0a0d14" stroke="rgba(201,168,76,0.55)" stroke-width="0.8"/>
+          <!-- Headlight bulb -->
+          <ellipse cx="344" cy="94" rx="5" ry="3.5"
+            fill="rgba(255,230,140,0.18)"/>
+          <!-- Headlight inner ring -->
+          <ellipse cx="344" cy="94" rx="7" ry="5"
+            fill="none" stroke="rgba(201,168,76,0.30)" stroke-width="0.5"/>
+
+          <!-- Headlight beams -->
+          <path class="beam"
+            d="M353,91 Q390,78 420,68
+               M353,94 Q390,90 420,88
+               M353,97 Q390,104 420,110"
+            fill="none" stroke="rgba(255,230,140,0.09)" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- Front indicator -->
+          <rect x="358" y="112" width="12" height="5" rx="2"
+            fill="rgba(255,160,40,0.4)" stroke="rgba(255,160,40,0.6)" stroke-width="0.5"/>
+
+          <!-- ── REAR SECTION ── -->
+          <!-- Rear bumper -->
+          <path d="M68,118 L44,118 Q36,118 34,122 L36,128 L68,128 Z"
+            fill="#1a2236" stroke="rgba(201,168,76,0.35)" stroke-width="0.7"/>
+          <!-- Bumper chrome strip -->
+          <rect x="36" y="122" width="32" height="3" rx="1.5" fill="rgba(201,168,76,0.45)"/>
+
+          <!-- Tail light housing -->
+          <rect x="61" y="90" width="9" height="22" rx="3"
+            fill="#0a0d14" stroke="rgba(220,38,38,0.50)" stroke-width="0.8"/>
+          <!-- Tail light red lens -->
+          <rect x="62" y="91" width="7" height="14" rx="2"
+            fill="rgba(220,38,38,0.55)"/>
+          <!-- Tail light inner glow -->
+          <rect class="taillight-inner" x="63" y="92" width="5" height="10" rx="1.5"
+            fill="rgba(220,38,38,0.90)"/>
+          <!-- Reverse light -->
+          <rect x="62" y="106" width="7" height="5" rx="1.5"
+            fill="rgba(255,255,255,0.25)" stroke="rgba(255,255,255,0.20)" stroke-width="0.4"/>
+
+          <!-- Exhaust pipes -->
+          <ellipse cx="55" cy="128" rx="4" ry="2.5" fill="#0a0d14" stroke="rgba(201,168,76,0.35)" stroke-width="0.6"/>
+          <ellipse cx="55" cy="128" rx="2" ry="1.5" fill="#070a10"/>
+          <ellipse cx="46" cy="128" rx="4" ry="2.5" fill="#0a0d14" stroke="rgba(201,168,76,0.35)" stroke-width="0.6"/>
+          <ellipse cx="46" cy="128" rx="2" ry="1.5" fill="#070a10"/>
+
+          <!-- ── DOORS ── -->
+          <!-- Door seam 1 (front door / B-pillar) -->
+          <line x1="200" y1="62" x2="200" y2="130" stroke="rgba(0,0,0,0.6)" stroke-width="1.5"/>
+          <line x1="200" y1="62" x2="200" y2="130" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+          <!-- Door seam 2 (rear door / C-pillar) -->
+          <line x1="270" y1="66" x2="268" y2="130" stroke="rgba(0,0,0,0.6)" stroke-width="1.5"/>
+          <line x1="270" y1="66" x2="268" y2="130" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+
+          <!-- Door handles -->
+          <rect x="215" y="103" width="18" height="4" rx="2" fill="rgba(201,168,76,0.55)" stroke="rgba(201,168,76,0.4)" stroke-width="0.5"/>
+          <rect x="278" y="103" width="18" height="4" rx="2" fill="rgba(201,168,76,0.55)" stroke="rgba(201,168,76,0.4)" stroke-width="0.5"/>
+
+          <!-- ── SIDE VENTS / DETAILS ── -->
+          <!-- Side intake vent -->
+          <rect x="88" y="96" width="38" height="8" rx="2"
+            fill="#0a0d14" stroke="rgba(201,168,76,0.30)" stroke-width="0.6"/>
+          <line x1="96"  y1="96" x2="96"  y2="104" stroke="rgba(201,168,76,0.22)" stroke-width="0.6"/>
+          <line x1="104" y1="96" x2="104" y2="104" stroke="rgba(201,168,76,0.22)" stroke-width="0.6"/>
+          <line x1="112" y1="96" x2="112" y2="104" stroke="rgba(201,168,76,0.22)" stroke-width="0.6"/>
+          <line x1="120" y1="96" x2="120" y2="104" stroke="rgba(201,168,76,0.22)" stroke-width="0.6"/>
+
+          <!-- Fuel cap -->
+          <circle cx="142" cy="86" r="5" fill="#0a0d14" stroke="rgba(201,168,76,0.40)" stroke-width="0.7"/>
+          <circle cx="142" cy="86" r="2.5" fill="#111827"/>
+
+          <!-- ── WHEELS ── -->
+          <!-- REAR WHEEL -->
+          <g class="wheel wheel-rear">
+            <!-- Tyre outer -->
+            <circle cx="122" cy="140" r="26" fill="#0c0e14" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+            <!-- Tyre sidewall texture -->
+            <circle cx="122" cy="140" r="24" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="3"/>
+            <!-- Rim -->
+            <circle cx="122" cy="140" r="18" fill="#161d2e" stroke="rgba(201,168,76,0.50)" stroke-width="1"/>
+            <!-- Rim inner ring -->
+            <circle cx="122" cy="140" r="13" fill="#111827" stroke="rgba(201,168,76,0.25)" stroke-width="0.6"/>
+            <!-- Spokes -->
+            <line x1="122" y1="122" x2="122" y2="127" stroke="rgba(201,168,76,0.65)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="122" y1="153" x2="122" y2="158" stroke="rgba(201,168,76,0.65)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="104" y1="140" x2="109" y2="140" stroke="rgba(201,168,76,0.65)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="135" y1="140" x2="140" y2="140" stroke="rgba(201,168,76,0.65)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="109" y1="127" x2="113" y2="131" stroke="rgba(201,168,76,0.65)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="131" y1="149" x2="135" y2="153" stroke="rgba(201,168,76,0.65)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="135" y1="127" x2="131" y2="131" stroke="rgba(201,168,76,0.65)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="109" y1="149" x2="113" y2="153" stroke="rgba(201,168,76,0.65)" stroke-width="2" stroke-linecap="round"/>
+            <!-- Centre hub -->
+            <circle cx="122" cy="140" r="5" fill="#1a2236" stroke="rgba(201,168,76,0.70)" stroke-width="0.8"/>
+            <circle cx="122" cy="140" r="2" fill="rgba(201,168,76,0.7)"/>
+          </g>
+
+          <!-- FRONT WHEEL -->
+          <g class="wheel wheel-front">
+            <!-- Tyre outer -->
+            <circle cx="298" cy="140" r="26" fill="#0c0e14" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+            <!-- Tyre sidewall texture -->
+            <circle cx="298" cy="140" r="24" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="3"/>
+            <!-- Rim -->
+            <circle cx="298" cy="140" r="18" fill="#161d2e" stroke="rgba(201,168,76,0.50)" stroke-width="1"/>
+            <!-- Rim inner ring -->
+            <circle cx="298" cy="140" r="13" fill="#111827" stroke="rgba(201,168,76,0.25)" stroke-width="0.6"/>
+            <!-- Spokes -->
+            <line x1="298" y1="122" x2="298" y2="127" stroke="rgba(201,168,76,0.65)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="298" y1="153" x2="298" y2="158" stroke="rgba(201,168,76,0.65)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="280" y1="140" x2="285" y2="140" stroke="rgba(201,168,76,0.65)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="311" y1="140" x2="316" y2="140" stroke="rgba(201,168,76,0.65)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="285" y1="127" x2="289" y2="131" stroke="rgba(201,168,76,0.65)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="307" y1="149" x2="311" y2="153" stroke="rgba(201,168,76,0.65)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="311" y1="127" x2="307" y2="131" stroke="rgba(201,168,76,0.65)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="285" y1="149" x2="289" y2="153" stroke="rgba(201,168,76,0.65)" stroke-width="2" stroke-linecap="round"/>
+            <!-- Centre hub -->
+            <circle cx="298" cy="140" r="5" fill="#1a2236" stroke="rgba(201,168,76,0.70)" stroke-width="0.8"/>
+            <circle cx="298" cy="140" r="2" fill="rgba(201,168,76,0.7)"/>
+          </g>
+
+          <!-- Wheel arch highlights -->
+          <path d="M96,130 Q122,114 148,130"
+            fill="none" stroke="rgba(201,168,76,0.18)" stroke-width="0.8"/>
+          <path d="M272,130 Q298,114 324,130"
+            fill="none" stroke="rgba(201,168,76,0.18)" stroke-width="0.8"/>
+
+        </g>
+        <!-- end .car-group -->
+
+      </svg>
+    </div>
+    <!-- end .car-scene -->
+
     <div class="left-content">
       <div class="brand-tag">
         <span class="brand-dot"></span>
@@ -23,7 +264,7 @@
 
       <div class="stats-row">
         <div class="stat">
-          <span class="stat-num">500+</span>
+          <span class="stat-num">2k+</span>
           <span class="stat-label">Vehicles</span>
         </div>
         <div class="stat-divider"></div>
@@ -70,7 +311,7 @@
 
     <form [formGroup]="itemForm" (ngSubmit)="onLogin()" novalidate>
 
-      <!-- USERNAME — matches backend field exactly -->
+      <!-- USERNAME -->
       <div class="form-group">
         <label for="username">Username</label>
         <div class="input-wrap">
