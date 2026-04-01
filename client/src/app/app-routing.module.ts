@@ -17,26 +17,26 @@ const routes: Routes = [
 
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 
-  // Authentication
+ 
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
 
-  // Dashboard
+ 
   { path: 'dashboard', component: DashbaordComponent },
 
-  // Customer functionality
+
   { path: 'cars', component: CarsComponent },
 
-  // Agent functionality
+
   { path: 'add-car', component: AddCarComponent },
   { path: 'bookings', component: GetBookingsComponent },
 
-  // Admin functionality
+ 
   { path: 'categories', component: CategoryComponent },
   { path: 'booking-report', component: BookingReportComponent },
   { path: 'payment-report', component: PaymentReportComponent },
 
-  // Wildcard
+ 
   { path: '**', redirectTo: '/login' }
 ];
 

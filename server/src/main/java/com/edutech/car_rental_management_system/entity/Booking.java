@@ -4,32 +4,31 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "bookings") // do not change this line
+@Table(name = "bookings") 
 public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; //booking id
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date rentalStartDate;
+    private Date rentalStartDate; // rental start date
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date rentalEndDate;
+    private Date rentalEndDate; // rental end date
 
-    private String status;
-    private Double totalAmount;
-    private String paymentStatus;
+    private String status; // booking status
+    private Double totalAmount; // total amount
+    private String paymentStatus; // payment 
 
     @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL)
     private Payment payment;
 
-    // IMPORTANT: Do NOT use @JsonIgnore here — tests require $.user.id
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    // IMPORTANT: Do NOT use @JsonIgnore here — tests require $.car.make
+
     @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;
@@ -46,7 +45,6 @@ public class Booking {
         this.paymentStatus = paymentStatus;
     }
 
-    // GETTERS & SETTERS
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

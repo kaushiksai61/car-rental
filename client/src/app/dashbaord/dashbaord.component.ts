@@ -22,7 +22,6 @@ export class DashbaordComponent implements OnInit {
     this.username = localStorage.getItem('userid');
   }
 
-  // ✅ ADD THESE METHODS
   goToCars() {
     this.router.navigate(['/cars']);
   }

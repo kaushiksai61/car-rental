@@ -15,12 +15,12 @@ public class CarService {
     @Autowired
     private CarRepository carRepository;
 
-    // ADD CAR (Agent)
+  
     public Car addCar(Car car) {
         return carRepository.save(car);
     }
 
-    // UPDATE CAR (Agent)
+   
     public Car updateCar(Long carId, Car updatedCar) {
         Optional<Car> optional = carRepository.findById(carId);
 
@@ -38,12 +38,12 @@ public class CarService {
         return null;
     }
 
-    // GET ALL AVAILABLE CARS (Customer)
+    
     public List<Car> getAvailableCars() {
         return carRepository.findByStatus("available");
     }
 
-    // GET ALL CARS (Agent)
+
     public List<Car> getAllCars() {
         return carRepository.findAll();
     }

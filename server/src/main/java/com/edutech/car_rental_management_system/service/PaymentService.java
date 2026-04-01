@@ -20,12 +20,12 @@ public class PaymentService {
     @Autowired
     private BookingRepository bookingRepository;
 
-    // ADMIN REPORT
+ 
     public List<Payment> getAllPayments() {
         return paymentRepository.findAll();
     }
 
-    // AGENT CREATES PAYMENT
+   
     public Payment generateInvoice(Long bookingId, Payment paymentRequest) {
 
         Optional<Booking> optional = bookingRepository.findById(bookingId);
@@ -35,7 +35,7 @@ public class PaymentService {
 
             paymentRequest.setBooking(booking);
 
-            // mark booking as paid
+           
             booking.setPaymentStatus("paid");
             bookingRepository.save(booking);
 

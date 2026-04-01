@@ -22,18 +22,17 @@ public class UserService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // REGISTER USER
+   
     public User registerUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
-    // GET USER BY USERNAME
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-    // LOAD USER FOR AUTH
+    
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 

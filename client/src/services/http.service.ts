@@ -22,7 +22,7 @@ export class HttpService {
     };
   }
 
-  // CATEGORY
+  
   getAllCategories(): Observable<any> {
     return this.http.get(
       this.serverName + '/api/administrator/car-categories',
@@ -46,7 +46,7 @@ export class HttpService {
     );
   }
 
-  // ADMIN REPORTS
+
   getBookingReport(): Observable<any> {
     return this.http.get(
       this.serverName + '/api/administrator/reports/bookings',
@@ -61,7 +61,7 @@ export class HttpService {
     );
   }
 
-  // AGENT CAR MANAGEMENT
+
   getAllCars(): Observable<any> {
     return this.http.get(
       this.serverName + '/api/agent/cars',
@@ -85,7 +85,6 @@ export class HttpService {
     );
   }
 
-  // AGENT BOOKINGS
   getBookingByAgent(): Observable<any> {
     return this.http.get(
       this.serverName + '/api/agent/bookings',
@@ -93,7 +92,7 @@ export class HttpService {
     );
   }
 
-  // 🔥 FIXED: Must send ?status=booked (Angular test requirement)
+ 
   updateBookingStatus(id: any): Observable<any> {
     return this.http.put(
       this.serverName + `/api/agent/bookings/${id}/status?status=booked`,
@@ -110,7 +109,7 @@ export class HttpService {
     );
   }
 
-  // CUSTOMER
+
   getCars(): Observable<any> {
     return this.http.get(
       this.serverName + '/api/customers/cars/available',
@@ -126,8 +125,7 @@ export class HttpService {
     );
   }
 
-  // AUTH
-  // 🔥 FIXED: Must include JSON header for Angular test
+
   Login(details: any): Observable<any> {
     return this.http.post(
       this.serverName + '/api/user/login',
@@ -136,7 +134,7 @@ export class HttpService {
     );
   }
 
-  // 🔥 FIXED: Must include JSON header for Angular test
+  
   registerUser(details: any): Observable<any> {
     return this.http.post(
       this.serverName + '/api/user/register',
