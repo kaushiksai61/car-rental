@@ -1,28 +1,250 @@
-<div class="container">
-  <h2>Available Cars</h2>
+<div class="page-container">
 
-  <div class="car-card" *ngFor="let car of carList">
-    <h3>{{ car.make }} {{ car.model }}</h3>
-
-    <p>Year: {{ car.manufactureYear }}</p>
-    <p>Registration: {{ car.registrationNumber }}</p>
-    <p>Rate per day: {{ car.rentalRatePerDay }}</p>
-
-    <button (click)="book(car)">Book</button>
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-header-left">
+      <div class="page-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+        </svg>
+      </div>
+      <div>
+        <h1 class="page-title">Available Cars</h1>
+        <p class="page-sub">Browse and book from our premium fleet</p>
+      </div>
+    </div>
+    <div class="page-header-right">
+      <div class="page-badge">
+        <span class="badge-dot"></span>
+        Customer
+      </div>
+      <div class="stat-pill">
+        <span class="stat-num">{{ carList.length }}</span>
+        <span class="stat-label">Available</span>
+      </div>
+    </div>
   </div>
 
-  <h3>Book Selected Car</h3>
+  <div class="page-body">
 
-  <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
-    <label>Start Date</label>
-    <input type="datetime-local" formControlName="rentalStartDate">
+    <!-- BOOKING FORM PANEL -->
+    <div class="form-panel" *ngIf="showBookingForm">
+      <div class="panel-header">
+        <div class="panel-header-left">
+          <h2 class="panel-title">Book a Car</h2>
+        </div>
+        <button class="btn-cancel" (click)="cancelBooking()">Cancel</button>
+      </div>
 
-    <label>End Date</label>
-    <input type="datetime-local" formControlName="rentalEndDate">
+      <!-- Selected car info card -->
+      <div class="selected-car-card" *ngIf="toBook?.make">
+        <div class="selected-car-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99z"/>
+          </svg>
+        </div>
+        <div class="selected-car-info">
+          <span class="selected-car-name">{{ toBook.make }} {{ toBook.model }}</span>
+          <span class="selected-car-reg">{{ toBook.registrationNumber }}</span>
+        </div>
+        <div class="selected-car-rate">
+          <span class="rate-num">₹ {{ toBook.rentalRatePerDay | number }}</span>
+          <span class="rate-label">per day</span>
+        </div>
+      </div>
 
-    <button type="submit" [disabled]="!toBook.id">Confirm Booking</button>
+      <!-- Success -->
+      <div class="alert-success" *ngIf="showMessage">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/>
+        </svg>
+        {{ responseMessage }}
+      </div>
 
-    <p class="success" *ngIf="showMessage">{{ responseMessage }}</p>
-    <p class="error" *ngIf="showError">{{ errorMessage }}</p>
-  </form>
+      <!-- Error -->
+      <div class="alert-error" *ngIf="showError">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+        </svg>
+        {{ errorMessage }}
+      </div>
+
+      <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" novalidate>
+
+        <!-- Rental Start Date -->
+        <div class="form-group">
+          <label for="rentalStartDate">Rental Start Date</label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/>
+              </svg>
+            </span>
+            <input
+              id="rentalStartDate"
+              type="date"
+              formControlName="rentalStartDate"
+              [min]="today"
+              [class.input-error]="itemForm.controls['rentalStartDate'].touched && itemForm.controls['rentalStartDate'].invalid"
+            />
+          </div>
+          <p class="error-msg"
+            *ngIf="itemForm.controls['rentalStartDate'].touched && itemForm.controls['rentalStartDate'].invalid">
+            Start date is required
+          </p>
+        </div>
+
+        <!-- Rental End Date -->
+        <div class="form-group">
+          <label for="rentalEndDate">Rental End Date</label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/>
+              </svg>
+            </span>
+            <input
+              id="rentalEndDate"
+              type="date"
+              formControlName="rentalEndDate"
+              [min]="getMinEndDate()"
+              [class.input-error]="(itemForm.controls['rentalEndDate'].touched && itemForm.controls['rentalEndDate'].invalid) || (itemForm.errors?.['dateRangeInvalid'] && itemForm.controls['rentalEndDate'].touched)"
+            />
+          </div>
+          <p class="error-msg"
+            *ngIf="itemForm.controls['rentalEndDate'].touched && itemForm.controls['rentalEndDate'].invalid">
+            End date is required
+          </p>
+          <p class="error-msg"
+            *ngIf="itemForm.errors?.['dateRangeInvalid'] && itemForm.controls['rentalEndDate'].touched">
+            End date cannot be before start date
+          </p>
+        </div>
+
+        <!-- Cost Estimate -->
+        <div class="cost-estimate" *ngIf="getDayCount() > 0">
+          <div class="cost-row">
+            <span class="cost-label">Duration</span>
+            <span class="cost-value">{{ getDayCount() }} day(s)</span>
+          </div>
+          <div class="cost-row">
+            <span class="cost-label">Rate</span>
+            <span class="cost-value">₹ {{ toBook.rentalRatePerDay | number }} / day</span>
+          </div>
+          <div class="cost-divider"></div>
+          <div class="cost-row cost-total">
+            <span class="cost-label">Estimated Total</span>
+            <span class="cost-value-total">₹ {{ getEstimatedCost() | number }}</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit" [disabled]="isLoading || itemForm.errors?.['dateRangeInvalid']">
+          <span *ngIf="!isLoading">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" style="vertical-align: middle; margin-right: 6px;">
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+            </svg>
+            Confirm Booking
+          </span>
+          <span *ngIf="isLoading" class="btn-loader">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </span>
+        </button>
+
+      </form>
+    </div>
+
+    <!-- CARS GRID PANEL -->
+    <div class="cars-panel" [class.full-width]="!showBookingForm">
+
+      <div class="panel-header">
+        <h2 class="panel-title">Available Fleet</h2>
+        <button class="btn-refresh" (click)="getCars()">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13">
+            <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+          </svg>
+          Refresh
+        </button>
+      </div>
+
+      <!-- Success outside form -->
+      <div class="alert-success" *ngIf="showMessage && !showBookingForm">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/>
+        </svg>
+        {{ responseMessage }}
+      </div>
+
+      <!-- Loading -->
+      <div class="table-loading" *ngIf="isTableLoading">
+        <div class="spinner"></div>
+        <p>Loading available cars...</p>
+      </div>
+
+      <!-- Empty -->
+      <div class="empty-state" *ngIf="!isTableLoading && !showError && carList.length === 0">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="40" height="40">
+          <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99z"/>
+        </svg>
+        <p>No cars available</p>
+        <span>All cars are currently booked. Please check back later.</span>
+      </div>
+
+      <!-- Error state -->
+      <div class="empty-state" *ngIf="!isTableLoading && showError">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="40" height="40">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+        </svg>
+        <p>Failed to load cars</p>
+        <span>{{ errorMessage }}</span>
+        <button class="btn-retry" (click)="getCars()">Try Again</button>
+      </div>
+
+      <!-- Car Cards Grid -->
+      <div class="car-cards-grid" *ngIf="!isTableLoading && !showError && carList.length > 0">
+        <div
+          class="car-card"
+          *ngFor="let car of carList"
+          [class.car-card-selected]="toBook?.id === car.id"
+        >
+          <div class="car-card-header">
+            <div class="car-card-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+              </svg>
+            </div>
+            <span class="car-status-chip status-available">Available</span>
+          </div>
+
+          <div class="car-card-body">
+            <h3 class="car-name">{{ car.make }} {{ car.model }}</h3>
+            <p class="car-year">{{ car.manufactureYear }}</p>
+
+            <div class="car-details">
+              <div class="car-detail-item">
+                <span class="detail-label">Reg. No</span>
+                <span class="detail-value">{{ car.registrationNumber }}</span>
+              </div>
+              <div class="car-detail-item">
+                <span class="detail-label">Rate</span>
+                <span class="detail-value rate-highlight">₹ {{ car.rentalRatePerDay | number }}/day</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="car-card-footer">
+            <button class="btn-book" (click)="book(car)">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+              </svg>
+              Book Now
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
 </div>

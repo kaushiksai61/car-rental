@@ -13,7 +13,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import com.edutech.car_rental_management_system.jwt.JwtRequestFilter;
 
 @Configuration
@@ -39,32 +38,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http.csrf().disable()
                 .cors().and()
                 .authorizeRequests()
 
-                // PUBLIC
+                // PUBLIC — no token needed
                 .antMatchers("/api/user/register", "/api/user/login").permitAll()
 
-                // ADMIN
-                .antMatchers("/api/administrator/car-categories").hasAuthority("ADMINISTRATOR")
-                .antMatchers("/api/administrator/car-categories/**").hasAuthority("ADMINISTRATOR")
-                .antMatchers("/api/administrator/reports/bookings").hasAuthority("ADMINISTRATOR")
-                .antMatchers("/api/administrator/reports/payments").hasAuthority("ADMINISTRATOR")
+                // ADMIN — matches role stored in DB as "ADMIN"
+                .antMatchers("/api/administrator/**").hasAuthority("ADMIN")
 
-                // AGENT
-                .antMatchers("/api/agent/car").hasAuthority("AGENT")
-                .antMatchers("/api/agent/car/**").hasAuthority("AGENT")
-                .antMatchers("/api/agent/bookings").hasAuthority("AGENT")
-                .antMatchers("/api/agent/bookings/**").hasAuthority("AGENT")
-                .antMatchers("/api/agent/payment/**").hasAuthority("AGENT")
+                // AGENT — matches role stored in DB as "AGENT"
+                .antMatchers("/api/agent/**").hasAuthority("AGENT")
 
-                // CUSTOMER
-                .antMatchers("/api/customers/cars/available").hasAuthority("CUSTOMER")
-                .antMatchers("/api/customers/booking").hasAuthority("CUSTOMER")
+                // CUSTOMER — matches role stored in DB as "CUSTOMER"
+                .antMatchers("/api/customers/**").hasAuthority("CUSTOMER")
 
-                // ANY OTHER MUST AUTHENTICATE
+                // ALL OTHER REQUESTS MUST BE AUTHENTICATED
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
