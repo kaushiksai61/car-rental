@@ -1,28 +1,44 @@
+<!-- container for available cars page -->
 <div class="container">
+
+  <!-- page title -->
   <h2>Available Cars</h2>
 
+  <!-- list of available cars -->
   <div class="car-card" *ngFor="let car of carList">
+
+    <!-- car details -->
     <h3>{{ car.make }} {{ car.model }}</h3>
 
     <p>Year: {{ car.manufactureYear }}</p>
     <p>Registration: {{ car.registrationNumber }}</p>
     <p>Rate per day: {{ car.rentalRatePerDay }}</p>
 
+    <!-- select car for booking -->
     <button (click)="book(car)">Book</button>
   </div>
 
+  <!-- booking form -->
   <h3>Book Selected Car</h3>
 
+  <!-- reactive form for booking car -->
   <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+
+    <!-- rental start date -->
     <label>Start Date</label>
     <input type="datetime-local" formControlName="rentalStartDate">
 
+    <!-- rental end date -->
     <label>End Date</label>
     <input type="datetime-local" formControlName="rentalEndDate">
 
+    <!-- confirm booking -->
     <button type="submit" [disabled]="!toBook.id">Confirm Booking</button>
 
+    <!-- success message -->
     <p class="success" *ngIf="showMessage">{{ responseMessage }}</p>
+
+    <!-- error message -->
     <p class="error" *ngIf="showError">{{ errorMessage }}</p>
   </form>
 </div>

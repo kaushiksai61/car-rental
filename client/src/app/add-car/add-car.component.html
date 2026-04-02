@@ -1,50 +1,69 @@
+<!-- container for add/update car page -->
 <div class="container">
+
+  <!-- page title -->
   <h2>Add / Update Car</h2>
 
+  <!-- reactive form for add or update car -->
   <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
 
+    <!-- car make -->
     <label>Make</label>
     <input type="text" formControlName="make">
 
+    <!-- car model -->
     <label>Model</label>
     <input type="text" formControlName="model">
 
+    <!-- manufacture year -->
     <label>Manufacture Year</label>
     <input type="number" formControlName="manufactureYear">
 
+    <!-- registration number -->
     <label>Registration Number</label>
     <input type="text" formControlName="registrationNumber">
 
+    <!-- car status -->
     <label>Status</label>
-<select formControlName="status">
-  <option value="">Select</option>
-  <option value="available">Available</option>
-  <option value="booked">Booked</option>
-</select>
+    <select formControlName="status">
+      <option value="">Select</option>
+      <option value="available">Available</option>
+      <option value="booked">Booked</option>
+    </select>
 
+    <!-- rental rate per day -->
     <label>Rental Rate Per Day</label>
     <input type="number" formControlName="rentalRatePerDay">
 
+    <!-- car category -->
     <label>Category</label>
     <select formControlName="categoryId">
       <option value="">Select Category</option>
+      <!-- list of car categories -->
       <option *ngFor="let c of categoryList" [value]="c.id">
         {{ c.name }}
       </option>
     </select>
 
+    <!-- submit form -->
     <button type="submit">Save</button>
 
+    <!-- success message -->
     <p class="success" *ngIf="showMessage">{{ responseMessage }}</p>
+
+    <!-- error message -->
     <p class="error" *ngIf="showError">{{ errorMessage }}</p>
   </form>
 
+  <!-- list of existing cars -->
   <h3>Existing Cars</h3>
 
+  <!-- car details card -->
   <div class="car-card" *ngFor="let car of carList">
     <p>{{ car.make }} {{ car.model }}</p>
     <p>Reg: {{ car.registrationNumber }}</p>
 
+    <!-- edit car -->
     <button (click)="editCar(car)">Edit</button>
   </div>
 </div>

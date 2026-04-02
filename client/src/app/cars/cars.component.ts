@@ -12,65 +12,81 @@ import { DatePipe } from '@angular/common';
 })
 export class CarsComponent implements OnInit {
 
-  itemForm!: FormGroup;
-  carList: any = [];
-  toBook: any = {};
-  showError = false;
-  errorMessage: any;
-  showMessage = false;
-  responseMessage: any;
+  itemForm!: FormGroup;          // reactive form for booking
+  carList: any = [];             // available car list
+  toBook: any = {};              // selected car for booking
+
+  showError = false;             // error flag
+  errorMessage: any;             // error message
+
+  showMessage = false;           // success flag
+  responseMessage: any;          // success message
 
   constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private http: HttpService,
-    private auth: AuthService,
-    private datePipe: DatePipe
+    private fb: FormBuilder,     // form builder
+    private router: Router,      // router navigation
+    private http: HttpService,   // http service
+    private auth: AuthService,   // auth service
+    private datePipe: DatePipe   // date formatter
   ) {
+    // booking form initialization
     this.itemForm = this.fb.group({
-      rentalStartDate: ['', Validators.required],
-      rentalEndDate: ['', Validators.required]
+      rentalStartDate: ['', Validators.required], // rental start date
+      rentalEndDate: ['', Validators.required]    // rental end date
     });
   }
 
   ngOnInit(): void {
-    this.getCars();
+    this.getCars();              // get available cars
   }
 
+  // get available cars
   getCars() {
-  this.http.getCars().subscribe(
-    res => this.carList = res,
-    () => this.errorMessage = 'Unable to fetch cars'
-  );
-}
+    this.http.getCars().subscribe(
+      res => this.carList = res,
+      () => this.errorMessage = 'Unable to fetch cars'
+    );
+  }
 
+  // select car for booking
   book(val: any) {
     this.toBook = val;
   }
 
+  // submit booking request
   onSubmit() {
+
     if (this.itemForm.invalid) {
       this.itemForm.markAllAsTouched();
       return;
     }
 
-    const start = this.datePipe.transform(this.itemForm.value.rentalStartDate, 'yyyy-MM-ddTHH:mm:ss');
-    const end = this.datePipe.transform(this.itemForm.value.rentalEndDate, 'yyyy-MM-ddTHH:mm:ss');
+    const start = this.datePipe.transform(
+      this.itemForm.value.rentalStartDate,
+      'yyyy-MM-ddTHH:mm:ss'
+    );
 
+    const end = this.datePipe.transform(
+      this.itemForm.value.rentalEndDate,
+      'yyyy-MM-ddTHH:mm:ss'
+    );
+
+    // booking payload
     const payload = {
       rentalStartDate: start,
       rentalEndDate: end
     };
 
-    const userId = localStorage.getItem('userid');
-    const carId = this.toBook.id;
+    const userId = localStorage.getItem('userid'); // customer id
+    const carId = this.toBook.id;                  // car id
 
+    // book car
     this.http.bookACar(payload, userId, carId).subscribe(
       () => {
         this.showMessage = true;
         this.responseMessage = "Car booked successfully.";
         this.itemForm.reset();
-        this.getCars();
+        this.getCars();         // refresh car list
       },
       () => {
         this.showError = true;

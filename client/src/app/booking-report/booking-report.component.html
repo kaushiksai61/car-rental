@@ -1,19 +1,35 @@
+<!-- container for booking report -->
 <div class="container">
+
+  <!-- page title -->
   <h2>Booking Report</h2>
 
+  <!-- booking report table -->
   <table>
     <thead>
       <tr>
+        <!-- booking id -->
         <th>Booking ID</th>
+
+        <!-- car details -->
         <th>Car</th>
+
+        <!-- customer id -->
         <th>Customer ID</th>
+
+        <!-- booking status -->
         <th>Status</th>
+
+        <!-- rental start date -->
         <th>Start</th>
+
+        <!-- rental end date -->
         <th>End</th>
       </tr>
     </thead>
 
     <tbody>
+      <!-- iterate over booking report list -->
       <tr *ngFor="let b of bookingList">
         <td>{{ b.id }}</td>
         <td>{{ b.car?.make }} {{ b.car?.model }}</td>
@@ -25,5 +41,6 @@
     </tbody>
   </table>
 
+  <!-- error message -->
   <p class="error" *ngIf="showError">{{ errorMessage }}</p>
 </div>

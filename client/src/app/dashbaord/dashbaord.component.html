@@ -1,22 +1,36 @@
+<!-- main dashboard container -->
 <div class="dashboard">
+
+  <!-- dashboard title -->
   <h2>Dashboard</h2>
+
+  <!-- welcome message -->
   <p>Welcome to the Car Rental Management System.</p>
 
-  <!-- ✅ ADMIN DASHBOARD -->
+  <!-- administrator dashboard options -->
   <div class="links" *ngIf="role === 'ADMINISTRATOR'">
+    <!-- manage car categories -->
     <button (click)="goToCategories()">Categories</button>
+
+    <!-- view booking report -->
     <button (click)="goToBookingReport()">Booking Report</button>
+
+    <!-- view payment report -->
     <button (click)="goToPaymentReport()">Payment Report</button>
   </div>
 
-  <!-- ✅ AGENT DASHBOARD -->
+  <!-- agent dashboard options -->
   <div class="links" *ngIf="role === 'AGENT'">
+    <!-- add car -->
     <button (click)="goToAddCar()">Add Car</button>
+
+    <!-- view all bookings -->
     <button (click)="goToBookings()">Bookings</button>
   </div>
 
-  <!-- ✅ CUSTOMER DASHBOARD -->
+  <!-- customer dashboard options -->
   <div class="links" *ngIf="role === 'CUSTOMER'">
+    <!-- view available cars -->
     <button (click)="goToCars()">Cars</button>
   </div>
 </div>

@@ -8,16 +8,17 @@ import { HttpService } from '../../services/http.service';
 })
 export class BookingReportComponent implements OnInit {
 
-  bookingList: any[] = [];
-  showError = false;
-  errorMessage: any;
+  bookingList: any[] = [];     // booking report list
+  showError = false;           // error flag
+  errorMessage: any;           // error message
 
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService) {} // http service
 
   ngOnInit(): void {
-    this.getBookingReport();
+    this.getBookingReport();   // fetch booking report
   }
 
+  // get booking report
   getBookingReport() {
     this.http.getBookingReport().subscribe(
       (res) => this.bookingList = res,

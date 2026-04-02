@@ -1,29 +1,41 @@
+<!-- container for car category management -->
 <div class="container">
+
+  <!-- page title -->
   <h2>Car Categories</h2>
 
+  <!-- reactive form for add or update car category -->
   <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
 
+    <!-- category name -->
     <label>Name</label>
     <input type="text" formControlName="name">
 
+    <!-- category description -->
     <label>Description</label>
     <textarea formControlName="description"></textarea>
 
+    <!-- base rate -->
     <label>Base Rate</label>
     <input type="number" formControlName="baseRate">
 
+    <!-- submit form -->
     <button type="submit">Save</button>
 
+    <!-- success message -->
     <p class="success" *ngIf="showMessage">{{ responseMessage }}</p>
   </form>
 
+  <!-- list of existing car categories -->
   <h3>Existing Categories</h3>
 
+  <!-- category details card -->
   <div class="cat-card" *ngFor="let cat of categoryList">
     <p><strong>{{ cat.name }}</strong></p>
     <p>{{ cat.description }}</p>
     <p>Rate: {{ cat.baseRate }}</p>
 
+    <!-- edit category -->
     <button (click)="edit(cat)">Edit</button>
   </div>
 </div>

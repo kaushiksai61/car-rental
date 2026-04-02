@@ -9,10 +9,14 @@ import { AuthService } from './auth.service';
 })
 export class HttpService {
 
-  public serverName = environment.apiUrl;
+  public serverName = environment.apiUrl; // backend api url
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(
+    private http: HttpClient,             // http client
+    private authService: AuthService      // auth service
+  ) {}
 
+  // get authorization headers
   private getHeaders() {
     return {
       headers: new HttpHeaders({
@@ -22,7 +26,9 @@ export class HttpService {
     };
   }
 
-  
+  /* ================= ADMINISTRATOR APIS ================= */
+
+  // get all car categories
   getAllCategories(): Observable<any> {
     return this.http.get(
       this.serverName + '/api/administrator/car-categories',
@@ -30,6 +36,7 @@ export class HttpService {
     );
   }
 
+  // create car category
   createCategory(details: any): Observable<any> {
     return this.http.post(
       this.serverName + '/api/administrator/car-categories',
@@ -38,6 +45,7 @@ export class HttpService {
     );
   }
 
+  // update car category
   updateCategory(details: any, id: any): Observable<any> {
     return this.http.put(
       this.serverName + `/api/administrator/car-categories/${id}`,
@@ -46,7 +54,7 @@ export class HttpService {
     );
   }
 
-
+  // get booking report
   getBookingReport(): Observable<any> {
     return this.http.get(
       this.serverName + '/api/administrator/reports/bookings',
@@ -54,6 +62,7 @@ export class HttpService {
     );
   }
 
+  // get payment report
   paymentReport(): Observable<any> {
     return this.http.get(
       this.serverName + '/api/administrator/reports/payments',
@@ -61,7 +70,9 @@ export class HttpService {
     );
   }
 
+  /* ================= AGENT APIS ================= */
 
+  // get all cars
   getAllCars(): Observable<any> {
     return this.http.get(
       this.serverName + '/api/agent/cars',
@@ -69,6 +80,7 @@ export class HttpService {
     );
   }
 
+  // add car
   createCar(details: any): Observable<any> {
     return this.http.post(
       this.serverName + '/api/agent/car',
@@ -77,6 +89,7 @@ export class HttpService {
     );
   }
 
+  // update car details
   updateCar(details: any, id: any): Observable<any> {
     return this.http.put(
       this.serverName + `/api/agent/car/${id}`,
@@ -85,6 +98,7 @@ export class HttpService {
     );
   }
 
+  // get all bookings
   getBookingByAgent(): Observable<any> {
     return this.http.get(
       this.serverName + '/api/agent/bookings',
@@ -92,7 +106,7 @@ export class HttpService {
     );
   }
 
- 
+  // update booking status
   updateBookingStatus(id: any): Observable<any> {
     return this.http.put(
       this.serverName + `/api/agent/bookings/${id}/status?status=booked`,
@@ -101,6 +115,7 @@ export class HttpService {
     );
   }
 
+  // create payment for booking
   bookingPayment(details: any, id: any): Observable<any> {
     return this.http.post(
       this.serverName + `/api/agent/payment/${id}`,
@@ -109,7 +124,9 @@ export class HttpService {
     );
   }
 
+  /* ================= CUSTOMER APIS ================= */
 
+  // get available cars
   getCars(): Observable<any> {
     return this.http.get(
       this.serverName + '/api/customers/cars/available',
@@ -117,6 +134,7 @@ export class HttpService {
     );
   }
 
+  // book a car
   bookACar(details: any, userId: any, carId: any): Observable<any> {
     return this.http.post(
       this.serverName + `/api/customers/booking?userId=${userId}&carId=${carId}`,
@@ -125,7 +143,9 @@ export class HttpService {
     );
   }
 
+  /* ================= USER AUTH APIS ================= */
 
+  // login user
   Login(details: any): Observable<any> {
     return this.http.post(
       this.serverName + '/api/user/login',
@@ -134,7 +154,7 @@ export class HttpService {
     );
   }
 
-  
+  // register user
   registerUser(details: any): Observable<any> {
     return this.http.post(
       this.serverName + '/api/user/register',

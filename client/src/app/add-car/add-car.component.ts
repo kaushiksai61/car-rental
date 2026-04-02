@@ -12,40 +12,42 @@ import { DatePipe } from '@angular/common';
 })
 export class AddCarComponent implements OnInit {
 
-  itemForm!: FormGroup;
-  categoryList: any[] = [];
-  carList: any[] = [];
-  updateId: any = null;
+  itemForm!: FormGroup;              // reactive form for add/update car
+  categoryList: any[] = [];           // car category list
+  carList: any[] = [];                // list of cars
+  updateId: any = null;               // car id for update
 
-  showError = false;
-  errorMessage: any;
+  showError = false;                  // error flag
+  errorMessage: any;                  // error message
 
-  showMessage = false;
-  responseMessage: any;
+  showMessage = false;                // success flag
+  responseMessage: any;               // success message
 
   constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private http: HttpService,
-    private auth: AuthService,
-    private datePipe: DatePipe
+    private fb: FormBuilder,          // form builder
+    private router: Router,            // router navigation
+    private http: HttpService,         // http service
+    private auth: AuthService,         // auth service
+    private datePipe: DatePipe         // date formatter
   ) {
+    // reactive form initialization
     this.itemForm = this.fb.group({
-      make: ['', Validators.required],
-      model: ['', Validators.required],
-      manufactureYear: ['', Validators.required],
-      registrationNumber: ['', Validators.required],
-      status: ['', Validators.required],
-      rentalRatePerDay: ['', Validators.required],
-      categoryId: ['', Validators.required]
+      make: ['', Validators.required],                // car make
+      model: ['', Validators.required],               // car model
+      manufactureYear: ['', Validators.required],     // manufacture year
+      registrationNumber: ['', Validators.required],  // registration number
+      status: ['', Validators.required],              // car status
+      rentalRatePerDay: ['', Validators.required],    // rental rate per day
+      categoryId: ['', Validators.required]            // car category
     });
   }
 
   ngOnInit(): void {
-    this.getCategories();
-    this.getCars();
+    this.getCategories();               // get car categories
+    this.getCars();                     // get all cars
   }
 
+  // get all car categories
   getCategories() {
     this.http.getAllCategories().subscribe(
       (res) => this.categoryList = res,
@@ -56,6 +58,7 @@ export class AddCarComponent implements OnInit {
     );
   }
 
+  // get all cars
   getCars() {
     this.http.getAllCars().subscribe(
       (res) => this.carList = res,
@@ -66,8 +69,9 @@ export class AddCarComponent implements OnInit {
     );
   }
 
+  // edit car details
   editCar(car: any) {
-    this.updateId = car.id;
+    this.updateId = car.id;             // set update car id
 
     this.itemForm.patchValue({
       make: car.make,
@@ -80,6 +84,7 @@ export class AddCarComponent implements OnInit {
     });
   }
 
+  // submit add or update car
   onSubmit() {
     if (this.itemForm.invalid) {
       this.itemForm.markAllAsTouched();
@@ -89,11 +94,13 @@ export class AddCarComponent implements OnInit {
     const payload = this.itemForm.value;
 
     if (this.updateId) {
+      // update car details
       this.http.updateCar(payload, this.updateId).subscribe(
         () => this.afterSave("Car updated successfully."),
         () => this.errorHandler("Failed to update car.")
       );
     } else {
+      // create new car
       this.http.createCar(payload).subscribe(
         () => this.afterSave("Car created successfully."),
         () => this.errorHandler("Failed to create car.")
@@ -101,15 +108,17 @@ export class AddCarComponent implements OnInit {
     }
   }
 
+  // post save actions
   afterSave(msg: string) {
     this.showMessage = true;
     this.responseMessage = msg;
     this.itemForm.reset();
     this.updateId = null;
 
-    this.getCars();
+    this.getCars();                     // refresh car list
   }
 
+  // handle error message
   errorHandler(msg: string) {
     this.showError = true;
     this.errorMessage = msg;

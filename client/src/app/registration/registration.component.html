@@ -1,26 +1,44 @@
+<!-- main container for registration page -->
 <div class="container">
 
+  <!-- application title -->
   <h1>CAR RENTAL MANAGEMENT SYSTEM</h1>
+
+  <!-- registration instruction -->
   <p class="sub">Create your account</p>
 
+  <!-- registration form -->
   <form [formGroup]="itemForm" (ngSubmit)="onRegister()">
 
+    <!-- username field -->
     <label>Username</label>
     <input type="text" formControlName="username" placeholder="Username" />
-    <p class="error" *ngIf="itemForm.controls['username'].touched && itemForm.controls['username'].invalid">
+    <p
+      class="error"
+      *ngIf="itemForm.controls['username'].touched && itemForm.controls['username'].invalid"
+    >
       Please enter username.
     </p>
 
+    <!-- email field -->
     <label>Email address</label>
     <input type="email" formControlName="email" placeholder="name@example.com" />
-    <p class="error" *ngIf="itemForm.controls['email'].touched && itemForm.controls['email'].invalid">
+    <p
+      class="error"
+      *ngIf="itemForm.controls['email'].touched && itemForm.controls['email'].invalid"
+    >
       Please enter a valid email.
     </p>
 
+    <!-- password field -->
     <label>Password</label>
     <input type="password" formControlName="password" placeholder="*******" />
 
-    <p class="error" *ngIf="itemForm.controls['password'].touched && itemForm.controls['password'].errors">
+    <!-- password validation message -->
+    <p
+      class="error"
+      *ngIf="itemForm.controls['password'].touched && itemForm.controls['password'].errors"
+    >
       <span *ngIf="itemForm.controls['password'].errors['required']">
         Password is required.
       </span><br />
@@ -31,12 +49,13 @@
 
       <span *ngIf="itemForm.controls['password'].errors['pattern']">
         Password must contain:
-        <br />• One capital letter  
-        <br />• One number  
+        <br />• One capital letter
+        <br />• One number
         <br />• One special character
       </span>
     </p>
 
+    <!-- role selection -->
     <label>Role</label>
     <select formControlName="role">
       <option value="">Choose Role</option>
@@ -45,12 +64,15 @@
       <option value="CUSTOMER">CUSTOMER</option>
     </select>
 
+    <!-- submit registration -->
     <button type="submit">Submit</button>
 
+    <!-- success message -->
     <p class="success" *ngIf="showMessage">{{ responseMessage }}</p>
 
   </form>
 
+  <!-- redirect to login -->
   <p class="bottom-text">
     <a routerLink="/login">Go to Login</a>
   </p>

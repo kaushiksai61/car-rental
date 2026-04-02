@@ -1,24 +1,29 @@
+/* main container for payment report */
 .container {
   width: 800px;
   margin: 20px auto;
 }
 
+/* payment report table */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 15px;
 }
 
+/* table header and data cells */
 th, td {
   border: 1px solid #555;
   padding: 8px;
   text-align: center;
 }
 
+/* table header styling */
 th {
   background: #f0f0f0;
 }
 
+/* error message */
 .error {
   color: red;
   margin-top: 10px;

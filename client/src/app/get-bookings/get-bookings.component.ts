@@ -12,34 +12,39 @@ import { HttpService } from '../../services/http.service';
 })
 export class GetBookingsComponent implements OnInit {
 
-  itemForm!: FormGroup;
-  carList: any = [];
-  showError = false;
-  errorMessage: any;
-  idPaymentNow = false;
-  selectedBooking: any = {};
-  showMessage = false;
-  responseMessage: any;
+  itemForm!: FormGroup;            // reactive form for payment
+  carList: any = [];               // booking list for agent
+
+  showError = false;               // error flag
+  errorMessage: any;               // error message
+
+  idPaymentNow = false;            // payment form toggle
+  selectedBooking: any = {};       // selected booking for payment
+
+  showMessage = false;             // success flag
+  responseMessage: any;            // success message
 
   constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private http: HttpService,
-    private auth: AuthService,
-    private datePipe: DatePipe
+    private fb: FormBuilder,       // form builder
+    private router: Router,        // router navigation
+    private http: HttpService,     // http service
+    private auth: AuthService,     // auth service
+    private datePipe: DatePipe     // date formatter
   ) {
+    // payment form initialization
     this.itemForm = this.fb.group({
-      amount: ['', Validators.required],
-      paymentDate: ['', Validators.required],
-      paymentMethod: ['', Validators.required],
-      paymentStatus: ['', Validators.required]
+      amount: ['', Validators.required],        // payment amount
+      paymentDate: ['', Validators.required],   // payment date
+      paymentMethod: ['', Validators.required], // payment method
+      paymentStatus: ['', Validators.required]  // payment status
     });
   }
 
   ngOnInit(): void {
-    this.getBookings();
+    this.getBookings();             // get all bookings
   }
 
+  // get all bookings for agent
   getBookings() {
     this.http.getBookingByAgent().subscribe(
       (res) => this.carList = res,
@@ -50,12 +55,13 @@ export class GetBookingsComponent implements OnInit {
     );
   }
 
+  // update booking status
   bookNow(val: any) {
     this.http.updateBookingStatus(val.id).subscribe(
       () => {
         this.showMessage = true;
         this.responseMessage = "Booking status updated.";
-        this.getBookings();
+        this.getBookings();        // refresh booking list
       },
       () => {
         this.showError = true;
@@ -64,12 +70,15 @@ export class GetBookingsComponent implements OnInit {
     );
   }
 
+  // initiate payment for booking
   payment(val: any) {
     this.idPaymentNow = true;
-    this.selectedBooking = val;
+    this.selectedBooking = val;    // set booking for payment
   }
 
+  // submit payment for booking
   onSubmit() {
+
     if (this.itemForm.invalid) {
       this.itemForm.markAllAsTouched();
       return;
@@ -80,6 +89,7 @@ export class GetBookingsComponent implements OnInit {
       'yyyy-MM-ddTHH:mm:ss'
     );
 
+    // payment payload
     const payload = {
       amount: this.itemForm.value.amount,
       paymentDate: paymentDate,
@@ -87,13 +97,14 @@ export class GetBookingsComponent implements OnInit {
       paymentStatus: this.itemForm.value.paymentStatus
     };
 
+    // create payment for booking
     this.http.bookingPayment(payload, this.selectedBooking.id).subscribe(
       () => {
         this.showMessage = true;
         this.responseMessage = "Payment successful.";
         this.idPaymentNow = false;
         this.itemForm.reset();
-        this.getBookings();
+        this.getBookings();       // refresh booking list
       },
       () => {
         this.showError = true;

@@ -8,17 +8,18 @@ import { HttpService } from '../../services/http.service';
 })
 export class PaymentReportComponent implements OnInit {
 
-  bookingList: any[] = [];
-  showError = false;
-  errorMessage: any;
-  showMessage = false;
+  bookingList: any[] = [];     // list of payment report data
+  showError = false;           // error flag
+  errorMessage: any;           // error message
+  showMessage = false;         // success flag
 
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService) {} // http service
 
   ngOnInit(): void {
-    this.getPaymentReport();
+    this.getPaymentReport();   // fetch payment report
   }
 
+  // get payment report
   getPaymentReport() {
     this.http.paymentReport().subscribe(
       (res) => {

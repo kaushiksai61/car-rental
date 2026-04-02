@@ -12,18 +12,29 @@ import { HttpService } from '../../services/http.service';
 export class CategoryComponent implements OnInit {
 
   itemForm!: FormGroup;
+  //reactive form for car category
   categoryList: any = [];
+  //list of car categories
   updateId: any;
+  //category id for update
   showError = false;
+  //error flag
   errorMessage: any;
+  //error message
   showMessage = false;
+  //success flag
   responseMessage: any;
+  //success message
 
   constructor(
     private fb: FormBuilder,
+    //form builder
     private router: Router,
+    //router navigation
     private http: HttpService,
+    //http service
     private auth: AuthService
+    //auth service
   ) {
     this.itemForm = this.fb.group({
       name: ['', Validators.required],
@@ -35,7 +46,7 @@ export class CategoryComponent implements OnInit {
   ngOnInit(): void {
     this.getCategories();
   }
-
+  //get all categories
   getCategories() {
     this.http.getAllCategories().subscribe(
       (res) => this.categoryList = res,
@@ -45,36 +56,41 @@ export class CategoryComponent implements OnInit {
       }
     );
   }
-
+// edit car category
   edit(val: any) {
     this.updateId = val.id;
+    //set category id
     this.itemForm.patchValue(val);
   }
-
+ // submit add or update category
   onSubmit() {
     if (this.itemForm.invalid) {
       this.itemForm.markAllAsTouched();
       return;
     }
+   
 
     if (this.updateId) {
+      //update car category
       this.http.updateCategory(this.itemForm.value, this.updateId).subscribe(
         () => this.afterSave("Category updated."),
         () => this.showError = true
       );
     } else {
+      //create car category
       this.http.createCategory(this.itemForm.value).subscribe(
         () => this.afterSave("Category created."),
         () => this.showError = true
       );
     }
   }
-
+//post save actions
   afterSave(msg: string) {
     this.showMessage = true;
     this.responseMessage = msg;
     this.itemForm.reset();
     this.updateId = null;
     this.getCategories();
+    // refresh category list
   }
 }

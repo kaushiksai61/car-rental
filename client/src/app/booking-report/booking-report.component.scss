@@ -1,24 +1,29 @@
+/* main container for booking report */
 .container {
   width: 800px;
   margin: 20px auto;
 }
 
+/* booking report table */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 15px;
 }
 
+/* table header and data cells */
 th, td {
   border: 1px solid #555;
   padding: 8px;
   text-align: center;
 }
 
+/* table header styling */
 th {
   background: #eee;
 }
 
+/* error message */
 .error {
   margin-top: 10px;
   color: red;

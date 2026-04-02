@@ -1,20 +1,34 @@
+<!-- main container for login page -->
 <div class="container">
 
+  <!-- application title -->
   <h1>CAR RENTAL MANAGEMENT SYSTEM</h1>
+
+  <!-- login instruction -->
   <p class="sub">Please enter your user and password!</p>
 
+  <!-- login form -->
   <form [formGroup]="itemForm" (ngSubmit)="onLogin()">
 
+    <!-- username field -->
     <label>Username</label>
     <input type="text" formControlName="username" placeholder="name@example.com" />
-    <p class="error" *ngIf="itemForm.controls['username'].touched && itemForm.controls['username'].invalid">
+    <p
+      class="error"
+      *ngIf="itemForm.controls['username'].touched && itemForm.controls['username'].invalid"
+    >
       Please enter username.
     </p>
 
+    <!-- password field -->
     <label>Password</label>
     <input type="password" formControlName="password" placeholder="*******" />
 
-    <p class="error" *ngIf="itemForm.controls['password'].touched && itemForm.controls['password'].errors">
+    <!-- password validation message -->
+    <p
+      class="error"
+      *ngIf="itemForm.controls['password'].touched && itemForm.controls['password'].errors"
+    >
       <span *ngIf="itemForm.controls['password'].errors['required']">
         Password is required.
       </span><br />
@@ -25,12 +39,15 @@
       </span>
     </p>
 
+    <!-- submit login -->
     <button type="submit">Login</button>
 
+    <!-- api error message -->
     <p class="api-error" *ngIf="showError">{{ errorMessage }}</p>
 
   </form>
 
+  <!-- redirect to registration -->
   <p class="bottom-text">
     Don't have an account?
     <a routerLink="/registration">Registration</a>

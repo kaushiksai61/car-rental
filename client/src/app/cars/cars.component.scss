@@ -1,8 +1,10 @@
+/* main container for available cars page */
 .container {
   width: 600px;
   margin: 20px auto;
 }
 
+/* card layout for each car */
 .car-card {
   border: 1px solid #888;
   padding: 10px;
@@ -10,6 +12,7 @@
   border-radius: 4px;
 }
 
+/* button styling */
 button {
   padding: 6px 12px;
   background: #1976d2;
@@ -18,22 +21,26 @@ button {
   cursor: pointer;
 }
 
+/* form labels */
 label {
   display: block;
   margin-top: 10px;
 }
 
+/* form input fields */
 input {
   width: 100%;
   padding: 6px;
   margin-top: 4px;
 }
 
+/* success message */
 .success {
   color: green;
   margin-top: 10px;
 }
 
+/* error message */
 .error {
   color: red;
   margin-top: 10px;

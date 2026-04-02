@@ -1,35 +1,60 @@
+<!-- main container for agent bookings -->
 <div class="container">
+
+  <!-- page title -->
   <h2>Bookings Assigned to You</h2>
 
+  <!-- list of bookings -->
   <div class="booking-card" *ngFor="let b of carList">
+
+    <!-- car details -->
     <p><strong>Car:</strong> {{ b.car?.make }} {{ b.car?.model }}</p>
+
+    <!-- customer id -->
     <p><strong>Customer ID:</strong> {{ b.customerId }}</p>
+
+    <!-- booking status -->
     <p><strong>Status:</strong> {{ b.status }}</p>
 
+    <!-- update booking status -->
     <button (click)="bookNow(b)">Update Status</button>
+
+    <!-- create payment for booking -->
     <button (click)="payment(b)">Make Payment</button>
   </div>
 
+  <!-- payment section -->
   <div *ngIf="idPaymentNow">
+
+    <!-- payment title -->
     <h3>Make Payment</h3>
 
+    <!-- payment form -->
     <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
 
+      <!-- payment amount -->
       <label>Amount</label>
       <input type="number" formControlName="amount">
 
+      <!-- payment date -->
       <label>Payment Date</label>
       <input type="datetime-local" formControlName="paymentDate">
 
+      <!-- payment method -->
       <label>Payment Method</label>
       <input type="text" formControlName="paymentMethod">
 
+      <!-- payment status -->
       <label>Payment Status</label>
       <input type="text" formControlName="paymentStatus">
 
+      <!-- submit payment -->
       <button type="submit">Submit Payment</button>
 
+      <!-- success message -->
       <p class="success" *ngIf="showMessage">{{ responseMessage }}</p>
+
+      <!-- error message -->
       <p class="error" *ngIf="showError">{{ errorMessage }}</p>
     </form>
   </div>
