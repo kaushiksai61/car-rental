@@ -1,8 +1,6 @@
-<!-- NAVBAR -->
 <nav class="app-navbar" *ngIf="IsLoggin">
   <div class="nav-inner">
 
-    <!-- Brand -->
     <div class="nav-brand">
       <div class="nav-brand-icon">
         <svg viewBox="0 0 24 24" fill="white">
@@ -12,10 +10,8 @@
       <span class="nav-brand-name">CAR<span>RENTAL</span></span>
     </div>
 
-    <!-- Nav Links -->
     <div class="nav-links" [class.open]="menuOpen">
 
-      <!-- Dashboard always visible -->
       <a class="nav-link" routerLink="/dashboard" routerLinkActive="active" (click)="menuOpen=false">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
         Dashboard
@@ -25,6 +21,10 @@
       <a class="nav-link" *ngIf="roleName === 'CUSTOMER'" routerLink="/cars" routerLinkActive="active" (click)="menuOpen=false">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
         Book a Car
+      </a>
+      <a class="nav-link" *ngIf="roleName === 'CUSTOMER'" routerLink="/my-bookings" routerLinkActive="active" (click)="menuOpen=false">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+        My Bookings
       </a>
 
       <!-- AGENT -->
@@ -53,12 +53,25 @@
 
     </div>
 
-    <!-- Right side -->
     <div class="nav-right">
+
+      <!-- Theme Toggle -->
+      <button class="theme-toggle" (click)="toggleTheme()" [title]="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+        <!-- Moon icon for dark mode -->
+        <svg *ngIf="isDark" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+        </svg>
+        <!-- Sun icon for light mode -->
+        <svg *ngIf="!isDark" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 7a5 5 0 100 10A5 5 0 0012 7zM2 13h2a1 1 0 000-2H2a1 1 0 000 2zm18 0h2a1 1 0 000-2h-2a1 1 0 000 2zM11 2v2a1 1 0 002 0V2a1 1 0 00-2 0zm0 18v2a1 1 0 002 0v-2a1 1 0 00-2 0zM5.99 4.58a1 1 0 00-1.41 1.41l1.06 1.06a1 1 0 001.41-1.41L5.99 4.58zm12.37 12.37a1 1 0 00-1.41 1.41l1.06 1.06a1 1 0 001.41-1.41l-1.06-1.06zm1.06-10.96a1 1 0 00-1.41-1.41l-1.06 1.06a1 1 0 001.41 1.41l1.06-1.06zM7.05 18.36a1 1 0 00-1.41-1.41l-1.06 1.06a1 1 0 001.41 1.41l1.06-1.06z"/>
+        </svg>
+      </button>
+
       <div class="role-badge">
         <span class="role-dot"></span>
         {{ roleName }}
       </div>
+
       <button class="btn-logout" (click)="logout()">
         <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
           <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5-5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
@@ -66,18 +79,14 @@
         Logout
       </button>
 
-      <!-- Mobile hamburger -->
       <button class="hamburger" (click)="toggleMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
       </button>
-    </div>
 
+    </div>
   </div>
 </nav>
 
-<!-- Page Content -->
 <div class="page-wrapper" [class.with-nav]="IsLoggin">
   <router-outlet></router-outlet>
 </div>

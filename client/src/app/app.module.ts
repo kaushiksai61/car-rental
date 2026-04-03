@@ -15,6 +15,7 @@ import { CarsComponent } from './cars/cars.component';
 import { GetBookingsComponent } from './get-bookings/get-bookings.component';
 import { BookingReportComponent } from './booking-report/booking-report.component';
 import { PaymentReportComponent } from './payment-report/payment-report.component';
+import { MyBookingsComponent } from './my-bookings/my-bookings.component';
 import { AuthService } from '../services/auth.service';
 import { StatusFilterPipe, PaymentStatusFilterPipe } from './status-filter.pipe';
 
@@ -30,6 +31,7 @@ import { StatusFilterPipe, PaymentStatusFilterPipe } from './status-filter.pipe'
     GetBookingsComponent,
     BookingReportComponent,
     PaymentReportComponent,
+    MyBookingsComponent,
     StatusFilterPipe,
     PaymentStatusFilterPipe
   ],

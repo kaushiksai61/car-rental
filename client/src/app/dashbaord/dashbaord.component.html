@@ -1,9 +1,11 @@
 <div class="dashboard-page">
 
-  <!-- Hero Welcome Section -->
+  <!-- Hero Section with car image -->
   <div class="dashboard-hero">
-    <div class="hero-bg"></div>
-    <div class="hero-content">
+    <div class="hero-overlay"></div>
+    <div class="hero-image-bg"></div>
+
+    <div class="hero-left">
       <div class="welcome-tag">
         <span class="tag-dot"></span>
         <span>Live Session</span>
@@ -15,6 +17,7 @@
       <p class="welcome-sub">{{ currentDate }}</p>
       <div class="time-display">{{ currentTime }}</div>
     </div>
+
     <div class="hero-stats">
       <div class="hero-stat">
         <span class="hero-stat-num">500+</span>
@@ -33,8 +36,9 @@
     </div>
   </div>
 
-  <!-- Quick Action Cards -->
+  <!-- Dashboard Body -->
   <div class="dashboard-body">
+
     <div class="section-header">
       <h2 class="section-title">Quick Actions</h2>
       <p class="section-sub">Jump straight into your work</p>
@@ -42,7 +46,6 @@
 
     <!-- ADMIN CARDS -->
     <div class="cards-grid" *ngIf="roleName === 'ADMIN'">
-
       <div class="action-card" (click)="navigateTo('/categories')">
         <div class="card-icon card-icon-red">
           <svg viewBox="0 0 24 24" fill="currentColor">
@@ -81,18 +84,16 @@
         </div>
         <div class="card-content">
           <h3 class="card-title">Payment Report</h3>
-          <p class="card-desc">Track all payment transactions and statuses</p>
+          <p class="card-desc">Track all payment transactions and revenue</p>
         </div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
         </div>
       </div>
-
     </div>
 
     <!-- AGENT CARDS -->
     <div class="cards-grid" *ngIf="roleName === 'AGENT'">
-
       <div class="action-card" (click)="navigateTo('/add-car')">
         <div class="card-icon card-icon-red">
           <svg viewBox="0 0 24 24" fill="currentColor">
@@ -116,18 +117,16 @@
         </div>
         <div class="card-content">
           <h3 class="card-title">Manage Bookings</h3>
-          <p class="card-desc">View bookings, confirm status and process payments</p>
+          <p class="card-desc">View bookings, confirm and process payments</p>
         </div>
         <div class="card-arrow">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
         </div>
       </div>
-
     </div>
 
     <!-- CUSTOMER CARDS -->
     <div class="cards-grid" *ngIf="roleName === 'CUSTOMER'">
-
       <div class="action-card" (click)="navigateTo('/cars')">
         <div class="card-icon card-icon-red">
           <svg viewBox="0 0 24 24" fill="currentColor">
@@ -143,6 +142,20 @@
         </div>
       </div>
 
+      <div class="action-card" (click)="navigateTo('/my-bookings')">
+        <div class="card-icon card-icon-gold">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">My Bookings</h3>
+          <p class="card-desc">View all your past and current bookings</p>
+        </div>
+        <div class="card-arrow">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+        </div>
+      </div>
     </div>
 
     <!-- Info strip -->

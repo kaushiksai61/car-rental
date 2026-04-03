@@ -45,8 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // PUBLIC — no token needed
                 .antMatchers("/api/user/register", "/api/user/login").permitAll()
 
-                // ADMIN — matches role stored in DB as "ADMIN"
-                .antMatchers("/api/administrator/**").hasAuthority("ADMIN")
+                // ADMIN — supports both "ADMIN" and "ADMINISTRATOR" role values
+                .antMatchers("/api/administrator/**")
+                    .access("hasAuthority('ADMIN') or hasAuthority('ADMINISTRATOR')")
 
                 // AGENT — matches role stored in DB as "AGENT"
                 .antMatchers("/api/agent/**").hasAuthority("AGENT")

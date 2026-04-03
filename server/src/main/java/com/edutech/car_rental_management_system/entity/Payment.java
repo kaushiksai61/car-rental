@@ -1,10 +1,11 @@
 package com.edutech.car_rental_management_system.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "payments") // do not change this line
+@Table(name = "payments")
 public class Payment {
 
     @Id
@@ -19,6 +20,7 @@ public class Payment {
     private String paymentMethod;
     private String paymentStatus;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "booking_id")
     private Booking booking;
@@ -34,22 +36,16 @@ public class Payment {
         this.paymentStatus = paymentStatus;
     }
 
-    // GETTERS & SETTERS
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-
     public Double getAmount() { return amount; }
     public void setAmount(Double amount) { this.amount = amount; }
-
     public Date getPaymentDate() { return paymentDate; }
     public void setPaymentDate(Date paymentDate) { this.paymentDate = paymentDate; }
-
     public String getPaymentMethod() { return paymentMethod; }
     public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }
-
     public String getPaymentStatus() { return paymentStatus; }
     public void setPaymentStatus(String paymentStatus) { this.paymentStatus = paymentStatus; }
-
     public Booking getBooking() { return booking; }
     public void setBooking(Booking booking) { this.booking = booking; }
 }

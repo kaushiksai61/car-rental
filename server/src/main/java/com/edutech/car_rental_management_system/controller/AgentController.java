@@ -4,14 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.edutech.car_rental_management_system.entity.Booking;
 import com.edutech.car_rental_management_system.entity.Car;
+import com.edutech.car_rental_management_system.entity.CarCategory;
 import com.edutech.car_rental_management_system.entity.Payment;
 import com.edutech.car_rental_management_system.service.BookingService;
+import com.edutech.car_rental_management_system.service.CarCategoryService;
 import com.edutech.car_rental_management_system.service.CarService;
 import com.edutech.car_rental_management_system.service.PaymentService;
-
 import java.util.List;
 
 @RestController
@@ -27,6 +27,19 @@ public class AgentController {
     @Autowired
     private PaymentService paymentService;
 
+    @Autowired
+    private CarCategoryService carCategoryService;
+
+    // GET ALL CATEGORIES (for dropdown in add car form)
+    @GetMapping("/categories")
+    public ResponseEntity<List<CarCategory>> getAllCategories() {
+        try {
+            List<CarCategory> list = carCategoryService.getAllCarCategories();
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     // ADD CAR
     @PostMapping("/car")
@@ -39,7 +52,6 @@ public class AgentController {
         }
     }
 
-
     // GET ALL CARS
     @GetMapping("/cars")
     public ResponseEntity<List<Car>> getAllCars() {
@@ -50,7 +62,6 @@ public class AgentController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     // UPDATE CAR DETAILS
     @PutMapping("/car/{carId}")
@@ -64,7 +75,6 @@ public class AgentController {
         }
     }
 
-
     // GET ALL BOOKINGS
     @GetMapping("/bookings")
     public ResponseEntity<List<Booking>> getAllBookings() {
@@ -75,7 +85,6 @@ public class AgentController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     // UPDATE BOOKING STATUS
     @PutMapping("/bookings/{bookingId}/status")
@@ -89,7 +98,6 @@ public class AgentController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     // CREATE PAYMENT FOR BOOKING
     @PostMapping("/payment/{bookingId}")

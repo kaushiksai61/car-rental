@@ -34,7 +34,8 @@
             "scripts": [
               "../../node_modules/jquery/dist/jquery.min.js",
               "../../node_modules/bootstrap/dist/js/bootstrap.js"
-            ]
+            ],
+            "deployUrl": "/project/5624/proxy/5000/"
           },
           "configurations": {
             "production": {
@@ -64,7 +65,8 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "deployUrl": "/project/5624/proxy/5000/"
             }
           },
           "defaultConfiguration": "production"

@@ -1,42 +1,57 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
   IsLoggin: boolean = false;
-  roleName: string | null = null;
+  roleName: string = '';
   menuOpen: boolean = false;
+  isDark: boolean = true;
 
-  constructor(private authService: AuthService, private router: Router) {
-    this.IsLoggin = this.authService.getLoginStatus();
-    this.roleName = this.authService.getRole();
+  constructor(private auth: AuthService, private router: Router) {}
 
-    // Re-check login status on every route change
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.IsLoggin = this.authService.getLoginStatus();
-        this.roleName = this.authService.getRole();
-      }
+  ngOnInit(): void {
+    const saved = localStorage.getItem('theme') || 'dark';
+    this.isDark = saved === 'dark';
+    this.applyTheme();
+
+    this.checkLogin();
+    this.router.events.subscribe(() => {
+      this.checkLogin();
     });
-
-    if (!this.IsLoggin) {
-      this.router.navigateByUrl('/login');
-    }
   }
 
-  logout() {
-    this.authService.logout();
-    this.IsLoggin = false;
-    this.roleName = null;
-    this.router.navigateByUrl('/login');
+  checkLogin(): void {
+    this.IsLoggin = this.auth.getLoginStatus();
+    this.roleName = this.auth.getRole() || '';
   }
 
-  toggleMenu() {
+  logout(): void {
+    this.auth.logout();
+    this.router.navigate(['/login']);
+  }
+
+  toggleMenu(): void {
     this.menuOpen = !this.menuOpen;
+  }
+
+  toggleTheme(): void {
+    this.isDark = !this.isDark;
+    localStorage.setItem('theme', this.isDark ? 'dark' : 'light');
+    this.applyTheme();
+  }
+
+  applyTheme(): void {
+    if (this.isDark) {
+      document.documentElement.removeAttribute('data-theme');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
   }
 }

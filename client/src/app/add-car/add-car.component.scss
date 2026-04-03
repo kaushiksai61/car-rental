@@ -483,3 +483,39 @@ tbody td {
     gap: 12px !important;
   }
 }
+
+
+.category-badge {
+  display: inline-flex !important;
+  padding: 4px 10px !important;
+  background: rgba(96,165,250,0.10) !important;
+  border: 0.5px solid rgba(96,165,250,0.25) !important;
+  border-radius: 20px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: #60A5FA !important;
+}
+
+.no-category {
+  color: #64748B !important;
+  font-size: 13px !important;
+}
+
+.format-hint {
+  margin-top: 5px !important;
+  font-size: 11px !important;
+  color: #475569 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.no-categories-hint {
+  margin-top: 6px !important;
+  font-size: 12px !important;
+  color: #C9A84C !important;
+  font-style: italic !important;
+}
+
+.no-cat {
+  color: #64748B !important;
+  font-size: 13px !important;
+}

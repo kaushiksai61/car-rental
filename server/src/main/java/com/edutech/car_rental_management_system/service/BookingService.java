@@ -2,14 +2,12 @@ package com.edutech.car_rental_management_system.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.edutech.car_rental_management_system.entity.Booking;
 import com.edutech.car_rental_management_system.entity.Car;
 import com.edutech.car_rental_management_system.entity.User;
 import com.edutech.car_rental_management_system.repository.BookingRepository;
 import com.edutech.car_rental_management_system.repository.CarRepository;
 import com.edutech.car_rental_management_system.repository.UserRepository;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +29,11 @@ public class BookingService {
         return bookingRepository.findAll();
     }
 
+    // GET BOOKINGS BY USER ID (CUSTOMER)
+    public List<Booking> getBookingsByUserId(Long userId) {
+        return bookingRepository.findByUserId(userId);
+    }
+
     // UPDATE BOOKING STATUS (AGENT)
     public Booking updateBookingStatus(Long bookingId, String status) {
         Optional<Booking> optional = bookingRepository.findById(bookingId);
@@ -44,13 +47,11 @@ public class BookingService {
 
     // CUSTOMER BOOKS A CAR
     public Booking bookCar(Long userId, Long carId, Date rentalStartDate, Date rentalEndDate) {
-
         Optional<User> userOpt = userRepository.findById(userId);
-        Optional<Car> carOpt = carRepository.findById(carId);
+        Optional<Car> carOpt  = carRepository.findById(carId);
 
         if (userOpt.isPresent() && carOpt.isPresent()) {
-
-            Car car = carOpt.get();
+            Car  car  = carOpt.get();
             User user = userOpt.get();
 
             Booking booking = new Booking();
@@ -58,32 +59,27 @@ public class BookingService {
             booking.setRentalEndDate(rentalEndDate);
             booking.setStatus("pending");
 
-            // calculate total price
+            // Calculate total amount
             long time = rentalEndDate.getTime() - rentalStartDate.getTime();
-            long days = (time / (1000 * 60 * 60 * 24));
+            long days = time / (1000 * 60 * 60 * 24);
             if (days <= 0) days = 1;
-
             double total = days * car.getRentalRatePerDay();
+
             booking.setTotalAmount(total);
             booking.setPaymentStatus("unpaid");
-
             booking.setUser(user);
             booking.setCar(car);
 
-            // set car unavailable
+            // Mark car as booked
             car.setStatus("booked");
             carRepository.save(car);
 
-            // save booking
+            // Save and return booking
             Booking savedBooking = bookingRepository.save(booking);
-
-            // IMPORTANT FIX: ensure JSON response contains user & car objects
             savedBooking.setUser(user);
             savedBooking.setCar(car);
-
             return savedBooking;
         }
-
         return null;
     }
 }

@@ -1,576 +1,653 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap');
 
+* { box-sizing: border-box; }
+
+@keyframes twinkle {
+  0%,100% { opacity: 0.3; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.4); }
+}
+
+@keyframes shootLine {
+  0%   { transform: translateX(-140%) scaleX(0.4); opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translateX(120vw) scaleX(1); opacity: 0; }
+}
+
 .login-page {
   display: flex !important;
   min-height: 100vh !important;
   overflow: hidden !important;
-  background: #080A0F !important;
+  background: #06080C !important;
   font-family: 'DM Sans', sans-serif !important;
 }
 
-/* ── LEFT PANEL ─────────────────────────────────────────── */
-.login-page .left-panel {
-  flex: 1;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 52px;
-  overflow: hidden;
-  min-height: 100vh;
+/* ─── LEFT PANEL ────────────────────────────────── */
+.left-panel {
+  flex: 1 !important;
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+  padding: 52px !important;
+  overflow: hidden !important;
+  min-height: 100vh !important;
+  background: linear-gradient(180deg, #04050a 0%, #080a10 60%, #0a0c12 100%) !important;
 }
 
-.login-page .left-bg {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(160deg, rgba(220,38,38,0.06) 0%, transparent 50%),
-    linear-gradient(to top, rgba(8,10,15,0.98) 0%, rgba(8,10,15,0.6) 55%, rgba(8,10,15,0.2) 100%),
-    #0a0c11;
+/* ── SPOTLIGHT ──────────────────────────────────── */
+.spotlight {
+  position: absolute !important;
+  width: 600px !important;
+  height: 600px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(circle,
+    rgba(220,38,38,0.12) 0%,
+    rgba(220,38,38,0.05) 35%,
+    transparent 70%) !important;
+  transform: translate(-50%,-50%) !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  transition: opacity 0.25s ease !important;
+  z-index: 5 !important;
+  mix-blend-mode: screen !important;
 }
 
-/* ── CAR SCENE ───────────────────────────────────────────── */
-.login-page .car-scene {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -58%);
-  width: 90%;
-  max-width: 520px;
-  z-index: 1;
-  opacity: 0.85;
+/* ── STARS ──────────────────────────────────────── */
+#stars {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
 }
 
-.login-page .vintage-car {
-  width: 100%;
-  height: auto;
-  overflow: visible;
+/* ── MOUNTAINS ──────────────────────────────────── */
+.mountains {
+  position: absolute !important;
+  bottom: 220px !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 300px !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
 }
 
-/* floating animation on whole car */
-.login-page .car-group {
-  animation: carFloat 4s ease-in-out infinite;
-  transform-origin: center bottom;
+.mountains svg {
+  width: 100% !important;
+  height: 100% !important;
 }
 
-@keyframes carFloat {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-8px); }
+/* ── CITY GLOW ──────────────────────────────────── */
+.city-glow {
+  position: absolute !important;
+  bottom: 260px !important;
+  left: 30% !important;
+  width: 300px !important;
+  height: 120px !important;
+  background: radial-gradient(ellipse, rgba(220,38,38,0.12) 0%, transparent 70%) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
 }
 
-/* wheel spin */
-.login-page .wheel {
-  animation: wheelSpin 1.8s linear infinite;
-}
-.login-page .wheel-front { transform-origin: 300px 133px; }
-.login-page .wheel-rear  { transform-origin: 122px 133px; }
-
-@keyframes wheelSpin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+.city-glow-2 {
+  left: 55% !important;
+  bottom: 280px !important;
+  width: 200px !important;
+  background: radial-gradient(ellipse, rgba(100,160,255,0.08) 0%, transparent 70%) !important;
 }
 
-/* road dashes scroll */
-.login-page .dash {
-  animation: roadScroll 1.2s linear infinite;
-}
-.login-page .d1 { animation-delay: 0s; }
-.login-page .d2 { animation-delay: -0.24s; }
-.login-page .d3 { animation-delay: -0.48s; }
-.login-page .d4 { animation-delay: -0.72s; }
-.login-page .d5 { animation-delay: -0.96s; }
-
-@keyframes roadScroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-80px); }
+/* ── ROAD ───────────────────────────────────────── */
+.road-wrap {
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 220px !important;
+  z-index: 3 !important;
+  pointer-events: none !important;
+  perspective: 600px !important;
 }
 
-/* headlight beam pulse */
-.login-page .beam {
-  animation: beamPulse 2.5s ease-in-out infinite;
-}
-@keyframes beamPulse {
-  0%, 100% { opacity: 0.5; }
-  50%       { opacity: 1; }
-}
-
-/* tail light blink */
-.login-page .taillight-inner {
-  animation: tailBlink 2s ease-in-out infinite;
-}
-@keyframes tailBlink {
-  0%, 90%, 100% { opacity: 1; }
-  95%           { opacity: 0.3; }
+.road-surface {
+  position: absolute !important;
+  bottom: 0 !important;
+  left: -10% !important;
+  right: -10% !important;
+  height: 220px !important;
+  background: linear-gradient(180deg, #0a0c10 0%, #111318 100%) !important;
+  transform: rotateX(20deg) !important;
+  transform-origin: bottom center !important;
 }
 
-/* glow under car */
-.login-page .underglow {
-  animation: underlowPulse 4s ease-in-out infinite;
-}
-@keyframes underlowPulse {
-  0%, 100% { opacity: 0.3; }
-  50%       { opacity: 0.7; }
-}
-
-.login-page .diagonal-line {
-  position: absolute;
-  top: 0;
-  right: 80px;
-  width: 1px;
-  height: 100%;
-  background: linear-gradient(to bottom, transparent 0%, rgba(220,38,38,0.35) 40%, rgba(220,38,38,0.1) 100%);
+.road-center-line {
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 50% !important;
+  width: 2px !important;
+  height: 220px !important;
+  background: linear-gradient(to top, rgba(255,255,255,0.06), transparent) !important;
+  transform: translateX(-50%) !important;
 }
 
-.login-page .left-content {
-  position: relative;
-  z-index: 2;
+.road-marking {
+  position: absolute !important;
+  bottom: 10px !important;
+  height: 3px !important;
+  background: rgba(255,255,255,0.07) !important;
+  border-radius: 2px !important;
 }
 
-.login-page .brand-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(220,38,38,0.10);
-  border: 0.5px solid rgba(220,38,38,0.28);
-  border-radius: 4px;
-  padding: 6px 14px;
-  margin-bottom: 28px;
-  width: fit-content;
+.m1 { left: 5%;  right: 5%;  }
+.m2 { left: 10%; right: 10%; bottom: 40px;  opacity: 0.6; }
+.m3 { left: 18%; right: 18%; bottom: 80px;  opacity: 0.4; }
+.m4 { left: 28%; right: 28%; bottom: 130px; opacity: 0.2; }
+
+.road-edge {
+  position: absolute !important;
+  bottom: 0 !important;
+  top: 0 !important;
+  width: 2px !important;
+  background: linear-gradient(to top, rgba(220,38,38,0.3), transparent) !important;
 }
 
-.login-page .brand-tag span:not(.brand-dot) {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #EF4444;
+.left-edge  { left: 4%; }
+.right-edge { right: 4%; }
+
+/* ── STREET LIGHTS ──────────────────────────────── */
+.street-light {
+  position: absolute !important;
+  bottom: 170px !important;
+  z-index: 4 !important;
+  pointer-events: none !important;
 }
 
-.login-page .brand-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #DC2626;
-  animation: loginPulse 2s ease-in-out infinite;
+.sl-1 { right: 12%; }
+.sl-2 { right: 22%; transform: scale(0.75); bottom: 175px; opacity: 0.7; }
+.sl-3 { right: 30%; transform: scale(0.55); bottom: 180px; opacity: 0.5; }
+
+.light-pole {
+  width: 3px !important;
+  height: 80px !important;
+  background: linear-gradient(to top, #1a1a1a, #2a2a2a) !important;
+  margin: 0 auto !important;
 }
 
-@keyframes loginPulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.3; }
+.light-head {
+  width: 24px !important;
+  height: 8px !important;
+  background: #222 !important;
+  border-radius: 4px 4px 0 0 !important;
+  margin: 0 auto !important;
+  margin-left: -10px !important;
+  position: relative !important;
 }
 
-.login-page .left-headline {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(52px, 6vw, 82px);
-  line-height: 0.92;
-  color: #F1F5F9;
-  letter-spacing: 1px;
-  margin-bottom: 20px;
+.light-head::after {
+  content: '' !important;
+  position: absolute !important;
+  bottom: -3px !important;
+  left: 4px !important;
+  width: 16px !important;
+  height: 4px !important;
+  background: #ffe8a0 !important;
+  border-radius: 2px !important;
+  box-shadow: 0 0 8px 4px rgba(255,220,100,0.5) !important;
 }
 
-.login-page .left-headline .accent-word {
-  color: #DC2626;
-  display: block;
+.light-cone {
+  position: absolute !important;
+  top: 68px !important;
+  left: -20px !important;
+  width: 60px !important;
+  height: 100px !important;
+  background: linear-gradient(to bottom, rgba(255,220,100,0.08), transparent) !important;
+  clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%) !important;
 }
 
-.login-page .left-sub {
-  font-size: 14px;
-  color: #94A3B8;
-  line-height: 1.7;
-  max-width: 340px;
-  margin-bottom: 36px;
+/* ── SPEED LINES ────────────────────────────────── */
+.lines-wrap {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+  transition: transform 0.1s ease !important;
 }
 
-.login-page .stats-row {
-  display: flex;
-  gap: 28px;
-  align-items: center;
+.sline {
+  position: absolute !important;
+  height: 1.5px !important;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55) 50%, transparent) !important;
+  border-radius: 2px !important;
+  animation: shootLine linear infinite !important;
+  will-change: transform !important;
 }
 
-.login-page .stat {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.red-sline {
+  background: linear-gradient(90deg, transparent, rgba(220,38,38,0.7) 50%, transparent) !important;
+  height: 2px !important;
 }
 
-.login-page .stat-num {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 28px;
-  color: #F1F5F9;
-  letter-spacing: 1px;
-  line-height: 1;
+/* ── HERO CAR ───────────────────────────────────── */
+.hero-car {
+  position: absolute !important;
+  bottom: 155px !important;
+  left: 0 !important;
+  width: 520px !important;
+  z-index: 6 !important;
+  pointer-events: none !important;
+  filter: drop-shadow(0 8px 30px rgba(220,38,38,0.25)) !important;
+  will-change: transform !important;
 }
 
-.login-page .stat-label {
-  font-size: 11px;
-  color: #64748B;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
+.hero-car svg { width: 100% !important; display: block !important; }
+
+.hlight-beam {
+  position: absolute !important;
+  right: -80px !important;
+  top: 48px !important;
+  width: 120px !important;
+  height: 40px !important;
+  background: linear-gradient(90deg, rgba(255,240,180,0.35), transparent) !important;
+  clip-path: polygon(0 30%, 100% 0%, 100% 100%, 0% 70%) !important;
 }
 
-.login-page .stat-divider {
-  width: 1px;
-  height: 36px;
-  background: rgba(255,255,255,0.11);
+.tlight-glow {
+  position: absolute !important;
+  left: -30px !important;
+  top: 48px !important;
+  width: 50px !important;
+  height: 30px !important;
+  background: radial-gradient(ellipse, rgba(255,34,0,0.4), transparent) !important;
 }
 
-/* ── RIGHT PANEL ─────────────────────────────────────────── */
-.login-page .right-panel {
-  width: 480px !important;
-  min-width: 420px !important;
-  background: #0E1117 !important;
+/* ── FAR CAR ────────────────────────────────────── */
+.far-car {
+  position: absolute !important;
+  bottom: 185px !important;
+  left: 0 !important;
+  width: 260px !important;
+  z-index: 5 !important;
+  pointer-events: none !important;
+  opacity: 0.65 !important;
+  filter: drop-shadow(0 4px 12px rgba(100,160,255,0.2)) !important;
+  will-change: transform !important;
+}
+
+.far-car svg { width: 100% !important; display: block !important; }
+
+/* ── GRID ───────────────────────────────────────── */
+.grid-overlay {
+  position: absolute !important;
+  inset: 0 !important;
+  background-image:
+    linear-gradient(rgba(220,38,38,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(220,38,38,0.025) 1px, transparent 1px) !important;
+  background-size: 64px 64px !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+/* ── VIGNETTE ───────────────────────────────────── */
+.vignette {
+  position: absolute !important;
+  inset: 0 !important;
+  background: radial-gradient(ellipse at 50% 50%, transparent 35%, rgba(0,0,0,0.75) 100%) !important;
+  pointer-events: none !important;
+  z-index: 7 !important;
+}
+
+/* ── LEFT CONTENT ───────────────────────────────── */
+.left-content {
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+.brand-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: rgba(220,38,38,0.10) !important;
+  border: 0.5px solid rgba(220,38,38,0.28) !important;
+  border-radius: 4px !important;
+  padding: 6px 14px !important;
+  margin-bottom: 28px !important;
+  width: fit-content !important;
+}
+
+.brand-tag span:not(.brand-dot) {
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #EF4444 !important;
+}
+
+.brand-dot {
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 50% !important;
+  background: #DC2626 !important;
+  animation: blink 2s ease-in-out infinite !important;
+}
+
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.2; }
+}
+
+.left-headline {
+  font-family: 'Bebas Neue', sans-serif !important;
+  font-size: clamp(60px, 6.5vw, 90px) !important;
+  line-height: 0.9 !important;
+  color: #F1F5F9 !important;
+  letter-spacing: 2px !important;
+  margin-bottom: 18px !important;
+  text-shadow: 0 0 80px rgba(220,38,38,0.12) !important;
+}
+
+.accent-word {
+  color: #DC2626 !important;
+  display: block !important;
+  text-shadow: 0 0 40px rgba(220,38,38,0.45) !important;
+}
+
+.left-sub {
+  font-size: 14px !important;
+  color: #64748B !important;
+  line-height: 1.75 !important;
+  max-width: 360px !important;
+  margin-bottom: 36px !important;
+}
+
+.stats-row {
+  display: flex !important;
+  gap: 28px !important;
+  align-items: center !important;
+}
+
+.stat { display: flex !important; flex-direction: column !important; gap: 4px !important; }
+
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif !important;
+  font-size: 30px !important;
+  color: #F1F5F9 !important;
+  letter-spacing: 1px !important;
+  line-height: 1 !important;
+}
+
+.stat-label {
+  font-size: 10px !important;
+  color: #475569 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+}
+
+.stat-divider {
+  width: 1px !important;
+  height: 40px !important;
+  background: rgba(255,255,255,0.08) !important;
+}
+
+.bottom-bar {
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 3px !important;
+  background: linear-gradient(90deg, transparent, #DC2626 30%, #EF4444 60%, transparent) !important;
+  z-index: 10 !important;
+}
+
+/* ─── RIGHT PANEL ────────────────────────────────── */
+.right-panel {
+  width: 460px !important;
+  min-width: 400px !important;
+  background: #0A0D13 !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
-  padding: 56px 48px !important;
+  padding: 52px 44px !important;
   position: relative !important;
-  border-left: 0.5px solid rgba(255,255,255,0.07) !important;
+  border-left: 0.5px solid rgba(255,255,255,0.06) !important;
   min-height: 100vh !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
+  flex-shrink: 0 !important;
 }
 
-.login-page .right-panel::before {
-  content: '';
-  position: absolute;
-  top: -40px;
-  right: -40px;
-  width: 220px;
-  height: 220px;
-  background: radial-gradient(circle, rgba(220,38,38,0.07) 0%, transparent 70%);
-  pointer-events: none;
+.right-panel::before {
+  content: '' !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 280px !important;
+  background: radial-gradient(ellipse at 50% 100%, rgba(220,38,38,0.05) 0%, transparent 70%) !important;
+  pointer-events: none !important;
 }
 
-.login-page .gold-bar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #C9A84C 20%, #DC2626 70%, transparent);
+.top-accent {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, transparent, #DC2626 40%, #EF4444 60%, transparent) !important;
 }
 
-/* ── LOGO ────────────────────────────────────────────────── */
-.login-page .logo-area {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 48px;
+.logo-area {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-bottom: 40px !important;
 }
 
-.login-page .logo-icon {
-  width: 36px;
-  height: 36px;
-  background: #DC2626;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.logo-icon {
+  width: 36px !important;
+  height: 36px !important;
+  background: #DC2626 !important;
+  border-radius: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
-.login-page .logo-icon svg {
-  width: 20px;
-  height: 20px;
-}
+.logo-icon svg { width: 20px !important; height: 20px !important; }
 
-.login-page .logo-name {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 22px;
-  letter-spacing: 2.5px;
+.logo-name {
+  font-family: 'Bebas Neue', sans-serif !important;
+  font-size: 22px !important;
+  letter-spacing: 3px !important;
   color: #F1F5F9 !important;
 }
 
-.login-page .logo-name span {
-  color: #DC2626 !important;
-}
+.logo-name span { color: #DC2626 !important; }
 
-/* ── FORM HEADER ─────────────────────────────────────────── */
-.login-page .form-header {
-  margin-bottom: 28px;
-}
+.form-header { margin-bottom: 24px !important; }
 
-.login-page .form-header h1 {
-  font-size: 26px !important;
+.form-header h1 {
+  font-size: 25px !important;
   font-weight: 600 !important;
   color: #F1F5F9 !important;
-  margin-bottom: 6px !important;
+  margin-bottom: 5px !important;
 }
 
-.login-page .form-header p {
-  font-size: 14px !important;
-  color: #64748B !important;
+.form-header p { font-size: 13px !important; color: #64748B !important; }
+
+.divider-line {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin-bottom: 22px !important;
 }
 
-.login-page .divider-line {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
+.divider-line::before,.divider-line::after {
+  content: '' !important;
+  flex: 1 !important;
+  height: 0.5px !important;
+  background: rgba(255,255,255,0.07) !important;
 }
 
-.login-page .divider-line::before,
-.login-page .divider-line::after {
-  content: '';
-  flex: 1;
-  height: 0.5px;
-  background: rgba(255,255,255,0.07);
+.divider-line span {
+  font-size: 10px !important;
+  color: #475569 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
 }
 
-.login-page .divider-line span {
-  font-size: 10px;
-  color: #64748B;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-/* ── SUCCESS BANNER ──────────────────────────────────────── */
-.login-page .success-banner {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 16px;
-  margin-bottom: 20px;
-  background: rgba(34, 197, 94, 0.08);
-  border: 0.5px solid rgba(34, 197, 94, 0.25);
-  border-radius: 8px;
-  font-size: 13px;
+.success-banner {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 11px 14px !important;
+  margin-bottom: 18px !important;
+  background: rgba(34,197,94,0.08) !important;
+  border: 0.5px solid rgba(34,197,94,0.25) !important;
+  border-radius: 8px !important;
+  font-size: 13px !important;
   color: #4ADE80 !important;
 }
 
-/* ── FORM ────────────────────────────────────────────────── */
-.login-page form {
-  width: 100%;
-}
+form { width: 100% !important; }
 
-.login-page .form-group {
-  margin-bottom: 20px;
-}
+.form-group { margin-bottom: 18px !important; }
 
 .login-page label {
   display: block !important;
   font-size: 11px !important;
   font-weight: 500 !important;
-  letter-spacing: 0.07em !important;
+  letter-spacing: 0.08em !important;
   text-transform: uppercase !important;
   color: #94A3B8 !important;
-  margin-bottom: 8px !important;
+  margin-bottom: 7px !important;
   background: transparent !important;
 }
 
-.login-page .input-wrap {
-  position: relative;
+.input-wrap { position: relative !important; }
+
+.input-icon {
+  position: absolute !important;
+  left: 13px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  color: #475569 !important;
+  display: flex !important;
+  align-items: center !important;
+  pointer-events: none !important;
 }
 
-.login-page .input-icon {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #64748B;
-  display: flex;
-  align-items: center;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.login-page .input-icon svg {
-  width: 16px;
-  height: 16px;
-}
+.input-icon svg { width: 16px !important; height: 16px !important; }
 
 .login-page input[type='text'],
-.login-page input[type='password'],
-.login-page input[type='email'] {
+.login-page input[type='password'] {
   width: 100% !important;
-  padding: 13px 14px 13px 42px !important;
-  background: #13181F !important;
-  border: 0.5px solid rgba(255,255,255,0.18) !important;
+  padding: 12px 14px 12px 42px !important;
+  background: #0F1318 !important;
+  border: 0.5px solid rgba(255,255,255,0.10) !important;
   border-radius: 8px !important;
   font-size: 14px !important;
   color: #F1F5F9 !important;
   font-family: 'DM Sans', sans-serif !important;
   outline: none !important;
   box-shadow: none !important;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
-.login-page input[type='text']::placeholder,
-.login-page input[type='password']::placeholder,
-.login-page input[type='email']::placeholder {
-  color: #64748B !important;
-}
+.login-page input::placeholder { color: #475569 !important; }
 
-.login-page input[type='text']:focus,
-.login-page input[type='password']:focus,
-.login-page input[type='email']:focus {
-  border-color: rgba(220,38,38,0.60) !important;
-  box-shadow: 0 0 0 3px rgba(220,38,38,0.14) !important;
-  background: #13181F !important;
+.login-page input:focus {
+  border-color: rgba(220,38,38,0.55) !important;
+  box-shadow: 0 0 0 3px rgba(220,38,38,0.10) !important;
+  background: #0F1318 !important;
   color: #F1F5F9 !important;
 }
 
-.login-page input.input-error {
-  border-color: rgba(220,38,38,0.5) !important;
-}
+.login-page input.input-error { border-color: rgba(220,38,38,0.5) !important; }
 
-.login-page .forgot-row {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 8px;
-}
+.forgot-row { display: flex !important; justify-content: flex-end !important; margin-top: 7px !important; }
 
-.login-page .forgot-row a {
-  font-size: 12px;
-  color: #64748B;
-  text-decoration: none;
-  transition: color 0.2s;
-}
+.forgot-row a { font-size: 12px !important; color: #475569 !important; text-decoration: none !important; }
+.forgot-row a:hover { color: #EF4444 !important; }
 
-.login-page .forgot-row a:hover {
-  color: #EF4444;
-}
+.error-msg { margin-top: 5px !important; font-size: 12px !important; color: #F87171 !important; }
 
-.login-page .error-msg {
-  margin-top: 6px;
-  font-size: 12px;
+.api-error {
+  margin-top: 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  font-size: 13px !important;
   color: #F87171 !important;
 }
 
-.login-page .api-error {
-  margin-top: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  font-size: 13px;
-  color: #F87171 !important;
-  text-align: center;
-}
-
-/* ── BUTTON ──────────────────────────────────────────────── */
-.login-page .btn-login {
+.btn-login {
   width: 100% !important;
-  margin-top: 28px !important;
+  margin-top: 24px !important;
   padding: 14px !important;
   background: #DC2626 !important;
   border: none !important;
   border-radius: 8px !important;
-  color: #ffffff !important;
+  color: #fff !important;
   font-size: 13px !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
   font-family: 'DM Sans', sans-serif !important;
-  letter-spacing: 0.08em !important;
+  letter-spacing: 0.14em !important;
   text-transform: uppercase !important;
   cursor: pointer !important;
   display: block !important;
-  transition: background 0.2s ease, transform 0.15s ease !important;
-  box-shadow: none !important;
-  text-shadow: none !important;
-  outline: none !important;
+  position: relative !important;
+  overflow: hidden !important;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s !important;
 }
 
-.login-page .btn-login:hover {
+.btn-login::after {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important; left: -100% !important;
+  width: 60% !important; height: 100% !important;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent) !important;
+  transition: left 0.4s ease !important;
+}
+
+.btn-login:hover:not(:disabled)::after { left: 160% !important; }
+.btn-login:hover:not(:disabled) {
   background: #EF4444 !important;
-  transform: translateY(-1px);
-  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 24px rgba(220,38,38,0.3) !important;
+}
+.btn-login:disabled { opacity: 0.65 !important; cursor: not-allowed !important; }
+
+.btn-loader { display: flex !important; align-items: center !important; justify-content: center !important; gap: 5px !important; }
+
+.btn-loader .dot {
+  width: 6px !important; height: 6px !important;
+  border-radius: 50% !important; background: white !important;
+  animation: db 1.1s ease-in-out infinite !important;
+}
+.btn-loader .dot:nth-child(2) { animation-delay: 0.18s !important; }
+.btn-loader .dot:nth-child(3) { animation-delay: 0.36s !important; }
+
+@keyframes db {
+  0%,80%,100% { transform: translateY(0); opacity: 0.4; }
+  40%          { transform: translateY(-6px); opacity: 1; }
 }
 
-.login-page .btn-login:active {
-  transform: translateY(0);
+.register-row { margin-top: 20px !important; text-align: center !important; font-size: 13px !important; color: #475569 !important; }
+.register-row a { color: #EF4444 !important; text-decoration: none !important; font-weight: 500 !important; margin-left: 4px !important; }
+.register-row a:hover { text-decoration: underline !important; }
+
+.trust-badges {
+  display: flex !important; justify-content: center !important;
+  gap: 20px !important; margin-top: 32px !important;
+  padding-top: 20px !important;
+  border-top: 0.5px solid rgba(255,255,255,0.06) !important;
 }
 
-.login-page .btn-login:disabled {
-  opacity: 0.7 !important;
-  cursor: not-allowed !important;
-}
+.badge-item { display: flex !important; align-items: center !important; gap: 6px !important; font-size: 11px !important; color: #475569 !important; }
+.badge-item svg { width: 13px !important; height: 13px !important; }
 
-/* ── LOADER DOTS ─────────────────────────────────────────── */
-.login-page .btn-loader {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-}
-
-.login-page .btn-loader .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: white;
-  animation: loginBounce 1.1s ease-in-out infinite;
-}
-
-.login-page .btn-loader .dot:nth-child(1) { animation-delay: 0s; }
-.login-page .btn-loader .dot:nth-child(2) { animation-delay: 0.18s; }
-.login-page .btn-loader .dot:nth-child(3) { animation-delay: 0.36s; }
-
-@keyframes loginBounce {
-  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
-  40%           { transform: translateY(-6px); opacity: 1; }
-}
-
-/* ── FOOTER ──────────────────────────────────────────────── */
-.login-page .register-row {
-  margin-top: 24px;
-  text-align: center;
-  font-size: 13px;
-  color: #64748B;
-}
-
-.login-page .register-row a {
-  color: #EF4444 !important;
-  text-decoration: none;
-  font-weight: 500;
-  margin-left: 4px;
-}
-
-.login-page .register-row a:hover {
-  text-decoration: underline;
-}
-
-.login-page .trust-badges {
-  display: flex;
-  justify-content: center;
-  gap: 22px;
-  margin-top: 36px;
-  padding-top: 24px;
-  border-top: 0.5px solid rgba(255,255,255,0.07);
-}
-
-.login-page .badge-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  color: #64748B;
-}
-
-.login-page .badge-item svg {
-  width: 13px;
-  height: 13px;
-  flex-shrink: 0;
-}
-
-/* ── RESPONSIVE ──────────────────────────────────────────── */
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   .login-page { flex-direction: column !important; }
-  .login-page .left-panel { min-height: 320px; padding: 36px 28px; }
-  .login-page .left-headline { font-size: 52px; }
-  .login-page .car-scene { top: 40%; max-width: 380px; }
-  .login-page .right-panel {
-    width: 100% !important;
-    min-width: unset !important;
-    padding: 40px 28px 52px !important;
-    min-height: unset !important;
-    border-left: none !important;
-    border-top: 0.5px solid rgba(255,255,255,0.07) !important;
-  }
-  .login-page .gold-bar { display: none; }
-}
-
-@media (max-width: 480px) {
-  .login-page .stats-row { gap: 16px; }
-  .login-page .right-panel { padding: 32px 20px 48px !important; }
-  .login-page .trust-badges { gap: 14px; }
-  .login-page .car-scene { max-width: 300px; }
+  .left-panel { min-height: 320px !important; padding: 36px 28px !important; }
+  .right-panel { width: 100% !important; min-width: unset !important; padding: 40px 28px 48px !important; min-height: unset !important; border-left: none !important; border-top: 0.5px solid rgba(255,255,255,0.06) !important; }
 }

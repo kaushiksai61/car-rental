@@ -1,229 +1,40 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap');
-
-/* ── NAVBAR ──────────────────────────────────────────────── */
-.app-navbar {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  z-index: 1000 !important;
-  background: #0E1117 !important;
-  border-bottom: 0.5px solid rgba(255,255,255,0.08) !important;
-  height: 64px !important;
-}
-
-/* Signature gold-red top line */
-.app-navbar::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #C9A84C 20%, #DC2626 70%, transparent);
-}
-
-.nav-inner {
-  max-width: 1400px;
-  margin: 0 auto;
-  height: 64px;
-  display: flex !important;
-  align-items: center !important;
-  padding: 0 24px !important;
-  gap: 8px;
-}
-
-/* ── BRAND ───────────────────────────────────────────────── */
-.nav-brand {
-  display: flex !important;
-  align-items: center !important;
-  gap: 10px !important;
-  text-decoration: none !important;
-  margin-right: 32px;
-  flex-shrink: 0;
-}
-
-.nav-brand-icon {
-  width: 32px !important;
-  height: 32px !important;
-  background: #DC2626 !important;
-  border-radius: 7px !important;
+.theme-toggle {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 8px !important;
+  border: 0.5px solid rgba(255,255,255,0.12) !important;
+  background: rgba(255,255,255,0.05) !important;
+  color: #94A3B8 !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-}
-
-.nav-brand-icon svg {
-  width: 18px !important;
-  height: 18px !important;
-}
-
-.nav-brand-name {
-  font-family: 'Bebas Neue', sans-serif !important;
-  font-size: 20px !important;
-  letter-spacing: 2px !important;
-  color: #F1F5F9 !important;
-}
-
-.nav-brand-name span {
-  color: #DC2626 !important;
-}
-
-/* ── NAV LINKS ───────────────────────────────────────────── */
-.nav-links {
-  display: flex !important;
-  align-items: center !important;
-  gap: 4px !important;
-  flex: 1 !important;
-}
-
-.nav-link {
-  display: flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-  padding: 7px 14px !important;
-  border-radius: 7px !important;
-  font-family: 'DM Sans', sans-serif !important;
-  font-size: 13px !important;
-  font-weight: 500 !important;
-  color: #94A3B8 !important;
-  text-decoration: none !important;
-  transition: background 0.15s ease, color 0.15s ease !important;
-  white-space: nowrap !important;
-}
-
-.nav-link svg {
-  width: 15px !important;
-  height: 15px !important;
-  flex-shrink: 0 !important;
-}
-
-.nav-link:hover {
-  background: rgba(255,255,255,0.06) !important;
-  color: #F1F5F9 !important;
-}
-
-.nav-link.active {
-  background: rgba(220, 38, 38, 0.12) !important;
-  color: #EF4444 !important;
-}
-
-/* ── RIGHT SIDE ──────────────────────────────────────────── */
-.nav-right {
-  display: flex !important;
-  align-items: center !important;
-  gap: 12px !important;
-  margin-left: auto !important;
-  flex-shrink: 0 !important;
-}
-
-.role-badge {
-  display: flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-  padding: 5px 12px !important;
-  background: rgba(220, 38, 38, 0.08) !important;
-  border: 0.5px solid rgba(220, 38, 38, 0.25) !important;
-  border-radius: 20px !important;
-  font-family: 'DM Sans', sans-serif !important;
-  font-size: 11px !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.06em !important;
-  text-transform: uppercase !important;
-  color: #EF4444 !important;
-}
-
-.role-dot {
-  width: 6px !important;
-  height: 6px !important;
-  border-radius: 50% !important;
-  background: #DC2626 !important;
-  animation: navPulse 2s ease-in-out infinite;
-}
-
-@keyframes navPulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.3; }
-}
-
-.btn-logout {
-  display: flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-  padding: 7px 16px !important;
-  background: transparent !important;
-  border: 0.5px solid rgba(255,255,255,0.15) !important;
-  border-radius: 7px !important;
-  font-family: 'DM Sans', sans-serif !important;
-  font-size: 13px !important;
-  font-weight: 500 !important;
-  color: #94A3B8 !important;
   cursor: pointer !important;
-  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease !important;
+  transition: all 0.2s ease !important;
+  flex-shrink: 0 !important;
+  padding: 0 !important;
 }
 
-.btn-logout:hover {
-  background: rgba(220,38,38,0.10) !important;
-  border-color: rgba(220,38,38,0.35) !important;
-  color: #EF4444 !important;
-}
-
-/* ── PAGE WRAPPER ────────────────────────────────────────── */
-.page-wrapper {
-  min-height: 100vh !important;
-  background: #080A0F !important;
-}
-
-.page-wrapper.with-nav {
-  padding-top: 64px !important;
-}
-
-/* ── HAMBURGER (mobile) ──────────────────────────────────── */
-.hamburger {
-  display: none !important;
-  flex-direction: column !important;
-  gap: 5px !important;
-  background: transparent !important;
-  border: none !important;
-  cursor: pointer !important;
-  padding: 4px !important;
-}
-
-.hamburger span {
+.theme-toggle svg {
+  width: 16px !important;
+  height: 16px !important;
   display: block !important;
-  width: 22px !important;
-  height: 2px !important;
-  background: #94A3B8 !important;
-  border-radius: 2px !important;
 }
 
-/* ── RESPONSIVE ──────────────────────────────────────────── */
-@media (max-width: 768px) {
-  .hamburger {
-    display: flex !important;
-  }
+.theme-toggle:hover {
+  border-color: rgba(220,38,38,0.4) !important;
+  color: #DC2626 !important;
+  background: rgba(220,38,38,0.08) !important;
+}
 
-  .nav-links {
-    display: none !important;
-    position: absolute !important;
-    top: 64px !important;
-    left: 0 !important;
-    right: 0 !important;
-    background: #0E1117 !important;
-    border-bottom: 0.5px solid rgba(255,255,255,0.08) !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    padding: 12px 16px !important;
-    gap: 4px !important;
-  }
+/* Light theme override for toggle button */
+[data-theme="light"] .theme-toggle {
+  border-color: rgba(0,0,0,0.12) !important;
+  background: rgba(0,0,0,0.04) !important;
+  color: #475569 !important;
+}
 
-  .nav-links.open {
-    display: flex !important;
-  }
-
-  .nav-link {
-    width: 100% !important;
-  }
-
-  .role-badge {
-    display: none !important;
-  }
+[data-theme="light"] .theme-toggle:hover {
+  border-color: rgba(220,38,38,0.4) !important;
+  color: #DC2626 !important;
+  background: rgba(220,38,38,0.06) !important;
 }
