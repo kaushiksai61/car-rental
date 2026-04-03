@@ -27,7 +27,6 @@ public class AdministratorController {
     @Autowired
     private PaymentService paymentService;
 
-
     
     @PostMapping("/car-categories")
     public ResponseEntity<CarCategory> createCarCategory(@RequestBody CarCategory carCategory) {
