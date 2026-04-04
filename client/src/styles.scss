@@ -42,45 +42,45 @@
   --status-blue-text:      #60A5FA;
 }
 
-/* ── LIGHT THEME ─────────────────────────────────── */
+/* ── LIGHT THEME (warm beige) ────────────────────── */
 [data-theme="light"] {
-  --bg-base:        #F4F6FA;
-  --bg-panel:       #FFFFFF;
-  --bg-input:       #F8F9FC;
-  --bg-select:      #F0F2F7;
-  --bg-hover:       rgba(0,0,0,0.02);
-  --bg-card:        #FFFFFF;
+  --bg-base:        #F5F0EB;
+  --bg-panel:       #FDFAF7;
+  --bg-input:       #F9F5F0;
+  --bg-select:      #F2EDE6;
+  --bg-hover:       rgba(180,120,60,0.04);
+  --bg-card:        #FDFAF7;
 
-  --border-main:    rgba(0,0,0,0.08);
-  --border-input:   rgba(0,0,0,0.12);
+  --border-main:    rgba(160,120,80,0.14);
+  --border-input:   rgba(160,120,80,0.20);
   --border-focus:   rgba(220,38,38,0.5);
 
-  --text-primary:   #0F172A;
-  --text-secondary: #475569;
-  --text-muted:     #94A3B8;
-  --text-label:     #64748B;
+  --text-primary:   #1C1410;
+  --text-secondary: #5C4A38;
+  --text-muted:     #9C8470;
+  --text-label:     #7A6355;
 
   --accent-red:     #DC2626;
   --accent-red-h:   #B91C1C;
-  --accent-gold:    #B45309;
+  --accent-gold:    #A0722A;
   --accent-green:   #16A34A;
   --accent-blue:    #2563EB;
 
-  --shadow-card:    0 2px 16px rgba(0,0,0,0.08);
-  --nav-bg:         #FFFFFF;
-  --nav-border:     rgba(0,0,0,0.08);
+  --shadow-card:    0 2px 16px rgba(120,80,40,0.08);
+  --nav-bg:         #FDFAF7;
+  --nav-border:     rgba(160,120,80,0.12);
 
   --status-booked-bg:      rgba(22,163,74,0.08);
-  --status-booked-border:  rgba(22,163,74,0.25);
+  --status-booked-border:  rgba(22,163,74,0.22);
   --status-booked-text:    #16A34A;
-  --status-pending-bg:     rgba(180,83,9,0.08);
-  --status-pending-border: rgba(180,83,9,0.25);
-  --status-pending-text:   #B45309;
+  --status-pending-bg:     rgba(160,114,9,0.08);
+  --status-pending-border: rgba(160,114,9,0.22);
+  --status-pending-text:   #A07209;
   --status-fail-bg:        rgba(220,38,38,0.08);
-  --status-fail-border:    rgba(220,38,38,0.25);
+  --status-fail-border:    rgba(220,38,38,0.22);
   --status-fail-text:      #DC2626;
   --status-blue-bg:        rgba(37,99,235,0.08);
-  --status-blue-border:    rgba(37,99,235,0.25);
+  --status-blue-border:    rgba(37,99,235,0.22);
   --status-blue-text:      #2563EB;
 }
 
@@ -236,9 +236,9 @@ body {
 }
 
 [data-theme="light"] .theme-toggle {
-  border-color: rgba(0,0,0,0.12) !important;
-  background: #F0F2F7 !important;
-  color: #475569 !important;
+  border-color: rgba(160,120,80,0.20) !important;
+  background: #F2EDE6 !important;
+  color: #5C4A38 !important;
 }
 
 [data-theme="light"] .theme-toggle:hover {
@@ -460,7 +460,7 @@ tbody td {
   color: var(--status-fail-text) !important;
 }
 
-/* ── RATE & CATEGORY BADGES ──────────────────────── */
+/* ── BADGES ──────────────────────────────────────── */
 .rate-badge, .amount-badge {
   background: rgba(201,168,76,0.10) !important;
   border: 0.5px solid rgba(201,168,76,0.25) !important;
@@ -504,7 +504,6 @@ tbody td {
     gap: 4px !important;
     z-index: 999 !important;
   }
-
   .nav-links.open { display: flex !important; }
   .hamburger { display: flex !important; }
 }
@@ -515,20 +514,20 @@ tbody td {
 
 /* Navbar */
 [data-theme="light"] .app-navbar {
-  background: #FFFFFF !important;
-  border-color: rgba(0,0,0,0.08) !important;
-  box-shadow: 0 1px 8px rgba(0,0,0,0.06) !important;
+  background: #FDFAF7 !important;
+  border-color: rgba(160,120,80,0.12) !important;
+  box-shadow: 0 1px 8px rgba(120,80,40,0.07) !important;
 }
 
-[data-theme="light"] .nav-brand-name { color: #0F172A !important; }
-[data-theme="light"] .nav-link       { color: #475569 !important; }
+[data-theme="light"] .nav-brand-name { color: #1C1410 !important; }
+[data-theme="light"] .nav-link       { color: #5C4A38 !important; }
 [data-theme="light"] .nav-link:hover  { background: rgba(220,38,38,0.06) !important; color: #DC2626 !important; }
 [data-theme="light"] .nav-link.active { background: rgba(220,38,38,0.08) !important; color: #DC2626 !important; }
-[data-theme="light"] .hamburger span  { background: #475569 !important; }
+[data-theme="light"] .hamburger span  { background: #5C4A38 !important; }
 
 [data-theme="light"] .btn-logout {
-  border-color: rgba(0,0,0,0.12) !important;
-  color: #475569 !important;
+  border-color: rgba(160,120,80,0.20) !important;
+  color: #5C4A38 !important;
 }
 
 [data-theme="light"] .btn-logout:hover {
@@ -537,39 +536,40 @@ tbody td {
   border-color: rgba(220,38,38,0.3) !important;
 }
 
-/* Page containers */
+/* Page */
 [data-theme="light"] .page-container {
-  background: #F4F6FA !important;
-  color: #0F172A !important;
+  background: #F5F0EB !important;
+  color: #1C1410 !important;
 }
 
 [data-theme="light"] .page-header {
-  background: #FFFFFF !important;
-  border-color: rgba(0,0,0,0.08) !important;
+  background: #FDFAF7 !important;
+  border-color: rgba(160,120,80,0.14) !important;
+  box-shadow: 0 1px 0 rgba(160,120,80,0.08) !important;
 }
 
-[data-theme="light"] .page-title { color: #0F172A !important; }
-[data-theme="light"] .page-sub   { color: #64748B !important; }
+[data-theme="light"] .page-title  { color: #1C1410 !important; }
+[data-theme="light"] .page-sub    { color: #9C8470 !important; }
 
 /* Panels */
 [data-theme="light"] .form-panel,
 [data-theme="light"] .table-panel,
 [data-theme="light"] .cars-panel {
-  background: #FFFFFF !important;
-  border-color: rgba(0,0,0,0.08) !important;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.05) !important;
+  background: #FDFAF7 !important;
+  border-color: rgba(160,120,80,0.14) !important;
+  box-shadow: 0 2px 16px rgba(120,80,40,0.07) !important;
 }
 
-[data-theme="light"] .panel-title { color: #0F172A !important; }
-[data-theme="light"] .panel-header { border-color: rgba(0,0,0,0.07) !important; }
+[data-theme="light"] .panel-title  { color: #1C1410 !important; }
+[data-theme="light"] .panel-header { border-color: rgba(160,120,80,0.12) !important; }
 
 /* Cards */
 [data-theme="light"] .summary-card,
 [data-theme="light"] .booking-card,
 [data-theme="light"] .car-card {
-  background: #FFFFFF !important;
-  border-color: rgba(0,0,0,0.08) !important;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.05) !important;
+  background: #FDFAF7 !important;
+  border-color: rgba(160,120,80,0.14) !important;
+  box-shadow: 0 2px 16px rgba(120,80,40,0.07) !important;
 }
 
 /* Inputs */
@@ -580,49 +580,63 @@ tbody td {
 [data-theme="light"] input[type='email'],
 [data-theme="light"] select,
 [data-theme="light"] textarea {
-  background: #F8F9FC !important;
-  border-color: rgba(0,0,0,0.12) !important;
-  color: #0F172A !important;
+  background: #F9F5F0 !important;
+  border-color: rgba(160,120,80,0.20) !important;
+  color: #1C1410 !important;
 }
 
-[data-theme="light"] input::placeholder { color: #94A3B8 !important; }
-[data-theme="light"] label { color: #64748B !important; }
-[data-theme="light"] select option { background: #F0F2F7 !important; color: #0F172A !important; }
-[data-theme="light"] .input-icon    { color: #94A3B8 !important; }
-[data-theme="light"] .select-arrow svg { fill: #94A3B8 !important; }
+[data-theme="light"] input::placeholder { color: #9C8470 !important; }
+[data-theme="light"] label { color: #7A6355 !important; }
+[data-theme="light"] select option { background: #F2EDE6 !important; color: #1C1410 !important; }
+[data-theme="light"] .input-icon    { color: #9C8470 !important; }
+[data-theme="light"] .select-arrow svg { fill: #9C8470 !important; }
 
 /* Table */
 [data-theme="light"] thead th {
-  color: #64748B !important;
-  background: rgba(0,0,0,0.02) !important;
-  border-color: rgba(0,0,0,0.07) !important;
+  color: #9C8470 !important;
+  background: rgba(160,120,80,0.04) !important;
+  border-color: rgba(160,120,80,0.12) !important;
 }
 
-[data-theme="light"] tbody tr  { border-color: rgba(0,0,0,0.06) !important; }
-[data-theme="light"] tbody tr:hover { background: rgba(0,0,0,0.02) !important; }
-[data-theme="light"] tbody td  { color: #475569 !important; }
-[data-theme="light"] .td-num   { color: #94A3B8 !important; }
-[data-theme="light"] .td-date  { color: #475569 !important; }
-[data-theme="light"] .td-reg   { color: #64748B !important; }
-[data-theme="light"] .td-year  { color: #475569 !important; }
+[data-theme="light"] tbody tr  { border-color: rgba(160,120,80,0.10) !important; }
+[data-theme="light"] tbody tr:hover { background: rgba(160,120,80,0.04) !important; }
+[data-theme="light"] tbody td  { color: #5C4A38 !important; }
+[data-theme="light"] .td-num   { color: #9C8470 !important; }
+[data-theme="light"] .td-date  { color: #5C4A38 !important; }
+[data-theme="light"] .td-reg   { color: #7A6355 !important; }
+[data-theme="light"] .td-year  { color: #5C4A38 !important; }
 
 /* Text */
-[data-theme="light"] .car-name    { color: #0F172A !important; }
-[data-theme="light"] .car-year    { color: #64748B !important; }
-[data-theme="light"] .car-reg     { color: #64748B !important; }
-[data-theme="light"] .car-make    { color: #0F172A !important; }
-[data-theme="light"] .user-name   { color: #0F172A !important; }
-[data-theme="light"] .date-value  { color: #0F172A !important; }
-[data-theme="light"] .date-label  { color: #94A3B8 !important; }
-[data-theme="light"] .amount-value { color: #B45309 !important; }
-[data-theme="light"] .amount-label { color: #94A3B8 !important; }
-[data-theme="light"] .rate-value  { color: #475569 !important; }
-[data-theme="light"] .rate-label  { color: #94A3B8 !important; }
-[data-theme="light"] .days-badge  { color: #B45309 !important; }
-[data-theme="light"] .error-msg   { color: #DC2626 !important; }
-[data-theme="light"] .format-hint { color: #94A3B8 !important; }
-[data-theme="light"] .no-cat      { color: #94A3B8 !important; }
-[data-theme="light"] .no-categories-hint { color: #B45309 !important; }
+[data-theme="light"] .car-name    { color: #1C1410 !important; }
+[data-theme="light"] .car-make    { color: #1C1410 !important; }
+[data-theme="light"] .car-year    { color: #7A6355 !important; }
+[data-theme="light"] .car-reg     { color: #7A6355 !important; }
+[data-theme="light"] .user-name   { color: #1C1410 !important; }
+[data-theme="light"] .date-value  { color: #1C1410 !important; }
+[data-theme="light"] .date-label  { color: #9C8470 !important; }
+[data-theme="light"] .amount-value { color: #A0722A !important; }
+[data-theme="light"] .amount-label { color: #9C8470 !important; }
+[data-theme="light"] .rate-value   { color: #5C4A38 !important; }
+[data-theme="light"] .rate-label   { color: #9C8470 !important; }
+[data-theme="light"] .days-badge   { color: #A0722A !important; }
+[data-theme="light"] .error-msg    { color: #DC2626 !important; }
+[data-theme="light"] .format-hint  { color: #9C8470 !important; }
+[data-theme="light"] .no-cat       { color: #9C8470 !important; }
+[data-theme="light"] .no-categories-hint { color: #A0722A !important; }
+[data-theme="light"] .selected-car-name { color: #1C1410 !important; }
+[data-theme="light"] .selected-car-reg  { color: #9C8470 !important; }
+
+/* Buttons */
+[data-theme="light"] .btn-refresh {
+  border-color: rgba(160,120,80,0.18) !important;
+  color: #5C4A38 !important;
+}
+
+[data-theme="light"] .btn-refresh:hover {
+  color: #DC2626 !important;
+  background: rgba(220,38,38,0.06) !important;
+  border-color: rgba(220,38,38,0.3) !important;
+}
 
 /* Badges */
 [data-theme="light"] .count-badge {
@@ -637,53 +651,67 @@ tbody td {
   color: #DC2626 !important;
 }
 
-/* Buttons */
-[data-theme="light"] .btn-refresh {
-  border-color: rgba(0,0,0,0.10) !important;
-  color: #475569 !important;
-}
-
-[data-theme="light"] .btn-refresh:hover {
-  color: #DC2626 !important;
-  background: rgba(220,38,38,0.06) !important;
-  border-color: rgba(220,38,38,0.3) !important;
-}
-
-/* Summary strip */
-[data-theme="light"] .summary-strip  { border-color: rgba(0,0,0,0.06) !important; }
-[data-theme="light"] .summary-card   { background: #FFFFFF !important; border-color: rgba(0,0,0,0.08) !important; }
-[data-theme="light"] .summary-num    { color: #0F172A !important; }
-[data-theme="light"] .summary-label  { color: #94A3B8 !important; }
+/* Summary */
+[data-theme="light"] .summary-strip  { border-color: rgba(160,120,80,0.10) !important; }
+[data-theme="light"] .summary-card   { background: #FDFAF7 !important; border-color: rgba(160,120,80,0.14) !important; }
+[data-theme="light"] .summary-num    { color: #1C1410 !important; }
+[data-theme="light"] .summary-label  { color: #9C8470 !important; }
 
 /* Stat pill */
-[data-theme="light"] .stat-pill  { background: #F8F9FC !important; border-color: rgba(0,0,0,0.08) !important; }
-[data-theme="light"] .stat-num   { color: #0F172A !important; }
-[data-theme="light"] .stat-label { color: #94A3B8 !important; }
+[data-theme="light"] .stat-pill  { background: #F2EDE6 !important; border-color: rgba(160,120,80,0.16) !important; }
+[data-theme="light"] .stat-num   { color: #1C1410 !important; }
+[data-theme="light"] .stat-label { color: #9C8470 !important; }
 
-/* Card details */
-[data-theme="light"] .card-header  { border-color: rgba(0,0,0,0.06) !important; }
-[data-theme="light"] .card-divider { background: rgba(0,0,0,0.06) !important; }
-[data-theme="light"] .card-footer  { background: rgba(0,0,0,0.02) !important; border-color: rgba(0,0,0,0.06) !important; }
-
-/* Info strip */
-[data-theme="light"] .info-strip { background: #FFFFFF !important; border-color: rgba(0,0,0,0.08) !important; }
-[data-theme="light"] .info-item  { color: #64748B !important; }
-
-/* Misc */
-[data-theme="light"] .selected-car-name { color: #0F172A !important; }
-[data-theme="light"] .selected-car-reg  { color: #94A3B8 !important; }
-
-[data-theme="light"] .cost-estimate {
-  background: #F8F9FC !important;
-  border-color: rgba(0,0,0,0.08) !important;
+/* Card internals */
+[data-theme="light"] .card-title  { color: #1C1410 !important; }
+[data-theme="light"] .card-desc   { color: #9C8470 !important; }
+[data-theme="light"] .card-arrow  { color: #9C8470 !important; }
+[data-theme="light"] .card-header { border-color: rgba(160,120,80,0.10) !important; }
+[data-theme="light"] .card-divider { background: rgba(160,120,80,0.10) !important; }
+[data-theme="light"] .card-footer {
+  background: rgba(160,120,80,0.03) !important;
+  border-color: rgba(160,120,80,0.10) !important;
 }
 
-[data-theme="light"] .cost-label       { color: #64748B !important; }
-[data-theme="light"] .cost-value       { color: #475569 !important; }
-[data-theme="light"] .cost-divider     { background: rgba(0,0,0,0.08) !important; }
-[data-theme="light"] .cost-value-total { color: #B45309 !important; }
+/* Info strip */
+[data-theme="light"] .info-strip {
+  background: #FDFAF7 !important;
+  border-color: rgba(160,120,80,0.14) !important;
+}
+[data-theme="light"] .info-item { color: #7A6355 !important; }
 
-[data-theme="light"] .table-loading { color: #94A3B8 !important; }
-[data-theme="light"] .spinner { border-color: rgba(0,0,0,0.08) !important; border-top-color: #DC2626 !important; }
-[data-theme="light"] .empty-state p    { color: #475569 !important; }
-[data-theme="light"] .empty-state span { color: #94A3B8 !important; }
+/* Cost estimate */
+[data-theme="light"] .cost-estimate {
+  background: #F2EDE6 !important;
+  border-color: rgba(160,120,80,0.16) !important;
+}
+[data-theme="light"] .cost-label       { color: #7A6355 !important; }
+[data-theme="light"] .cost-value       { color: #5C4A38 !important; }
+[data-theme="light"] .cost-divider     { background: rgba(160,120,80,0.12) !important; }
+[data-theme="light"] .cost-value-total { color: #A0722A !important; }
+
+/* Dashboard */
+[data-theme="light"] .dashboard-page  { background: #F5F0EB !important; }
+[data-theme="light"] .dashboard-body  { background: #F5F0EB !important; }
+[data-theme="light"] .section-title   { color: #1C1410 !important; }
+[data-theme="light"] .section-sub     { color: #9C8470 !important; }
+
+[data-theme="light"] .action-card {
+  background: #FDFAF7 !important;
+  border-color: rgba(160,120,80,0.14) !important;
+  box-shadow: 0 2px 12px rgba(120,80,40,0.07) !important;
+}
+
+[data-theme="light"] .action-card:hover {
+  border-color: rgba(220,38,38,0.25) !important;
+  box-shadow: 0 8px 24px rgba(220,38,38,0.08) !important;
+}
+
+/* Loading / empty */
+[data-theme="light"] .table-loading { color: #9C8470 !important; }
+[data-theme="light"] .spinner {
+  border-color: rgba(160,120,80,0.12) !important;
+  border-top-color: #DC2626 !important;
+}
+[data-theme="light"] .empty-state p    { color: #5C4A38 !important; }
+[data-theme="light"] .empty-state span { color: #9C8470 !important; }

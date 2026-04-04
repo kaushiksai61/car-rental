@@ -1,9 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl,
+  ValidationErrors
+} from '@angular/forms';
 import { HttpService } from '../../services/http.service';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+
+function dateRangeValidator(group: AbstractControl): ValidationErrors | null {
+  const start = group.get('rentalStartDate')?.value;
+  const end   = group.get('rentalEndDate')?.value;
+  if (start && end && new Date(end) < new Date(start)) {
+    return { dateRangeInvalid: true };
+  }
+  return null;
+}
 
 @Component({
   selector: 'app-cars',
@@ -12,83 +25,157 @@ import { DatePipe } from '@angular/common';
 })
 export class CarsComponent implements OnInit {
 
-  itemForm!: FormGroup;
-  formModel: any = { status: null };
-  showError: boolean = false;
-  errorMessage: any;
-  carList: any = [];
-  assignModel: any = {};
-  showMessage: any;
-  responseMessage: any;
-  updateId: any;
-  toBook: any = {};
-  isLoading: boolean = false;
-  isTableLoading: boolean = false;
-  showBookingForm: boolean = false;
-  today: string = '';
+  carList:         any[]    = [];
+  toBook:          any      = null;
+  itemForm!:       FormGroup;
+  today:           string   = '';
+  searchQuery:     string   = '';
+
+  showBookingForm: boolean  = false;
+  isTableLoading:  boolean  = false;
+  isLoading:       boolean  = false;
+  showMessage:     boolean  = false;
+  showError:       boolean  = false;
+  responseMessage: string   = '';
+  errorMessage:    string   = '';
+
+  // License popup
+  showLicensePopup:  boolean = false;
+  licenseNumber:     string  = '';
+  licenseError:      string  = '';
+  licenseValid:      boolean = false;
+  pendingBookingCar: any     = null;
 
   constructor(
-    private router: Router,
+    private fb:   FormBuilder,
     private http: HttpService,
-    private fb: FormBuilder,
-    private auth: AuthService,
-    private datePipe: DatePipe
-  ) {
-    this.today = new Date().toISOString().split('T')[0];
+    private auth: AuthService
+  ) {}
 
+  ngOnInit(): void {
+    this.today = new Date().toISOString().split('T')[0];
+    this.buildForm();
+    this.getCars();
+  }
+
+  buildForm(): void {
     this.itemForm = this.fb.group(
       {
         rentalStartDate: ['', Validators.required],
         rentalEndDate:   ['', Validators.required]
       },
-      { validators: this.dateRangeValidator }
+      { validators: dateRangeValidator }
     );
+
+    this.itemForm.get('rentalStartDate')!.valueChanges.subscribe(() => {
+      this.itemForm.get('rentalEndDate')!.updateValueAndValidity();
+    });
   }
 
-  dateRangeValidator(group: AbstractControl): ValidationErrors | null {
-    const start = group.get('rentalStartDate')?.value;
-    const end   = group.get('rentalEndDate')?.value;
-    if (start && end && new Date(end) < new Date(start)) {
-      return { dateRangeInvalid: true };
-    }
-    return null;
+  getMinEndDate(): string {
+    const start = this.itemForm.get('rentalStartDate')?.value;
+    if (!start) return this.today;
+    const next = new Date(start);
+    next.setDate(next.getDate() + 1);
+    return next.toISOString().split('T')[0];
   }
 
-  ngOnInit(): void {
-    this.getCars();
+  getDayCount(): number {
+    const start = this.itemForm.get('rentalStartDate')?.value;
+    const end   = this.itemForm.get('rentalEndDate')?.value;
+    if (!start || !end) return 0;
+    const diff = (new Date(end).getTime() - new Date(start).getTime()) / (1000 * 60 * 60 * 24);
+    return diff > 0 ? diff : 0;
+  }
+
+  getEstimatedCost(): number {
+    const rate = this.toBook?.rentalRatePerDay ?? 0;
+    return this.getDayCount() * rate;
+  }
+
+  filteredCars(): any[] {
+    const q = this.searchQuery.toLowerCase().trim();
+    if (!q) return this.carList;
+    return this.carList.filter(c =>
+      (c.make + ' ' + c.model).toLowerCase().includes(q) ||
+      (c.registrationNumber ?? '').toLowerCase().includes(q)
+    );
   }
 
   getCars(): void {
     this.isTableLoading = true;
-    this.showError = false;
+    this.showError      = false;
+
     this.http.getCars().subscribe(
       (res: any) => {
-        this.carList = res;
+        this.carList        = res ?? [];
         this.isTableLoading = false;
       },
-      () => {
-        this.showError = true;
-        this.errorMessage = 'Failed to load available cars. Please try again.';
+      (err: any) => {
         this.isTableLoading = false;
+        this.showError      = true;
+        this.errorMessage   = 'Failed to load available cars.';
       }
     );
   }
 
-  book(val: any): void {
-    this.toBook = val;
-    this.showBookingForm = true;
-    this.showMessage = false;
-    this.showError = false;
+  // ── License popup trigger ────────────────────────────────────
+  book(car: any): void {
+    this.pendingBookingCar = car;
+    this.licenseNumber     = '';
+    this.licenseError      = '';
+    this.licenseValid      = false;
+    this.showLicensePopup  = true;
+  }
+
+  // ── Validate license format: DL-XXXXXX (DL- followed by 6 digits) ──
+  validateLicenseFormat(): boolean {
+    const pattern = /^DL-\d{6}$/;
+    return pattern.test(this.licenseNumber.trim());
+  }
+
+  onLicenseInput(): void {
+    this.licenseError = '';
+    if (this.licenseNumber.trim().length > 0) {
+      this.licenseValid = this.validateLicenseFormat();
+    } else {
+      this.licenseValid = false;
+    }
+  }
+
+  confirmLicense(): void {
+    if (!this.licenseNumber.trim()) {
+      this.licenseError = 'Please enter your driving license number.';
+      return;
+    }
+    if (!this.validateLicenseFormat()) {
+      this.licenseError = 'Invalid license. Use DL-XXXXXX (e.g. DL-987654).';
+      return;
+    }
+    // License valid — proceed to booking form
+    this.showLicensePopup  = false;
+    this.toBook            = this.pendingBookingCar;
+    this.pendingBookingCar = null;
+    this.showBookingForm   = true;
+    this.showMessage       = false;
+    this.showError         = false;
     this.itemForm.reset();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  closeLicensePopup(): void {
+    this.showLicensePopup  = false;
+    this.pendingBookingCar = null;
+    this.licenseNumber     = '';
+    this.licenseError      = '';
+    this.licenseValid      = false;
   }
 
   cancelBooking(): void {
     this.showBookingForm = false;
-    this.toBook = {};
+    this.toBook          = null;
     this.itemForm.reset();
-    this.showMessage = false;
-    this.showError = false;
+    this.showMessage     = false;
+    this.showError       = false;
   }
 
   onSubmit(): void {
@@ -97,61 +184,37 @@ export class CarsComponent implements OnInit {
       return;
     }
 
-    if (this.itemForm.errors?.['dateRangeInvalid']) {
-      return;
-    }
-
-    this.isLoading = true;
+    this.isLoading   = true;
     this.showMessage = false;
-    this.showError = false;
+    this.showError   = false;
+
+    const start = this.itemForm.value.rentalStartDate;
+    const end   = this.itemForm.value.rentalEndDate;
+
+    const details = {
+      rentalStartDate: start + 'T00:00:00',
+      rentalEndDate:   end   + 'T23:59:59'
+    };
 
     const userId = this.auth.getUserId();
     const carId  = this.toBook.id;
 
-    const formVal = this.itemForm.value;
-
-    // Backend BookingDto expects "yyyy-MM-dd'T'HH:mm:ss" format
-    // We send start date at 00:00:00 and end date at 23:59:59
-    const startDate = formVal.rentalStartDate + 'T00:00:00';
-    const endDate   = formVal.rentalEndDate   + 'T23:59:59';
-
-    const payload = {
-      rentalStartDate: startDate,
-      rentalEndDate:   endDate
-    };
-
-    this.http.bookACar(payload, userId, carId).subscribe(
-      () => {
+    this.http.bookACar(details, userId, carId).subscribe(
+      (res: any) => {
         this.isLoading       = false;
         this.showMessage     = true;
-        this.responseMessage = 'Car booked successfully!';
+        this.responseMessage = 'Booking confirmed! Your car is reserved.';
         this.itemForm.reset();
-        this.toBook          = {};
+        this.toBook          = null;
         this.showBookingForm = false;
         this.getCars();
+        setTimeout(() => (this.showMessage = false), 5000);
       },
-      () => {
+      (err: any) => {
         this.isLoading    = false;
         this.showError    = true;
-        this.errorMessage = 'Failed to book car. Please try again.';
+        this.errorMessage = 'Booking failed. Please try again.';
       }
     );
-  }
-
-  getDayCount(): number {
-    const start = this.itemForm.value.rentalStartDate;
-    const end   = this.itemForm.value.rentalEndDate;
-    if (!start || !end) return 0;
-    const diff = new Date(end).getTime() - new Date(start).getTime();
-    return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
-  }
-
-  getEstimatedCost(): number {
-    return this.getDayCount() * (this.toBook?.rentalRatePerDay || 0);
-  }
-
-  getMinEndDate(): string {
-    const start = this.itemForm.value.rentalStartDate;
-    return start ? start : this.today;
   }
 }

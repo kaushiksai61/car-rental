@@ -22,7 +22,9 @@ export class AddCarComponent implements OnInit {
   isLoading: boolean = false;
   isTableLoading: boolean = false;
 
-  // Indian car brands and models
+  // Star rating hover state
+  hoveredStar: number = 0;
+
   carBrands: any[] = [
     { make: 'Maruti Suzuki', models: ['Swift', 'Baleno', 'Brezza', 'Ertiga', 'Dzire', 'Alto', 'Wagon R', 'Ciaz'] },
     { make: 'Hyundai',       models: ['Creta', 'i20', 'Venue', 'Verna', 'Tucson', 'Alcazar', 'Aura'] },
@@ -60,10 +62,10 @@ export class AddCarComponent implements OnInit {
       status:             ['', Validators.required],
       rentalRatePerDay:   ['', [Validators.required, Validators.min(1)]],
       category:           [null],
+      rating:             [0],
       id:                 ['']
     });
 
-    // When make changes, update model dropdown
     this.itemForm.get('make')!.valueChanges.subscribe(make => {
       const brand = this.carBrands.find(b => b.make === make);
       this.availableModels = brand ? brand.models : [];
@@ -71,7 +73,6 @@ export class AddCarComponent implements OnInit {
     });
   }
 
-  // Validator: year must be 4 digits between 1980 and current year
   yearValidator(control: AbstractControl): ValidationErrors | null {
     const val = control.value;
     if (!val) return null;
@@ -83,7 +84,6 @@ export class AddCarComponent implements OnInit {
     return null;
   }
 
-  // Validator: format must be XX 00 XX 0000 (2 letters, space, 2 digits, 2 letters, 4 digits)
   regNumberValidator(control: AbstractControl): ValidationErrors | null {
     const val = control.value;
     if (!val) return null;
@@ -121,15 +121,30 @@ export class AddCarComponent implements OnInit {
     );
   }
 
+  // ── Star rating helpers ──────────────────────────────────────
+  setRating(star: number): void {
+    this.itemForm.get('rating')!.setValue(star);
+  }
+
+  getRating(): number {
+    return this.itemForm.get('rating')!.value || 0;
+  }
+
+  getStarClass(star: number): string {
+    const active = this.hoveredStar > 0 ? this.hoveredStar : this.getRating();
+    return star <= active ? 'star-filled' : 'star-empty';
+  }
+
+  // ── Submit ───────────────────────────────────────────────────
   onSubmit(): void {
     if (this.itemForm.invalid) {
       this.itemForm.markAllAsTouched();
       return;
     }
 
-    this.isLoading = true;
+    this.isLoading   = true;
     this.showMessage = false;
-    this.showError = false;
+    this.showError   = false;
 
     const formVal = this.itemForm.value;
     const payload: any = {
@@ -138,7 +153,8 @@ export class AddCarComponent implements OnInit {
       manufactureYear:    formVal.manufactureYear,
       registrationNumber: formVal.registrationNumber.toUpperCase(),
       status:             formVal.status,
-      rentalRatePerDay:   formVal.rentalRatePerDay
+      rentalRatePerDay:   formVal.rentalRatePerDay,
+      rating:             formVal.rating || 0
     };
 
     if (formVal.category) {
@@ -148,30 +164,30 @@ export class AddCarComponent implements OnInit {
     if (this.updateId) {
       this.http.updateCar(payload, this.updateId).subscribe(
         () => {
-          this.isLoading = false;
-          this.showMessage = true;
+          this.isLoading       = false;
+          this.showMessage     = true;
           this.responseMessage = 'Car updated successfully.';
           this.resetForm();
           this.getAllCarList();
         },
         () => {
-          this.isLoading = false;
-          this.showError = true;
+          this.isLoading    = false;
+          this.showError    = true;
           this.errorMessage = 'Failed to update car.';
         }
       );
     } else {
       this.http.createCar(payload).subscribe(
         () => {
-          this.isLoading = false;
-          this.showMessage = true;
+          this.isLoading       = false;
+          this.showMessage     = true;
           this.responseMessage = 'Car added successfully.';
           this.resetForm();
           this.getAllCarList();
         },
         () => {
-          this.isLoading = false;
-          this.showError = true;
+          this.isLoading    = false;
+          this.showError    = true;
           this.errorMessage = 'Failed to add car.';
         }
       );
@@ -180,7 +196,6 @@ export class AddCarComponent implements OnInit {
 
   editCar(val: any): void {
     this.updateId = val.id;
-    // Set make first so models populate
     const brand = this.carBrands.find(b => b.make === val.make);
     this.availableModels = brand ? brand.models : [];
 
@@ -191,10 +206,12 @@ export class AddCarComponent implements OnInit {
       registrationNumber: val.registrationNumber,
       status:             val.status,
       rentalRatePerDay:   val.rentalRatePerDay,
-      category:           val.category?.id || null
+      category:           val.category?.id || null,
+      rating:             val.rating || 0
     });
+
     this.showMessage = false;
-    this.showError = false;
+    this.showError   = false;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -206,9 +223,10 @@ export class AddCarComponent implements OnInit {
   resetForm(): void {
     this.itemForm.reset();
     this.availableModels = [];
-    this.showMessage = false;
-    this.showError = false;
-    this.updateId = null;
+    this.showMessage     = false;
+    this.showError       = false;
+    this.updateId        = null;
+    this.hoveredStar     = 0;
   }
 
   getStatusClass(status: string): string {

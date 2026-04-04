@@ -41,20 +41,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .cors().and()
                 .authorizeRequests()
-
-                // PUBLIC — no token needed
+                // PUBLIC
                 .antMatchers("/api/user/register", "/api/user/login").permitAll()
-
-                // ADMIN — supports both "ADMIN" and "ADMINISTRATOR" role values
+                // ADMIN
                 .antMatchers("/api/administrator/**")
                     .access("hasAuthority('ADMIN') or hasAuthority('ADMINISTRATOR')")
-
-                // AGENT — matches role stored in DB as "AGENT"
+                // AGENT
                 .antMatchers("/api/agent/**").hasAuthority("AGENT")
-
-                // CUSTOMER — matches role stored in DB as "CUSTOMER"
+                // CUSTOMER
                 .antMatchers("/api/customers/**").hasAuthority("CUSTOMER")
-
+                // CHATBOT
+                .antMatchers("/api/chat/**").hasAuthority("CUSTOMER")
                 // ALL OTHER REQUESTS MUST BE AUTHENTICATED
                 .anyRequest().authenticated()
                 .and()

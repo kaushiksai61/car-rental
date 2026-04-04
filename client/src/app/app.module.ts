@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe, CommonModule } from '@angular/common';
+import { ChatbotComponent } from './chatbot/chatbot.component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -33,7 +34,8 @@ import { StatusFilterPipe, PaymentStatusFilterPipe } from './status-filter.pipe'
     PaymentReportComponent,
     MyBookingsComponent,
     StatusFilterPipe,
-    PaymentStatusFilterPipe
+    PaymentStatusFilterPipe,
+    ChatbotComponent
   ],
   imports: [
     BrowserModule,

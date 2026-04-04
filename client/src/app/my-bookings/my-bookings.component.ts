@@ -11,8 +11,8 @@ import { DatePipe } from '@angular/common';
 export class MyBookingsComponent implements OnInit {
 
   bookingList: any[] = [];
-  isLoading: boolean = false;
-  showError: boolean = false;
+  isLoading:   boolean = false;
+  showError:   boolean = false;
   errorMessage: string = '';
 
   constructor(
@@ -28,16 +28,25 @@ export class MyBookingsComponent implements OnInit {
   getMyBookings(): void {
     this.isLoading = true;
     this.showError = false;
+
     const userId = this.auth.getUserId();
+
+    if (!userId) {
+      this.showError    = true;
+      this.errorMessage = 'User session not found. Please log in again.';
+      this.isLoading    = false;
+      return;
+    }
+
     this.http.getMyBookings(userId).subscribe(
       (res: any) => {
         this.bookingList = res || [];
-        this.isLoading = false;
+        this.isLoading   = false;
       },
-      () => {
-        this.showError = true;
+      (err: any) => {
+        this.showError    = true;
         this.errorMessage = 'Failed to load your bookings. Please try again.';
-        this.isLoading = false;
+        this.isLoading    = false;
       }
     );
   }

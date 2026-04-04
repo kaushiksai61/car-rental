@@ -1,6 +1,5 @@
 <div class="page-container">
 
-  <!-- Page Header -->
   <div class="page-header">
     <div class="page-header-left">
       <div class="page-icon">
@@ -46,7 +45,7 @@
 
       <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" novalidate>
 
-        <!-- Make Dropdown -->
+        <!-- Make -->
         <div class="form-group">
           <label>Make</label>
           <div class="input-wrap select-wrap">
@@ -55,13 +54,10 @@
                 <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99z"/>
               </svg>
             </span>
-            <select
-              formControlName="make"
+            <select formControlName="make"
               [class.input-error]="itemForm.controls['make'].touched && itemForm.controls['make'].invalid">
               <option value="" disabled selected>Select brand</option>
-              <option *ngFor="let brand of carBrands" [value]="brand.make">
-                {{ brand.make }}
-              </option>
+              <option *ngFor="let brand of carBrands" [value]="brand.make">{{ brand.make }}</option>
             </select>
             <span class="select-arrow">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
@@ -72,7 +68,7 @@
           </p>
         </div>
 
-        <!-- Model Dropdown -->
+        <!-- Model -->
         <div class="form-group">
           <label>Model</label>
           <div class="input-wrap select-wrap">
@@ -81,15 +77,12 @@
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
               </svg>
             </span>
-            <select
-              formControlName="model"
+            <select formControlName="model"
               [class.input-error]="itemForm.controls['model'].touched && itemForm.controls['model'].invalid">
               <option value="" disabled selected>
                 {{ itemForm.value.make ? 'Select model' : 'Select make first' }}
               </option>
-              <option *ngFor="let model of availableModels" [value]="model">
-                {{ model }}
-              </option>
+              <option *ngFor="let model of availableModels" [value]="model">{{ model }}</option>
             </select>
             <span class="select-arrow">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
@@ -109,12 +102,8 @@
                 <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/>
               </svg>
             </span>
-            <input
-              type="number"
-              formControlName="manufactureYear"
-              placeholder="e.g. 2022"
-              [class.input-error]="itemForm.controls['manufactureYear'].touched && itemForm.controls['manufactureYear'].invalid"
-            />
+            <input type="number" formControlName="manufactureYear" placeholder="e.g. 2022"
+              [class.input-error]="itemForm.controls['manufactureYear'].touched && itemForm.controls['manufactureYear'].invalid"/>
           </div>
           <p class="error-msg" *ngIf="itemForm.controls['manufactureYear'].touched && itemForm.controls['manufactureYear'].errors?.['required']">
             Manufacture year is required
@@ -133,14 +122,10 @@
                 <path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4V6h16v12z"/>
               </svg>
             </span>
-            <input
-              type="text"
-              formControlName="registrationNumber"
-              placeholder="e.g. TN 08 AB 1234"
-              maxlength="12"
+            <input type="text" formControlName="registrationNumber"
+              placeholder="e.g. TN 08 AB 1234" maxlength="12"
               style="text-transform: uppercase;"
-              [class.input-error]="itemForm.controls['registrationNumber'].touched && itemForm.controls['registrationNumber'].invalid"
-            />
+              [class.input-error]="itemForm.controls['registrationNumber'].touched && itemForm.controls['registrationNumber'].invalid"/>
           </div>
           <p class="error-msg" *ngIf="itemForm.controls['registrationNumber'].touched && itemForm.controls['registrationNumber'].errors?.['required']">
             Registration number is required
@@ -184,8 +169,7 @@
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/>
               </svg>
             </span>
-            <select
-              formControlName="status"
+            <select formControlName="status"
               [class.input-error]="itemForm.controls['status'].touched && itemForm.controls['status'].invalid">
               <option value="" disabled selected>Choose status</option>
               <option value="available">Available</option>
@@ -210,12 +194,8 @@
                 <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
               </svg>
             </span>
-            <input
-              type="number"
-              formControlName="rentalRatePerDay"
-              placeholder="e.g. 3500"
-              [class.input-error]="itemForm.controls['rentalRatePerDay'].touched && itemForm.controls['rentalRatePerDay'].invalid"
-            />
+            <input type="number" formControlName="rentalRatePerDay" placeholder="e.g. 3500"
+              [class.input-error]="itemForm.controls['rentalRatePerDay'].touched && itemForm.controls['rentalRatePerDay'].invalid"/>
           </div>
           <p class="error-msg" *ngIf="itemForm.controls['rentalRatePerDay'].touched && itemForm.controls['rentalRatePerDay'].errors?.['required']">
             Rental rate is required
@@ -223,6 +203,39 @@
           <p class="error-msg" *ngIf="itemForm.controls['rentalRatePerDay'].touched && itemForm.controls['rentalRatePerDay'].errors?.['min']">
             Rate must be greater than 0
           </p>
+        </div>
+
+        <!-- ── STAR RATING ──────────────────────────────────── -->
+        <div class="form-group">
+          <label>Car Rating</label>
+          <div class="star-rating-wrap">
+            <div class="stars-row">
+              <button
+                type="button"
+                *ngFor="let star of [1,2,3,4,5]"
+                class="star-btn"
+                [class.star-filled]="star <= (hoveredStar || getRating())"
+                [class.star-empty]="star > (hoveredStar || getRating())"
+                (mouseenter)="hoveredStar = star"
+                (mouseleave)="hoveredStar = 0"
+                (click)="setRating(star)">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="star-rating-info">
+              <span class="star-rating-value" *ngIf="getRating() > 0">
+                {{ getRating() }}.0 / 5.0
+              </span>
+              <span class="star-rating-value star-rating-none" *ngIf="getRating() === 0">
+                No rating set
+              </span>
+              <span class="star-rating-label">
+                {{ getRating() === 1 ? 'Poor' : getRating() === 2 ? 'Fair' : getRating() === 3 ? 'Good' : getRating() === 4 ? 'Very Good' : getRating() === 5 ? 'Excellent' : 'Click to rate' }}
+              </span>
+            </div>
+          </div>
         </div>
 
         <button type="submit" class="btn-submit" [disabled]="isLoading">
@@ -250,13 +263,11 @@
         </div>
       </div>
 
-      <!-- Loading -->
       <div class="table-loading" *ngIf="isTableLoading">
         <div class="spinner"></div>
         <p>Loading fleet...</p>
       </div>
 
-      <!-- Empty -->
       <div class="empty-state" *ngIf="!isTableLoading && carList.length === 0">
         <svg viewBox="0 0 24 24" fill="currentColor" width="40" height="40">
           <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99z"/>
@@ -265,7 +276,6 @@
         <span>Add your first car using the form</span>
       </div>
 
-      <!-- Table -->
       <div class="table-wrap" *ngIf="!isTableLoading && carList.length > 0">
         <table>
           <thead>
@@ -276,6 +286,7 @@
               <th>Reg. Number</th>
               <th>Category</th>
               <th>Rate / Day</th>
+              <th>Rating</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -291,18 +302,25 @@
               <td class="td-year">{{ car.manufactureYear }}</td>
               <td class="td-reg">{{ car.registrationNumber }}</td>
               <td>
-                <span class="category-badge" *ngIf="car.category">
-                  {{ car.category.name }}
-                </span>
+                <span class="category-badge" *ngIf="car.category">{{ car.category.name }}</span>
                 <span class="no-cat" *ngIf="!car.category">—</span>
               </td>
               <td>
                 <span class="rate-badge">₹ {{ car.rentalRatePerDay | number }}</span>
               </td>
               <td>
-                <span class="status-chip" [ngClass]="getStatusClass(car.status)">
-                  {{ car.status }}
-                </span>
+                <div class="table-stars">
+                  <span *ngFor="let s of [1,2,3,4,5]"
+                    class="table-star"
+                    [class.table-star-filled]="s <= (car.rating || 0)">
+                    ★
+                  </span>
+                  <span class="table-star-val" *ngIf="car.rating">{{ car.rating }}.0</span>
+                  <span class="table-star-val no-rating" *ngIf="!car.rating">—</span>
+                </div>
+              </td>
+              <td>
+                <span class="status-chip" [ngClass]="getStatusClass(car.status)">{{ car.status }}</span>
               </td>
               <td>
                 <button class="btn-edit" (click)="editCar(car)">

@@ -1,0 +1,132 @@
+<div class="chatbot-wrapper" *ngIf="isCustomer">
+
+  <!-- ── CHAT WINDOW ──────────────────────────────────────── -->
+  <div class="chat-window" [class.chat-open]="isOpen">
+
+    <!-- Header -->
+    <div class="chat-header">
+      <div class="chat-header-left">
+        <div class="chat-avatar">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+            <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+          </svg>
+        </div>
+        <div class="chat-header-info">
+          <span class="chat-bot-name">NOVA</span>
+          <span class="chat-bot-status">
+            <span class="status-dot"></span>
+            CarRental Assistant
+          </span>
+        </div>
+      </div>
+      <div class="chat-header-right">
+        <button class="chat-action-btn" (click)="clearChat()" title="Clear chat">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15">
+            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+          </svg>
+        </button>
+        <button class="chat-action-btn" (click)="toggleChat()" title="Close">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Messages -->
+    <div class="chat-messages">
+
+      <div class="message-wrap"
+        *ngFor="let msg of messages"
+        [class.user-wrap]="msg.role === 'user'"
+        [class.bot-wrap]="msg.role === 'assistant'">
+
+        <!-- Bot avatar -->
+        <div class="msg-avatar" *ngIf="msg.role === 'assistant'">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+            <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99z"/>
+          </svg>
+        </div>
+
+        <div class="msg-content-wrap">
+          <div class="msg-bubble"
+            [class.user-bubble]="msg.role === 'user'"
+            [class.bot-bubble]="msg.role === 'assistant'"
+            [innerHTML]="formatMessage(msg.content)">
+          </div>
+          <span class="msg-time">{{ msg.time }}</span>
+        </div>
+
+      </div>
+
+      <!-- Typing indicator -->
+      <div class="message-wrap bot-wrap" *ngIf="isTyping">
+        <div class="msg-avatar">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+            <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99z"/>
+          </svg>
+        </div>
+        <div class="msg-content-wrap">
+          <div class="msg-bubble bot-bubble typing-bubble">
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+          </div>
+        </div>
+      </div>
+
+      <div #messagesEnd></div>
+    </div>
+
+    <!-- Quick Replies — show only when 1 message -->
+    <div class="quick-replies" *ngIf="messages.length === 1">
+      <button class="quick-btn" *ngFor="let q of getQuickReplies()" (click)="quickReply(q)">
+        {{ q }}
+      </button>
+    </div>
+
+    <!-- Input -->
+    <div class="chat-input-area">
+      <div class="chat-input-wrap">
+        <textarea
+          class="chat-input"
+          placeholder="Ask me anything about car rental..."
+          [(ngModel)]="userInput"
+          (keydown)="onKeyDown($event)"
+          rows="1">
+        </textarea>
+        <button class="chat-send-btn" (click)="sendMessage()" [disabled]="!userInput.trim() || isTyping">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+        </button>
+      </div>
+      <p class="chat-footer-text">Powered by Claude AI · CarRental</p>
+    </div>
+
+  </div>
+
+  <!-- ── FLOATING BUBBLE ──────────────────────────────────── -->
+  <button class="chat-bubble" (click)="toggleChat()" [class.bubble-open]="isOpen">
+
+    <!-- Car icon when closed -->
+    <span class="bubble-icon bubble-car" *ngIf="!isOpen">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+        <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+      </svg>
+      <span class="bubble-label">Ask NOVA</span>
+    </span>
+
+    <!-- Close icon when open -->
+    <span class="bubble-icon" *ngIf="isOpen">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+      </svg>
+    </span>
+
+    <!-- Notification dot -->
+    <span class="bubble-notify" *ngIf="!isOpen"></span>
+
+  </button>
+
+</div>

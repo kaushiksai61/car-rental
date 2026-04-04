@@ -31,7 +31,7 @@ public class BookingService {
 
     // GET BOOKINGS BY USER ID (CUSTOMER)
     public List<Booking> getBookingsByUserId(Long userId) {
-        return bookingRepository.findByUserId(userId);
+        return bookingRepository.findByUser_Id(userId);
     }
 
     // UPDATE BOOKING STATUS (AGENT)

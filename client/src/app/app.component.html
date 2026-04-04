@@ -87,6 +87,8 @@
   </div>
 </nav>
 
+<app-chatbot *ngIf="IsLoggin && roleName === 'CUSTOMER'"></app-chatbot>
+
 <div class="page-wrapper" [class.with-nav]="IsLoggin">
   <router-outlet></router-outlet>
 </div>
