@@ -15,7 +15,7 @@ import java.util.HashMap;
 @CrossOrigin(origins = "*")
 public class ChatController {
 
-    private static final String GROQ_API_KEY = "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";
+    private static final String GROQ_API_KEY = "";
     private static final String GROQ_URL     = "https://api.groq.com/openai/v1/chat/completions";
     private static final String MODEL        = "llama3-8b-8192";
 
