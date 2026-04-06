@@ -22,6 +22,10 @@ export class HttpService {
     };
   }
 
+  private jsonHeaders() {
+    return { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+  }
+
   // ── CATEGORY (ADMIN) ──────────────────────────────────────
   getAllCategories(): Observable<any> {
     return this.http.get(
@@ -144,7 +148,7 @@ export class HttpService {
     return this.http.post(
       this.serverName + '/api/user/login',
       details,
-      { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) }
+      this.jsonHeaders()
     );
   }
 
@@ -152,7 +156,40 @@ export class HttpService {
     return this.http.post(
       this.serverName + '/api/user/register',
       details,
-      { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) }
+      this.jsonHeaders()
+    );
+  }
+
+  // ── OTP (OPTION B) ────────────────────────────────────────
+  verifyEmailOtp(details: { email: string; otp: string }): Observable<any> {
+    return this.http.post(
+      this.serverName + '/api/user/verify-email-otp',
+      details,
+      this.jsonHeaders()
+    );
+  }
+
+  forgotPassword(details: { email: string }): Observable<any> {
+    return this.http.post(
+      this.serverName + '/api/user/forgot-password',
+      details,
+      this.jsonHeaders()
+    );
+  }
+
+  resetPassword(details: { email: string; otp: string; newPassword: string }): Observable<any> {
+    return this.http.post(
+      this.serverName + '/api/user/reset-password',
+      details,
+      this.jsonHeaders()
+    );
+  }
+
+  resendOtp(details: { email: string }): Observable<any> {
+    return this.http.post(
+      this.serverName + '/api/user/resend-otp',
+      details,
+      this.jsonHeaders()
     );
   }
 }

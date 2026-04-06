@@ -1,55 +1,25 @@
 <div class="register-page">
 
-  <!-- LEFT BRANDING PANEL -->
+  <!-- LEFT PANEL -->
   <div class="left-panel">
     <div class="left-bg"></div>
     <div class="diagonal-line"></div>
-
     <div class="left-content">
       <div class="brand-tag">
         <span class="brand-dot"></span>
         <span>Join the Fleet</span>
       </div>
-
       <h2 class="left-headline">
         START<br>YOUR<br>
         <span class="accent-word">JOURNEY.</span>
       </h2>
-
       <p class="left-sub">
         Create your account and get instant access to hundreds of premium vehicles across 40+ locations.
       </p>
-
-      <div class="perks-list">
-        <div class="perk-item">
-          <span class="perk-icon">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
-          </span>
-          <span>Instant booking confirmation</span>
-        </div>
-        <div class="perk-item">
-          <span class="perk-icon">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
-          </span>
-          <span>Access to 500+ vehicles</span>
-        </div>
-        <div class="perk-item">
-          <span class="perk-icon">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
-          </span>
-          <span>24/7 roadside support</span>
-        </div>
-        <div class="perk-item">
-          <span class="perk-icon">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
-          </span>
-          <span>Flexible cancellation policy</span>
-        </div>
-      </div>
     </div>
   </div>
 
-  <!-- RIGHT REGISTER PANEL -->
+  <!-- RIGHT PANEL -->
   <div class="right-panel">
     <div class="gold-bar"></div>
 
@@ -57,7 +27,7 @@
     <div class="logo-area">
       <div class="logo-icon">
         <svg viewBox="0 0 24 24" fill="white">
-          <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+          <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM5 11l1.5-4.5h11L19 11H5z"/>
         </svg>
       </div>
       <div class="logo-name">CAR<span>RENTAL</span></div>
@@ -69,107 +39,109 @@
       <p>Fill in your details to get started</p>
     </div>
 
-    <div class="divider-line"><span>account details</span></div>
+    <form [formGroup]="itemForm" (ngSubmit)="onRegister()">
 
-    <form [formGroup]="itemForm" (ngSubmit)="onRegister()" novalidate>
-
-      <!-- Username -->
+      <!-- USERNAME -->
       <div class="form-group">
-        <label for="username">Username</label>
+        <label>Username</label>
         <div class="input-wrap">
           <span class="input-icon">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+              <path d="M12 12c2.7 0 8 1.34 8 4v2H4v-2c0-2.66 5.3-4 8-4zm0-2a4 4 0 100-8 4 4 0 000 8z"/>
             </svg>
           </span>
-          <input
-            id="username"
-            type="text"
-            formControlName="username"
-            placeholder="johndoe"
-            [class.input-error]="itemForm.controls['username'].touched && itemForm.controls['username'].invalid"
-          />
+          <input type="text" formControlName="username" placeholder="johndoe"
+            [class.input-error]="itemForm.controls['username'].touched && itemForm.controls['username'].invalid"/>
         </div>
-        <p class="error-msg" *ngIf="itemForm.controls['username'].touched && itemForm.controls['username'].invalid">
+        <p class="error-msg"
+          *ngIf="itemForm.controls['username'].touched && itemForm.controls['username'].invalid">
           Username is required
         </p>
       </div>
 
-      <!-- Email -->
+      <!-- EMAIL -->
       <div class="form-group">
-        <label for="email">Email Address</label>
+        <label>Email</label>
         <div class="input-wrap">
           <span class="input-icon">
-            <svg viewBox="0 0 24 24" fill="currentColor">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
               <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
             </svg>
           </span>
-          <input
-            id="email"
-            type="email"
-            formControlName="email"
-            placeholder="name@example.com"
-            [class.input-error]="itemForm.controls['email'].touched && itemForm.controls['email'].invalid"
-          />
+          <input type="email" formControlName="email" placeholder="name@example.com"
+            [class.input-error]="itemForm.controls['email'].touched && itemForm.controls['email'].invalid"/>
         </div>
-        <p class="error-msg" *ngIf="itemForm.controls['email'].touched && itemForm.controls['email'].invalid">
-          Please enter a valid email address
+        <p class="error-msg"
+          *ngIf="itemForm.controls['email'].touched && itemForm.controls['email'].errors?.['required']">
+          Email is required
+        </p>
+        <p class="error-msg"
+          *ngIf="itemForm.controls['email'].touched && itemForm.controls['email'].errors?.['email']">
+          Enter a valid email
         </p>
       </div>
 
-      <!-- Password -->
+      <!-- PASSWORD -->
       <div class="form-group">
-        <label for="password">Password</label>
+        <label>Password</label>
         <div class="input-wrap">
           <span class="input-icon">
-            <svg viewBox="0 0 24 24" fill="currentColor">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
               <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
             </svg>
           </span>
-          <input
-            id="password"
-            type="password"
-            formControlName="password"
-            placeholder="••••••••"
-            [class.input-error]="itemForm.controls['password'].touched && itemForm.controls['password'].invalid"
-          />
+          <input type="password" formControlName="password" placeholder="••••••••"
+            [class.input-error]="itemForm.controls['password'].touched && itemForm.controls['password'].invalid"/>
         </div>
-        <p class="error-msg" *ngIf="itemForm.controls['password'].touched && itemForm.controls['password'].invalid">
-          Password is required
-        </p>
+
+        <!-- ── DYNAMIC PASSWORD CHECKLIST ─────────────────── -->
+        <div class="pwd-checklist" *ngIf="passwordTouched">
+          <div class="pwd-check" [class.pwd-check-pass]="hasMinLength" [class.pwd-check-fail]="!hasMinLength">
+            <span class="pwd-check-icon">{{ hasMinLength ? '✓' : '✗' }}</span>
+            At least 8 characters
+          </div>
+          <div class="pwd-check" [class.pwd-check-pass]="hasUppercase" [class.pwd-check-fail]="!hasUppercase">
+            <span class="pwd-check-icon">{{ hasUppercase ? '✓' : '✗' }}</span>
+            One uppercase letter
+          </div>
+          <div class="pwd-check" [class.pwd-check-pass]="hasNumber" [class.pwd-check-fail]="!hasNumber">
+            <span class="pwd-check-icon">{{ hasNumber ? '✓' : '✗' }}</span>
+            One number
+          </div>
+          <div class="pwd-check" [class.pwd-check-pass]="hasSpecial" [class.pwd-check-fail]="!hasSpecial">
+            <span class="pwd-check-icon">{{ hasSpecial ? '✓' : '✗' }}</span>
+            One special character
+          </div>
+        </div>
       </div>
 
-      <!-- Role -->
+      <!-- ROLE -->
       <div class="form-group">
-        <label for="role">Role</label>
-        <div class="input-wrap select-wrap">
+        <label>Role</label>
+        <div class="select-wrap">
           <span class="input-icon">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
+            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/>
             </svg>
           </span>
-          <select
-            id="role"
-            formControlName="role"
-            [class.input-error]="itemForm.controls['role'].touched && itemForm.controls['role'].invalid"
-          >
+          <select formControlName="role"
+            [class.input-error]="itemForm.controls['role'].touched && itemForm.controls['role'].invalid">
             <option value="" disabled selected>Choose your role</option>
             <option value="ADMIN">Admin</option>
             <option value="AGENT">Agent</option>
             <option value="CUSTOMER">Customer</option>
           </select>
           <span class="select-arrow">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M7 10l5 5 5-5z"/>
-            </svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
           </span>
         </div>
-        <p class="error-msg" *ngIf="itemForm.controls['role'].touched && itemForm.controls['role'].invalid">
-          Please select a role
+        <p class="error-msg"
+          *ngIf="itemForm.controls['role'].touched && itemForm.controls['role'].invalid">
+          Role is required
         </p>
       </div>
 
-      <!-- Submit -->
+      <!-- BUTTON -->
       <button type="submit" class="btn-register" [disabled]="isLoading">
         <span *ngIf="!isLoading">Create Account</span>
         <span *ngIf="isLoading" class="btn-loader">
@@ -179,11 +151,8 @@
         </span>
       </button>
 
-      <!-- Success message -->
-      <div class="success-banner" *ngIf="showMessage">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/>
-        </svg>
+      <!-- RESPONSE MESSAGE -->
+      <div class="success-banner" *ngIf="showMessage && !isLoading">
         {{ responseMessage }}
       </div>
 

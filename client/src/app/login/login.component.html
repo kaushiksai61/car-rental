@@ -53,66 +53,46 @@
 
     <!-- Speed lines -->
     <div class="lines-wrap" id="linesWrap">
-      <div class="sline" *ngFor="let l of speedLines"
-        [style.top]="l.top"
-        [style.width]="l.width"
-        [style.opacity]="l.opacity"
-        [style.animationDuration]="l.dur"
-        [style.animationDelay]="l.delay"
-        [class.red-sline]="l.red">
+      <div class="sline"
+           *ngFor="let l of speedLines"
+           [style.top]="l.top"
+           [style.width]="l.width"
+           [style.opacity]="l.opacity"
+           [style.animationDuration]="l.dur"
+           [style.animationDelay]="l.delay"
+           [class.red-sline]="l.red">
       </div>
     </div>
 
     <!-- Hero Car SVG -->
     <div class="hero-car" id="heroCar">
       <svg viewBox="0 0 520 160" xmlns="http://www.w3.org/2000/svg">
-        <!-- Car shadow -->
         <ellipse cx="260" cy="148" rx="200" ry="10" fill="rgba(0,0,0,0.6)"/>
-        <!-- Car body lower -->
         <rect x="40" y="95" width="440" height="45" rx="8" fill="#1a0505"/>
-        <!-- Car body upper -->
         <path d="M120 95 L160 50 L200 40 L320 40 L370 50 L400 95 Z" fill="#220606"/>
-        <!-- Roof -->
         <path d="M165 50 L200 38 L320 38 L355 50 Z" fill="#1a0404"/>
-        <!-- Windshield -->
         <path d="M175 90 L205 50 L315 50 L345 90 Z" fill="rgba(100,180,255,0.15)" stroke="rgba(100,180,255,0.2)" stroke-width="1"/>
-        <!-- Side windows -->
         <rect x="158" y="54" width="48" height="36" rx="3" fill="rgba(80,140,220,0.12)" stroke="rgba(80,140,220,0.2)" stroke-width="1"/>
-        <!-- Door lines -->
         <line x1="210" y1="45" x2="230" y2="95" stroke="rgba(220,38,38,0.15)" stroke-width="1"/>
         <line x1="300" y1="45" x2="310" y2="95" stroke="rgba(220,38,38,0.15)" stroke-width="1"/>
-        <!-- Body stripe -->
         <rect x="40" y="108" width="440" height="3" rx="1" fill="rgba(220,38,38,0.4)"/>
-        <!-- Side skirt -->
         <path d="M60 138 L480 138 L490 140 L50 140 Z" fill="#120202"/>
-        <!-- Front bumper -->
         <path d="M430 95 L480 100 L485 138 L420 138 Z" fill="#1a0404"/>
-        <!-- Rear bumper -->
         <path d="M90 95 L40 100 L35 138 L100 138 Z" fill="#1a0404"/>
-        <!-- Front headlights -->
         <rect x="458" y="100" width="22" height="14" rx="3" fill="#fffbe0"/>
-        <rect x="458" y="100" width="22" height="14" rx="3" fill="rgba(255,240,180,0.3)"/>
         <ellipse cx="469" cy="107" rx="11" ry="7" fill="#fff8d0" opacity="0.9"/>
-        <!-- Headlight glow -->
         <ellipse cx="490" cy="107" rx="30" ry="12" fill="rgba(255,240,180,0.12)"/>
-        <!-- DRL strip -->
         <rect x="440" y="98" width="18" height="3" rx="1" fill="rgba(255,220,100,0.8)"/>
-        <!-- Tail lights -->
         <rect x="38" y="100" width="18" height="16" rx="2" fill="#cc1100"/>
-        <rect x="38" y="100" width="18" height="16" rx="2" fill="rgba(255,30,0,0.2)"/>
         <ellipse cx="47" cy="108" rx="9" ry="8" fill="#ff2200" opacity="0.9"/>
-        <!-- Tail glow -->
         <ellipse cx="20" cy="108" rx="25" ry="10" fill="rgba(255,34,0,0.18)"/>
-        <!-- Rear DRL -->
         <rect x="56" y="98" width="16" height="3" rx="1" fill="rgba(255,60,0,0.7)"/>
-        <!-- Wheel arches -->
         <path d="M95 138 Q140 100 185 138 Z" fill="#0d0303"/>
         <path d="M340 138 Q385 100 430 138 Z" fill="#0d0303"/>
-        <!-- Wheels -->
+
         <circle cx="140" cy="140" r="28" fill="#111" stroke="#222" stroke-width="2"/>
         <circle cx="140" cy="140" r="18" fill="#0a0a0a"/>
         <circle cx="140" cy="140" r="10" fill="#1a1a1a" stroke="#DC2626" stroke-width="2"/>
-        <!-- Wheel spokes front -->
         <line x1="140" y1="122" x2="140" y2="158" stroke="#333" stroke-width="2"/>
         <line x1="122" y1="140" x2="158" y2="140" stroke="#333" stroke-width="2"/>
         <line x1="127" y1="127" x2="153" y2="153" stroke="#333" stroke-width="1.5"/>
@@ -121,23 +101,19 @@
         <circle cx="385" cy="140" r="28" fill="#111" stroke="#222" stroke-width="2"/>
         <circle cx="385" cy="140" r="18" fill="#0a0a0a"/>
         <circle cx="385" cy="140" r="10" fill="#1a1a1a" stroke="#DC2626" stroke-width="2"/>
-        <!-- Wheel spokes rear -->
         <line x1="385" y1="122" x2="385" y2="158" stroke="#333" stroke-width="2"/>
         <line x1="367" y1="140" x2="403" y2="140" stroke="#333" stroke-width="2"/>
         <line x1="372" y1="127" x2="398" y2="153" stroke="#333" stroke-width="1.5"/>
         <line x1="398" y1="127" x2="372" y2="153" stroke="#333" stroke-width="1.5"/>
 
-        <!-- Ground reflection -->
         <path d="M60 148 L460 148 L460 155 L60 155 Z" fill="rgba(220,38,38,0.06)"/>
       </svg>
 
-      <!-- Headlight beam -->
       <div class="hlight-beam"></div>
-      <!-- Tail light glow -->
       <div class="tlight-glow"></div>
     </div>
 
-    <!-- Distant car 2 -->
+    <!-- Distant car -->
     <div class="far-car" id="farCar">
       <svg viewBox="0 0 260 80" xmlns="http://www.w3.org/2000/svg">
         <ellipse cx="130" cy="74" rx="100" ry="5" fill="rgba(0,0,0,0.5)"/>
@@ -158,10 +134,7 @@
     <!-- Stars -->
     <div class="stars" id="stars"></div>
 
-    <!-- Grid overlay -->
     <div class="grid-overlay"></div>
-
-    <!-- Vignette -->
     <div class="vignette"></div>
 
     <!-- Left content -->
@@ -220,9 +193,6 @@
     <div class="divider-line"><span>credentials</span></div>
 
     <div class="success-banner" *ngIf="registrationSuccess">
-      <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
-        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/>
-      </svg>
       Account created. Please sign in.
     </div>
 
@@ -265,9 +235,11 @@
             [class.input-error]="itemForm.controls['password'].touched && itemForm.controls['password'].invalid"
           />
         </div>
+
         <div class="forgot-row">
-          <a href="#">Forgot password?</a>
+          <a routerLink="/forgot-password">Forgot password?</a>
         </div>
+
         <p class="error-msg" *ngIf="itemForm.controls['password'].touched && itemForm.controls['password'].invalid">
           Password is required
         </p>
@@ -281,9 +253,6 @@
       </button>
 
       <p class="api-error" *ngIf="showError">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-        </svg>
         {{ errorMessage }}
       </p>
 
@@ -315,6 +284,7 @@
         Verified
       </div>
     </div>
+
   </div>
 
 </div>

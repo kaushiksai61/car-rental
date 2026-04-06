@@ -5,19 +5,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
-import java.util.List;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.HashMap;
+
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/chat")
 @CrossOrigin(origins = "*")
 public class ChatController {
 
-    private static final String GROQ_API_KEY = "";
-    private static final String GROQ_URL     = "https://api.groq.com/openai/v1/chat/completions";
-    private static final String MODEL        = "llama3-8b-8192";
+   private static final String GROQ_API_KEY = "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"; // ⚠️ REPLACE THIS
+   private static final String GROQ_URL     = "https://api.groq.com/openai/v1/chat/completions";
+   private static final String MODEL        = "llama-3.3-70b-versatile";
 
     private static final String SYSTEM_PROMPT =
         "You are NOVA, a friendly assistant for CarRental — a car rental management system. " +
@@ -29,18 +27,18 @@ public class ChatController {
         "Only answer car rental related questions. If asked something else, politely redirect.";
 
     @PostMapping("/message")
-    public ResponseEntity<String> sendMessage(@RequestBody Map<String, Object> payload) {
+    public ResponseEntity<Map<String, Object>> sendMessage(@RequestBody Map<String, Object> payload) {
+
         try {
             RestTemplate restTemplate = new RestTemplate();
 
             List<Map<String, String>> incomingMessages =
                 (List<Map<String, String>>) payload.get("messages");
 
-            // Build messages with system prompt first
             List<Map<String, String>> groqMessages = new ArrayList<>();
 
             Map<String, String> systemMsg = new HashMap<>();
-            systemMsg.put("role",    "system");
+            systemMsg.put("role", "system");
             systemMsg.put("content", SYSTEM_PROMPT);
             groqMessages.add(systemMsg);
 
@@ -48,11 +46,10 @@ public class ChatController {
                 groqMessages.addAll(incomingMessages);
             }
 
-            // Build Groq request payload
             Map<String, Object> groqPayload = new HashMap<>();
-            groqPayload.put("model",       MODEL);
-            groqPayload.put("messages",    groqMessages);
-            groqPayload.put("max_tokens",  500);
+            groqPayload.put("model", MODEL);
+            groqPayload.put("messages", groqMessages);
+            groqPayload.put("max_tokens", 500);
             groqPayload.put("temperature", 0.7);
 
             HttpHeaders headers = new HttpHeaders();
@@ -66,41 +63,46 @@ public class ChatController {
                 GROQ_URL, request, Map.class
             );
 
-            // Extract text from Groq response
-            Map<String, Object> body    = response.getBody();
+            Map<String, Object> body = response.getBody();
             List<Map<String, Object>> choices =
                 (List<Map<String, Object>>) body.get("choices");
+
             Map<String, Object> message =
                 (Map<String, Object>) choices.get(0).get("message");
+
             String content = (String) message.get("content");
 
-            // Return in format Angular expects
-            String jsonResponse = "{\"content\": [{\"text\": \""
-                + content.replace("\\", "\\\\")
-                         .replace("\"", "\\\"")
-                         .replace("\n", "\\n")
-                         .replace("\r", "")
-                + "\"}]}";
+            // ✅ RETURN PROPER JSON
+            Map<String, Object> result = new HashMap<>();
+            List<Map<String, String>> contentList = new ArrayList<>();
 
-            return ResponseEntity.ok(jsonResponse);
+            Map<String, String> textObj = new HashMap<>();
+            textObj.put("text", content);
+
+            contentList.add(textObj);
+            result.put("content", contentList);
+
+            return ResponseEntity.ok(result);
 
         } catch (HttpClientErrorException e) {
-            System.err.println("Groq client error: " + e.getStatusCode() + " — " + e.getResponseBodyAsString());
-            return ResponseEntity
-                .status(e.getStatusCode())
-                .body("{\"content\": [{\"text\": \"I am having trouble right now. Please try again! 🙏\"}]}");
+            System.err.println("Groq Client Error: " + e.getResponseBodyAsString());
+
+            return ResponseEntity.status(e.getStatusCode())
+                .body(Map.of("content", List.of(Map.of("text", "Client error 😕"))));
 
         } catch (HttpServerErrorException e) {
-            System.err.println("Groq server error: " + e.getStatusCode() + " — " + e.getResponseBodyAsString());
-            return ResponseEntity
-                .status(e.getStatusCode())
-                .body("{\"content\": [{\"text\": \"Service is temporarily unavailable. Please try again! 🙏\"}]}");
+            System.err.println("Groq Server Error: " + e.getResponseBodyAsString());
+
+            return ResponseEntity.status(e.getStatusCode())
+                .body(Map.of("content", List.of(Map.of("text", "Server error 😔"))));
 
         } catch (Exception e) {
-            System.err.println("Unexpected error: " + e.getMessage());
-            return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("{\"content\": [{\"text\": \"I am currently unavailable. Please try again later! 🙏\"}]}");
+            e.printStackTrace();
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of("content", List.of(Map.of("text", "Something went wrong 🚨"))));
         }
     }
 }
+
+//demo

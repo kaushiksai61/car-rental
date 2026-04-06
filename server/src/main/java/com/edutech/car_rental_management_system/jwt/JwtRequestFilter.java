@@ -27,7 +27,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtil jwtUtil;
 
-
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -47,6 +46,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 Claims claims = jwtUtil.extractAllClaims(jwt);
                 username = claims.getSubject();
             } catch (Exception ignored) {
+                // Invalid token format / signature / expired etc.
             }
         }
 

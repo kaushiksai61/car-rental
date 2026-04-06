@@ -1,5 +1,6 @@
 package com.edutech.car_rental_management_system.config;
 
+import com.edutech.car_rental_management_system.jwt.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +14,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import com.edutech.car_rental_management_system.jwt.JwtRequestFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -41,19 +41,35 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .cors().and()
                 .authorizeRequests()
-                // PUBLIC
-                .antMatchers("/api/user/register", "/api/user/login").permitAll()
+
+                // ✅ PUBLIC ENDPOINTS
+                .antMatchers(
+                        "/api/user/register",
+                        "/api/user/login",
+
+                        // ✅ OTP OPTION-B endpoints (email verification + forgot password)
+                        "/api/user/verify-email-otp",
+                        "/api/user/forgot-password",
+                        "/api/user/reset-password",
+                        "/api/user/resend-otp"
+                ).permitAll()
+
                 // ADMIN
                 .antMatchers("/api/administrator/**")
-                    .access("hasAuthority('ADMIN') or hasAuthority('ADMINISTRATOR')")
+                .access("hasAuthority('ADMIN') or hasAuthority('ADMINISTRATOR')")
+
                 // AGENT
                 .antMatchers("/api/agent/**").hasAuthority("AGENT")
+
                 // CUSTOMER
                 .antMatchers("/api/customers/**").hasAuthority("CUSTOMER")
+
                 // CHATBOT
                 .antMatchers("/api/chat/**").hasAuthority("CUSTOMER")
+
                 // ALL OTHER REQUESTS MUST BE AUTHENTICATED
                 .anyRequest().authenticated()
+
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

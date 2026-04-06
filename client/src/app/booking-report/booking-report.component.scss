@@ -252,3 +252,58 @@ tbody td {
   text-transform: capitalize !important;
 }
 
+.status-booked    { background: var(--status-booked-bg) !important; border: 0.5px solid var(--status-booked-border) !important; color: var(--status-booked-text) !important; }
+.status-pending   { background: var(--status-pending-bg) !important; border: 0.5px solid var(--status-pending-border) !important; color: var(--status-pending-text) !important; }
+.status-completed { background: var(--status-blue-bg) !important; border: 0.5px solid var(--status-blue-border) !important; color: var(--status-blue-text) !important; }
+.status-cancelled { background: var(--status-fail-bg) !important; border: 0.5px solid var(--status-fail-border) !important; color: var(--status-fail-text) !important; }
+
+/* ── LOADING & EMPTY ────────────────────────────── */
+.table-loading {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 64px !important;
+  color: var(--text-muted) !important;
+  font-size: 13px !important;
+}
+
+.spinner {
+  width: 28px !important;
+  height: 28px !important;
+  border: 2px solid var(--border-main) !important;
+  border-top-color: #DC2626 !important;
+  border-radius: 50% !important;
+  animation: spin 0.8s linear infinite !important;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.empty-state {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 64px !important;
+  text-align: center !important;
+  color: var(--text-muted) !important;
+}
+
+.empty-state svg { opacity: 0.2 !important; margin-bottom: 8px !important; }
+.empty-state p   { font-size: 15px !important; font-weight: 500 !important; color: var(--text-secondary) !important; }
+.empty-state span { font-size: 13px !important; }
+
+.alert-error {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 16px 24px !important;
+  font-size: 13px !important;
+  color: var(--status-fail-text) !important;
+}
+
+@media (max-width: 768px) {
+  .page-header { flex-direction: column !important; align-items: flex-start !important; padding: 24px !important; gap: 16px !important; }
+  .summary-strip { padding: 16px 24px !important; }
+  .table-panel { margin: 16px 24px !important; }
+}

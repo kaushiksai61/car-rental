@@ -1,15 +1,15 @@
 package com.edutech.car_rental_management_system.jwt;
 
+import com.edutech.car_rental_management_system.entity.User;
+import com.edutech.car_rental_management_system.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.edutech.car_rental_management_system.entity.User;
-import com.edutech.car_rental_management_system.repository.UserRepository;
 
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,9 +19,10 @@ public class JwtUtil {
 
     // FIXED secret key — does not change on server restart
     private static final String SECRET =
-        "carrentalmanagement2026secretkeyforHS512algorithmthatisatleast64characterslong!!";
+            "carrentalmanagement2026secretkeyforHS512algorithmthatisatleast64characterslong!!";
+
     private static final SecretKey secretKey =
-        Keys.hmacShaKeyFor(SECRET.getBytes());
+            Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
 
     private final int expiration = 86400; // 24 hours in seconds
 
@@ -29,12 +30,14 @@ public class JwtUtil {
     private UserRepository userRepository;
 
     public String generateToken(String username) {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found for username: " + username));
+
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", user.getRole());
         claims.put("id", user.getId());
 
-        Date now    = new Date();
+        Date now = new Date();
         Date expiry = new Date(now.getTime() + expiration * 1000L);
 
         return Jwts.builder()
@@ -47,8 +50,9 @@ public class JwtUtil {
     }
 
     public Claims extractAllClaims(String token) {
-        return Jwts.parser()
+        return Jwts.parserBuilder()
                 .setSigningKey(secretKey)
+                .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
@@ -58,7 +62,7 @@ public class JwtUtil {
     }
 
     public boolean validateToken(String token, String username) {
-        return extractAllClaims(token).getSubject().equals(username)
-                && !isExpired(token);
+        if (token == null || username == null) return false;
+        return username.equals(extractAllClaims(token).getSubject()) && !isExpired(token);
     }
 }
